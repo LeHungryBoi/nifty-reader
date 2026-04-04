@@ -31,6 +31,7 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
@@ -190,28 +191,38 @@ body {
   flex: 1;
   background-color: #1e293b;
   border-radius: 12px;
-  padding: 30px;
-  line-height: 1.8;
+  padding: 40px;
+  line-height: 1.6;
   overflow-y: auto;
   max-height: calc(100vh - 200px);
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  color: #e2e8f0;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.reader-content p {
+  margin-bottom: 1.2em;
+  text-indent: 2.5em;
+  text-align: justify;
 }
 
 .reader-content h1,
 .reader-content h2,
 .reader-content h3 {
   color: #f1f5f9;
-  margin-bottom: 16px;
-}
-
-.reader-content p {
-  color: #cbd5e1;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  text-align: center;
+  text-indent: 0;
 }
 
 .reader-content hr {
   border: none;
-  border-top: 1px solid #334155;
-  margin: 20px 0;
+  border-top: 2px solid #334155;
+  margin: 30px auto;
+  width: 50%;
 }
 
 .footer {

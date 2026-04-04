@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-interface ArchiveItem {
-  id: string;
-  title: string;
-  author: string;
-  date: string;
-  description: string;
-  url: string;
-}
+import { fetchSearchResults, fetchAndCleanStory, ArchiveItem } from "./services/nifty";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,51 +15,20 @@ function App() {
     
     setLoading(true);
     try {
-      // Nifty Archives API endpoint with standard Chrome User Agent
-      const response = await fetch(`https://search.niftyarchives.org/api/search?q=${encodeURIComponent(searchQuery)}`, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-          "Accept": "application/json, text/plain, */*",
-          "Accept-Language": "en-US,en;q=0.9",
-          "Referer": "https://search.niftyarchives.org/"
-        }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setResults(data.results || []);
-      } else {
-        // Demo fallback data for demonstration
-        setResults([
-          {
-            id: "1",
-            title: "Sample Archive Document #1",
-            author: "Archive Team",
-            date: "2025-01-15",
-            description: "Historical document from nifty archives collection",
-            url: "https://search.niftyarchives.org/item/1"
-          },
-          {
-            id: "2",
-            title: "Sample Archive Document #2",
-            author: "Historical Society",
-            date: "2024-11-03",
-            description: "Preserved document from public archive",
-            url: "https://search.niftyarchives.org/item/2"
-          }
-        ]);
-      }
+      // Use the nifty service to fetch/parse search
+      const data = await fetchSearchResults(searchQuery);
+      setResults(data);
     } catch (error) {
       console.error("Search failed:", error);
-      // Fallback demo data
+      // Fallback for demonstration if CORS/fetch fails
       setResults([
         {
           id: "1",
-          title: "Sample Archive Document #1",
-          author: "Archive Team",
+          title: "Demo Story (Search failed, see console)",
+          author: "Self",
           date: "2025-01-15",
-          description: "Historical document from nifty archives collection",
-          url: "https://search.niftyarchives.org/item/1"
+          description: "Search likely failed due to CORS. In a real Tauri app, use the http plugin.",
+          url: "https://www.nifty.org/nifty/lesbian/hookers/linda-becomes-a-prostitute"
         }
       ]);
     } finally {
@@ -79,31 +41,16 @@ function App() {
     setLoading(true);
     
     try {
-      const response = await fetch(item.url, {
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-          "Accept-Language": "en-US,en;q=0.9",
-          "Referer": "https://search.niftyarchives.org/"
-        }
-      });
-      if (response.ok) {
-        setReaderContent(await response.text());
-      } else {
-        setReaderContent(`
-          <h1>${item.title}</h1>
-          <p><strong>Author:</strong> ${item.author}</p>
-          <p><strong>Date:</strong> ${item.date}</p>
-          <hr />
-          <p>${item.description}</p>
-          <p>Document content would be displayed here when API is integrated.</p>
-        `);
-      }
+      // Fetch and clean content using the service
+      const cleaned = await fetchAndCleanStory(item.url);
+      setReaderContent(cleaned);
     } catch (error) {
       setReaderContent(`
-        <h2>Document Preview</h2>
-        <p>This is a preview of the archive document.</p>
-        <p>Full content will load when connected to the live archive.</p>
+        <div class="error">
+          <h2>Could not load story</h2>
+          <p>This may be due to CORS restrictions or a network error.</p>
+          <p>Visit the story directly at: <a href="${item.url}" target="_blank">${item.url}</a></p>
+        </div>
       `);
     } finally {
       setLoading(false);
