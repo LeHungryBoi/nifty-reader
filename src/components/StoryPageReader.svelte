@@ -5,6 +5,8 @@
     createStoryPageTtsController,
     type StoryPageTtsState
   } from "../pages/StoryPageTts";
+  import "../styles/shared-controls.css";
+  import "./StoryPageReader.css";
 
   export let selectedItem: ArchiveItem;
   export let loading = false;

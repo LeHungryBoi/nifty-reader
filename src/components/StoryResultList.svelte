@@ -3,6 +3,7 @@
   import { getCategoryBarStyle } from "../lib/niftyCategories";
   import type { ArchiveItem } from "../services/nifty";
   import { libraryState } from "../stores/library";
+  import "./StoryResultList.css";
 
   export let results: ArchiveItem[] = [];
   export let loading = false;

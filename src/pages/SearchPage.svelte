@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from "svelte";
   import { get } from "svelte/store";
+  import "./SearchPage.css";
   import ReadingHistory from "../components/ReadingHistory.svelte";
   import SearchControls from "../components/SearchControls.svelte";
   import FilterPanel from "../components/FilterPanel.svelte";

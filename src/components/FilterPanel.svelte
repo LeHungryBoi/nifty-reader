@@ -1,6 +1,7 @@
 <script lang="ts">
   import { categoryOptions, subcategoryOptions } from "../lib/niftyCategories";
   import type { SearchSort } from "../services/nifty";
+  import "../styles/search-form.css";
 
   export let selectedCategory = "gay";
   export let selectedSubcategory = "";

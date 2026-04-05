@@ -1,5 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import "../styles/search-form.css";
+  import "../styles/shared-controls.css";
   export let searchQuery = "";
   export let loading = false;
   export let theme: "dark" | "light" = "dark";

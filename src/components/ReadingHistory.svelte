@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import type { ArchiveItem } from "../services/nifty";
   import type { HistoryRecord } from "../stores/library";
+  import "./ReadingHistory.css";
 
   export let entries: HistoryRecord[] = [];
 

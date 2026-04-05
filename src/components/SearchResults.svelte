@@ -1,6 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import type { ArchiveItem } from "../services/nifty";
+  import "../styles/shared-controls.css";
+  import "./SearchResults.css";
   import StoryResultList from "./StoryResultList.svelte";
 
   export let results: ArchiveItem[] = [];
