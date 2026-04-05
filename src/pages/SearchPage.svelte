@@ -122,8 +122,8 @@
   });
 </script>
 
-<div class="search-page">
-  <div class="top-tabs" role="tablist" aria-label="Primary actions">
+<div class="search-page flex flex-1 min-h-0 flex-col">
+  <div class="top-tabs w-full" role="tablist" aria-label="Primary actions">
     {#each topTabs as tab}
       <button
         type="button"
@@ -138,9 +138,9 @@
     {/each}
   </div>
 
-  <div class="tab-panel">
+  <div class="tab-panel min-h-0">
     {#if activeTab === "search"}
-      <div class="search-panel">
+      <div class="search-panel min-h-0">
         <SearchControls
           bind:searchQuery={state.query}
           loading={state.loading}

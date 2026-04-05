@@ -50,7 +50,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.68);
   background:
     var(--badge-bg, linear-gradient(180deg, #29384f 0%, #182233 100%));
@@ -105,10 +105,10 @@
 
 .result-meta {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
-  padding: 10px 16px 0;
-  font-size: 0.82rem;
+  padding: 8px 14px 0;
+  font-size: 0.8rem;
   color: #a6b2c3;
   text-shadow:
     0 1px 0 rgba(0, 0, 0, 0.6),
@@ -116,7 +116,7 @@
 }
 
 .result-body {
-  padding: 14px 16px 16px;
+  padding: 10px 14px 14px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%),
     linear-gradient(180deg, #151c29 0%, #101722 100%);

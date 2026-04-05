@@ -9,7 +9,7 @@
 </script>
 
 <form
-  class="top-nav"
+  class="top-nav w-full max-w-5xl mx-auto"
   on:submit|preventDefault={() => dispatch("search")}
 >
   <div class="search-bar">

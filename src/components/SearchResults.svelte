@@ -20,7 +20,7 @@
   }>();
 </script>
 
-<main class="results">
+<main class="results w-full max-w-5xl mx-auto space-y-3 px-2 sm:px-0">
   <div class="results-list">
     <StoryResultList {results} {loading} on:open={(event) => dispatch("open", event.detail)} />
   </div>
