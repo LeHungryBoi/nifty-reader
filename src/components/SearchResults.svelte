@@ -19,50 +19,54 @@
 </script>
 
 <main class="results">
-  <StoryResultList {results} {loading} on:open={(event) => dispatch("open", event.detail)} />
+  <div class="results-list">
+    <StoryResultList {results} {loading} on:open={(event) => dispatch("open", event.detail)} />
+  </div>
+
   {#if results.length > 0}
-    <div class="results-summary">
-      <span>Results {resultStart} - {resultEnd} of {totalResults}</span>
-      <span>Page {currentPage} of {totalPages}</span>
-    </div>
+    <div class="results-footer" aria-label="Search results pages">
+      <span class="results-footer-meta">Results {resultStart} - {resultEnd} of {totalResults}</span>
 
-    <div class="pagination-bar" aria-label="Search results pages">
-      <button
-        class="pagination-button"
-        on:click={() => dispatch("page", Math.max(1, currentPage - 1))}
-        disabled={loading || currentPage <= 1}
-      >
-        &laquo;
-      </button>
-
-      {#each pageNumbers as page}
+      <div class="pagination-bar">
         <button
-          class:active={page === currentPage}
           class="pagination-button"
-          on:click={() => dispatch("page", page)}
-          disabled={loading}
+          on:click={() => dispatch("page", Math.max(1, currentPage - 1))}
+          disabled={loading || currentPage <= 1}
         >
-          {page}
+          &laquo;
         </button>
-      {/each}
 
-      {#if totalPages > 1 && (!pageNumbers.includes(totalPages) || totalPages > (pageNumbers[pageNumbers.length - 1] ?? 0))}
+        {#each pageNumbers as page}
+          <button
+            class:active={page === currentPage}
+            class="pagination-button"
+            on:click={() => dispatch("page", page)}
+            disabled={loading}
+          >
+            {page}
+          </button>
+        {/each}
+
+        {#if totalPages > 1 && (!pageNumbers.includes(totalPages) || totalPages > (pageNumbers[pageNumbers.length - 1] ?? 0))}
+          <button
+            class="pagination-button"
+            on:click={() => dispatch("page", totalPages)}
+            disabled={loading || currentPage >= totalPages}
+          >
+            Last
+          </button>
+        {/if}
+
         <button
           class="pagination-button"
-          on:click={() => dispatch("page", totalPages)}
+          on:click={() => dispatch("page", Math.min(totalPages, currentPage + 1))}
           disabled={loading || currentPage >= totalPages}
         >
-          Last
+          &raquo;
         </button>
-      {/if}
+      </div>
 
-      <button
-        class="pagination-button"
-        on:click={() => dispatch("page", Math.min(totalPages, currentPage + 1))}
-        disabled={loading || currentPage >= totalPages}
-      >
-        &raquo;
-      </button>
+      <span class="results-footer-page">Page {currentPage} of {totalPages}</span>
     </div>
   {/if}
 </main>

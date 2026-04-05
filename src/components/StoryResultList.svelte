@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { getCategoryBarStyle } from "../lib/niftyCategories";
   import type { ArchiveItem } from "../services/nifty";
+  import { libraryState } from "../stores/library";
 
   export let results: ArchiveItem[] = [];
   export let loading = false;
@@ -24,6 +25,8 @@
 
 {#each results as item (item.id)}
   {@const primaryCategory = item.categories[0]}
+  {@const downloadRecord = $libraryState.downloads.find((entry) => entry.storyId === item.id)}
+  {@const historyRecord = $libraryState.history.find((entry) => entry.storyId === item.id)}
   <div
     class="result-block"
     on:click={() => dispatch("open", item)}
@@ -43,10 +46,22 @@
     <div class="result-meta">
       <span>Published: {item.date || "Unknown"}</span>
       <span>Author: {item.author || "Unknown"}</span>
+      {#if downloadRecord}
+        <span>{downloadRecord.isFavorite ? "Hearted" : "Downloaded"}</span>
+      {/if}
+      {#if historyRecord}
+        <span>Opened {historyRecord.openCount} time{historyRecord.openCount === 1 ? "" : "s"}</span>
+      {/if}
     </div>
 
     <div class="result-body">
       <div class="labels">
+        {#if downloadRecord?.isFavorite}
+          <span class="label status-label favorite">Hearted</span>
+        {/if}
+        {#if downloadRecord}
+          <span class="label status-label downloaded">Downloaded</span>
+        {/if}
         {#each item.subcategories as sub}
           <span class="label subcategory">{sub}</span>
         {/each}
