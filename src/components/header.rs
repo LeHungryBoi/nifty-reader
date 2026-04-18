@@ -6,6 +6,8 @@ pub struct HeaderProps {
     pub theme: Signal<String>,
     pub font_size: Signal<f32>,
     pub current_story: Signal<Option<Story>>,
+    pub on_open_settings: EventHandler<()>,
+    pub on_refresh: EventHandler<()>,
 }
 
 #[component]
@@ -23,9 +25,9 @@ pub fn Header(props: HeaderProps) -> Element {
     };
 
     rsx! {
-        header { class: "sticky top-0 z-10 backdrop-blur-md bg-opacity-80 border-b border-slate-700/30 px-6 py-4 flex justify-between items-center",
+        header { class: "sticky top-0 z-10 backdrop-blur-md bg-opacity-80 border-b border-slate-700/30 px-6 py-3 flex justify-between items-center",
             div { 
-                class: "flex items-center gap-3 text-2xl font-black tracking-tight cursor-pointer hover:opacity-80 transition-opacity",
+                class: "flex items-center gap-2 text-xl font-black tracking-tight cursor-pointer hover:opacity-80 transition-opacity",
                 onclick: move |_| current_story.set(None),
                 span { class: "text-blue-500", "📚" }
                 span { "NiftyReader" }
@@ -34,7 +36,7 @@ pub fn Header(props: HeaderProps) -> Element {
                 if current_story.read().is_some() {
                     div { class: "flex items-center bg-slate-800/50 rounded-lg p-1 border border-slate-700/30",
                         button { 
-                            class: "px-3 py-1 hover:bg-slate-700 rounded transition-colors text-sm font-bold",
+                            class: "px-2 py-0.5 hover:bg-slate-700 rounded transition-colors text-sm font-bold",
                             onclick: move |_| {
                                 let current = *font_size.read();
                                 font_size.set((current - 0.1).max(0.8));
@@ -43,7 +45,7 @@ pub fn Header(props: HeaderProps) -> Element {
                         }
                         div { class: "w-px h-4 bg-slate-700 mx-1" }
                         button { 
-                            class: "px-3 py-1 hover:bg-slate-700 rounded transition-colors text-sm font-bold",
+                            class: "px-2 py-0.5 hover:bg-slate-700 rounded transition-colors text-sm font-bold",
                             onclick: move |_| {
                                 let current = *font_size.read();
                                 font_size.set((current + 0.1).min(2.5));
@@ -53,9 +55,20 @@ pub fn Header(props: HeaderProps) -> Element {
                     }
                 }
                 button { 
-                    class: "p-2.5 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-xl shadow-inner",
+                    class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",
+                    onclick: move |_| props.on_refresh.call(()),
+                    title: "Refresh",
+                    "🔄"
+                }
+                button { 
+                    class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",
                     onclick: toggle_theme,
                     if *theme.read() == "dark" { "☀️" } else { "🌙" }
+                }
+                button { 
+                    class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",
+                    onclick: move |_| props.on_open_settings.call(()),
+                    "⚙️"
                 }
             }
         }

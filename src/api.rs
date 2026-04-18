@@ -27,11 +27,19 @@ pub struct StorySummary {
     pub chapters: Vec<(String, String)>, // (chapter_title, chapter_url)
 }
 
-pub async fn fetch_nifty_story(url: &str) -> Result<Story, Box<dyn std::error::Error>> {
-    // Using the same CORS proxy as the original JS code for WASM compatibility
-    let proxy_url = format!("https://corsproxy.io/?{}", urlencoding::encode(url));
-    
-    let response = reqwest::get(&proxy_url).await?;
+fn get_client(proxy_url: Option<&str>) -> Result<reqwest::Client, Box<dyn std::error::Error>> {
+    let mut builder = reqwest::Client::builder();
+    if let Some(url) = proxy_url {
+        if !url.is_empty() {
+            builder = builder.proxy(reqwest::Proxy::all(url)?);
+        }
+    }
+    Ok(builder.build()?)
+}
+
+pub async fn fetch_nifty_story(url: &str, proxy_url: Option<&str>) -> Result<Story, Box<dyn std::error::Error>> {
+    let client = get_client(proxy_url)?;
+    let response = client.get(url).send().await?;
     if !response.status().is_success() {
         return Err(format!("Failed to fetch story: {}", response.status()).into());
     }
@@ -99,11 +107,15 @@ pub async fn fetch_nifty_story(url: &str) -> Result<Story, Box<dyn std::error::E
     })
 }
 
-pub async fn fetch_latest_stories() -> Result<Vec<StorySummary>, Box<dyn std::error::Error>> {
-    let url = "https://search.niftyarchives.org/";
-    let proxy_url = format!("https://corsproxy.io/?{}", urlencoding::encode(url));
+pub async fn fetch_latest_stories(proxy_url: Option<&str>, page: u32) -> Result<Vec<StorySummary>, Box<dyn std::error::Error>> {
+    let url = if page <= 1 {
+        "https://search.niftyarchives.org/".to_string()
+    } else {
+        format!("https://search.niftyarchives.org/?page={}", page)
+    };
     
-    let response = reqwest::get(&proxy_url).await?;
+    let client = get_client(proxy_url)?;
+    let response = client.get(&url).send().await?;
     let html = response.text().await?;
     let document = Html::parse_document(&html);
     

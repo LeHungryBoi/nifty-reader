@@ -16,14 +16,14 @@ pub fn ReaderView(props: ReaderViewProps) -> Element {
     rsx! {
         article { class: "animate-in fade-in slide-in-from-bottom-10 duration-1000",
             button { 
-                class: "mb-10 text-slate-500 hover:text-blue-400 font-bold flex items-center gap-2 transition-colors group",
+                class: "mb-8 text-slate-500 hover:text-blue-400 font-bold flex items-center gap-2 transition-colors group",
                 onclick: move |_| props.on_back.call(()),
                 span { class: "group-hover:-translate-x-1 transition-transform", "←" }
                 "Library"
             }
             
-            header { class: "text-center mb-20",
-                h1 { class: "text-5xl md:text-6xl font-black mb-6 leading-[1.1] tracking-tight", "{story.title}" }
+            header { class: "text-center mb-12",
+                h1 { class: "text-4xl md:text-5xl font-black mb-4 leading-[1.1] tracking-tight", "{story.title}" }
                 div { class: "h-1.5 w-32 bg-blue-500 mx-auto rounded-full shadow-lg shadow-blue-500/20" }
             }
 
@@ -35,10 +35,10 @@ pub fn ReaderView(props: ReaderViewProps) -> Element {
                 }
             }
 
-            footer { class: "mt-24 pt-12 border-t border-slate-800/50 flex flex-col items-center gap-6",
+            footer { class: "mt-16 pt-10 border-t border-slate-800/50 flex flex-col items-center gap-6",
                 p { class: "text-slate-500 italic", "You've reached the end of the story." }
                 button { 
-                    class: "bg-slate-800 hover:bg-slate-700 px-10 py-4 rounded-2xl font-bold transition-all flex items-center gap-3 shadow-lg hover:shadow-slate-900/50 active:scale-95",
+                    class: "bg-slate-800 hover:bg-slate-700 px-8 py-3 rounded-2xl font-bold transition-all flex items-center gap-3 shadow-lg hover:shadow-slate-900/50 active:scale-95",
                     onclick: move |_| {
                         props.on_back.call(());
                     },
