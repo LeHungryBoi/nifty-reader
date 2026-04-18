@@ -1,16 +1,29 @@
-# React + Vite
+# Nifty Reader
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Desktop reader application for https://search.niftyarchives.org/
+Built with Dioxus (Rust)
 
-Currently, two official plugins are available:
+## 🚀 Setup Instructions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Prerequisites
+1. Install Rust: https://www.rust-lang.org/tools/install
+2. Install Dioxus CLI:
+```bash
+cargo install dioxus-cli
+```
 
-## React Compiler
+### Development
+```bash
+# Run development server
+dx serve
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Build
+```bash
+# Build desktop package
+dx build --release
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Recommended IDE Setup
+- [VS Code](https://code.visualstudio.com/)
+- [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
