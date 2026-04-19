@@ -24,6 +24,14 @@ dx serve
 dx build --release
 ```
 
+### TTS model assets
+```bash
+# Download Pocket TTS + wav2vec2 model files into ./models
+bash scripts/fetch_tts_models.sh
+# (uses the Rust hf-hub crate under the hood)
+```
+
+
 ## Recommended IDE Setup
 - [VS Code](https://code.visualstudio.com/)
 - [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)

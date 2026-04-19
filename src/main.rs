@@ -17,12 +17,12 @@ use crate::components::*;
 
 #[derive(Clone, Debug)]
 struct TTSState {
-    is_playing: bool,
-    current_word_index: Option<usize>,
-    playback_speed: f32,
-    selected_voice: String,
-    available_voices: Vec<crate::tts::VoiceInfo>,
-    playback_session: u64,
+  is_playing: bool,
+  current_word_index: Option<usize>,
+  playback_speed: f32,
+  selected_voice: String,
+  available_voices: Vec<crate::tts::VoiceInfo>,
+  playback_session: u64,
 }
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
@@ -266,8 +266,14 @@ fn App() -> Element {
     let cat = selected_category.read().clone();
     let sub = selected_subcategory.read().clone();
     spawn(async move {
-      if let Ok(list) =
-        fetch_latest_stories(proxy.as_deref(), 1, Some(&cat), Some(&sub), Some(&new_query)).await
+      if let Ok(list) = fetch_latest_stories(
+        proxy.as_deref(),
+        1,
+        Some(&cat),
+        Some(&sub),
+        Some(&new_query),
+      )
+      .await
       {
         browse_list.set(list);
       }
@@ -356,43 +362,91 @@ fn App() -> Element {
         tts_playback_speed: tts_state.read().playback_speed,
         on_tts_play: move |_| {
           if let Some(story) = current_story.read().clone() {
+            let mut engine = match tts_engine.read().clone() {
+              Some(engine) => engine,
+              None => {
+                tracing::error!("TTS engine not initialized");
+                return;
+              }
+            };
+
+            let mut vm = match voice_manager.read().clone() {
+              Some(vm) => vm,
+              None => {
+                tracing::error!("Voice manager not initialized");
+                return;
+              }
+            };
+
             let mut state = tts_state.read().clone();
             state.is_playing = true;
             state.playback_session = state.playback_session.wrapping_add(1);
             let session = state.playback_session;
             let speed = state.playback_speed.max(0.5);
-            let start_index = state.current_word_index.unwrap_or(0);
+            let selected_voice = state.selected_voice.clone();
             tts_state.set(state);
 
             spawn(async move {
-              let total_words = story
-                .paragraphs
-                .iter()
-                .flat_map(|paragraph| paragraph.split_whitespace())
-                .count();
-
-              if total_words == 0 {
-                let mut state = tts_state.read().clone();
-                state.is_playing = false;
-                state.current_word_index = None;
-                tts_state.set(state);
+              let text = story.paragraphs.join("\n");
+              if text.trim().is_empty() {
+                let mut current = tts_state.read().clone();
+                current.is_playing = false;
+                current.current_word_index = None;
+                tts_state.set(current);
                 return;
               }
 
-              let delay_ms = (240.0_f32 / speed).max(50.0) as u64;
-              for index in start_index.min(total_words - 1)..total_words {
+              let voice_state = match vm.get_voice_state(&selected_voice, &mut engine) {
+                Ok(voice_state) => voice_state,
+                Err(err) => {
+                  tracing::error!("Unable to load voice state: {}", err);
+                  let mut current = tts_state.read().clone();
+                  current.is_playing = false;
+                  tts_state.set(current);
+                  return;
+                }
+              };
+
+              let stream = match engine.synthesize_with_sync(&text, &voice_state, speed) {
+                Ok(stream) => stream,
+                Err(err) => {
+                  tracing::error!("TTS synthesis failed: {}", err);
+                  let mut current = tts_state.read().clone();
+                  current.is_playing = false;
+                  tts_state.set(current);
+                  return;
+                }
+              };
+
+              let mut previous_timestamp = 0.0f32;
+              for chunk in stream {
                 let state = tts_state.read().clone();
                 if !state.is_playing || state.playback_session != session {
                   break;
                 }
 
-                tts_state.set(TTSState {
-                  current_word_index: Some(index),
-                  ..state
-                });
+                let chunk = match chunk {
+                  Ok(chunk) => chunk,
+                  Err(err) => {
+                    tracing::error!("Failed to read synthesized chunk: {}", err);
+                    break;
+                  }
+                };
 
-                tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+                if let Some(last_word_index) = chunk.word_indices.last().copied() {
+                  tts_state.set(TTSState {
+                    current_word_index: Some(last_word_index),
+                    ..state
+                  });
+                }
+
+                let chunk_delay = (chunk.timestamp - previous_timestamp).max(0.05);
+                previous_timestamp = chunk.timestamp;
+                tokio::time::sleep(Duration::from_secs_f32(chunk_delay)).await;
               }
+
+              tts_engine.set(Some(engine));
+              voice_manager.set(Some(vm));
 
               let state = tts_state.read().clone();
               if state.playback_session == session {
