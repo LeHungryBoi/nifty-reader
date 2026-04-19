@@ -3,23 +3,23 @@
 @tailwind utilities;
 
 body {
-    @apply bg-slate-950 text-slate-100;
-    margin: 0;
-    padding: 0;
+  @apply bg-slate-950 text-slate-100;
+  margin: 0;
+  padding: 0;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-slate-950;
+  @apply bg-slate-950;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-slate-800 rounded-full;
+  @apply bg-slate-800 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-700;
+  @apply bg-slate-700;
 }

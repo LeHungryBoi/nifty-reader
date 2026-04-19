@@ -1,11 +1,11 @@
-pub mod header;
 pub mod browse;
-pub mod reader;
+pub mod header;
 pub mod history;
+pub mod reader;
 pub mod settings;
 
-pub use header::Header;
 pub use browse::BrowseView;
-pub use reader::ReaderView;
+pub use header::Header;
 pub use history::HistoryView;
+pub use reader::ReaderView;
 pub use settings::SettingsView;

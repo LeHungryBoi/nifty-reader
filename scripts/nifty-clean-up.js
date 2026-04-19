@@ -13,42 +13,44 @@
 // ==/UserScript==
 
 (function () {
-    'use strict';
+  "use strict";
 
-    function isStoryPage() {
-        const hasPre = !!document.querySelector('pre');
-        const hasTableStuff = document.querySelectorAll('tr, td').length > 0;
-        return hasPre && !hasTableStuff;
-    }
+  function isStoryPage() {
+    const hasPre = !!document.querySelector("pre");
+    const hasTableStuff = document.querySelectorAll("tr, td").length > 0;
+    return hasPre && !hasTableStuff;
+  }
 
-    if (isStoryPage()) {
-        console.log('✅ Story page detected — fixing text');
-        const pre = document.querySelector('pre');
-        if (!pre) return;
+  if (isStoryPage()) {
+    console.log("✅ Story page detected — fixing text");
+    const pre = document.querySelector("pre");
+    if (!pre) return;
 
-        let text = pre.textContent;
-        text = text.replace(/(\S)\n(\S)/g, '$1 $2');
-        text = text.replace(/ +/g, ' ');
+    let text = pre.textContent;
+    text = text.replace(/(\S)\n(\S)/g, "$1 $2");
+    text = text.replace(/ +/g, " ");
 
-        const paragraphBlocks = text.split(/\n{2,}/);
-        const article = document.createElement('article');
-        article.id = 'story-content';
+    const paragraphBlocks = text.split(/\n{2,}/);
+    const article = document.createElement("article");
+    article.id = "story-content";
 
-        paragraphBlocks.forEach(block => {
-            const trimmed = block.trim();
-            if (trimmed.length > 0) {
-                const p = document.createElement('p');
-                p.textContent = trimmed;
-                article.appendChild(p);
-            }
-        });
+    paragraphBlocks.forEach((block) => {
+      const trimmed = block.trim();
+      if (trimmed.length > 0) {
+        const p = document.createElement("p");
+        p.textContent = trimmed;
+        article.appendChild(p);
+      }
+    });
 
-        pre.parentNode.replaceChild(article, pre);
-        console.log(`✅ Text refactored: ${paragraphBlocks.length} paragraphs generated.`);
-    }
+    pre.parentNode.replaceChild(article, pre);
+    console.log(
+      `✅ Text refactored: ${paragraphBlocks.length} paragraphs generated.`,
+    );
+  }
 
-    const style = document.createElement('style');
-    style.textContent = `
+  const style = document.createElement("style");
+  style.textContent = `
         html, body {
             margin: 0 !important;
             width: 100% !important;
@@ -95,6 +97,6 @@
             }
         }
     `;
-    document.head.appendChild(style);
-    console.log('✅ Nifty script v3.8 (Compact Line-height) loaded');
+  document.head.appendChild(style);
+  console.log("✅ Nifty script v3.8 (Compact Line-height) loaded");
 })();
