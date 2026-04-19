@@ -7,6 +7,7 @@ pub struct HeaderProps {
   pub font_size: Signal<f32>,
   pub current_story: Signal<Option<Story>>,
   pub on_open_settings: EventHandler<()>,
+  pub on_open_history: EventHandler<()>,
   pub on_refresh: EventHandler<()>,
 }
 
@@ -59,6 +60,12 @@ pub fn Header(props: HeaderProps) -> Element {
           onclick: move |_| props.on_refresh.call(()),
           title: "Refresh",
           "🔄"
+        }
+        button {
+          class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",
+          onclick: move |_| props.on_open_history.call(()),
+          title: "Reading History",
+          "🕒"
         }
         button {
           class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",

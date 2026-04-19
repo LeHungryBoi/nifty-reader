@@ -92,8 +92,10 @@ fn App() -> Element {
   let mut input_url = use_signal(|| String::new());
   let mut browse_list = use_signal(Vec::<StorySummary>::new);
   let mut show_settings = use_signal(|| false);
+  let mut show_history = use_signal(|| false);
   let mut selected_category = use_signal(|| "All".to_string());
   let mut selected_subcategory = use_signal(|| "All".to_string());
+  let mut search_query = use_signal(|| String::new());
   let mut current_page = use_signal(|| 1u32);
   let proxy_url = use_signal(|| state.read().settings.proxy_url.clone());
 
@@ -101,8 +103,13 @@ fn App() -> Element {
     loading.set(true);
     let proxy = proxy_url.read().clone();
     let page = *current_page.read();
+    let cat = selected_category.read().clone();
+    let sub = selected_subcategory.read().clone();
+    let q = search_query.read().clone();
     spawn(async move {
-      if let Ok(list) = fetch_latest_stories(proxy.as_deref(), page).await {
+      if let Ok(list) =
+        fetch_latest_stories(proxy.as_deref(), page, Some(&cat), Some(&sub), Some(&q)).await
+      {
         browse_list.set(list);
       }
       loading.set(false);
@@ -114,7 +121,7 @@ fn App() -> Element {
     spawn(async move {
       if browse_list.read().is_empty() {
         let proxy = proxy_url.read().clone();
-        if let Ok(list) = fetch_latest_stories(proxy.as_deref(), 1).await {
+        if let Ok(list) = fetch_latest_stories(proxy.as_deref(), 1, None, None, None).await {
           browse_list.set(list);
         }
       }
@@ -122,12 +129,71 @@ fn App() -> Element {
   });
 
   // Fetch when page changes
-  let mut on_change_page = move |new_page: u32| {
+  let on_change_page = move |new_page: u32| {
     current_page.set(new_page);
     loading.set(true);
     let proxy = proxy_url.read().clone();
+    let cat = selected_category.read().clone();
+    let sub = selected_subcategory.read().clone();
+    let q = search_query.read().clone();
     spawn(async move {
-      if let Ok(list) = fetch_latest_stories(proxy.as_deref(), new_page).await {
+      if let Ok(list) =
+        fetch_latest_stories(proxy.as_deref(), new_page, Some(&cat), Some(&sub), Some(&q)).await
+      {
+        browse_list.set(list);
+      }
+      loading.set(false);
+    });
+  };
+
+  // Fetch when category changes — resets subcategory + page + search
+  let on_change_category = move |new_cat: String| {
+    selected_category.set(new_cat.clone());
+    selected_subcategory.set("All".to_string());
+    current_page.set(1);
+    loading.set(true);
+    let proxy = proxy_url.read().clone();
+    let q = search_query.read().clone();
+    spawn(async move {
+      if let Ok(list) =
+        fetch_latest_stories(proxy.as_deref(), 1, Some(&new_cat), None, Some(&q)).await
+      {
+        browse_list.set(list);
+      }
+      loading.set(false);
+    });
+  };
+
+  // Fetch when subcategory changes
+  let on_change_subcategory = move |new_sub: String| {
+    selected_subcategory.set(new_sub.clone());
+    current_page.set(1);
+    loading.set(true);
+    let proxy = proxy_url.read().clone();
+    let cat = selected_category.read().clone();
+    let q = search_query.read().clone();
+    spawn(async move {
+      if let Ok(list) =
+        fetch_latest_stories(proxy.as_deref(), 1, Some(&cat), Some(&new_sub), Some(&q)).await
+      {
+        browse_list.set(list);
+      }
+      loading.set(false);
+    });
+  };
+
+  // Fetch when search query changes
+  let on_search = move |new_query: String| {
+    search_query.set(new_query.clone());
+    current_page.set(1);
+    loading.set(true);
+    let proxy = proxy_url.read().clone();
+    let cat = selected_category.read().clone();
+    let sub = selected_subcategory.read().clone();
+    spawn(async move {
+      if let Ok(list) =
+        fetch_latest_stories(proxy.as_deref(), 1, Some(&cat), Some(&sub), Some(&new_query)).await
+      {
         browse_list.set(list);
       }
       loading.set(false);
@@ -156,6 +222,7 @@ fn App() -> Element {
 
     loading.set(true);
     error.set(String::new());
+    show_history.set(false); // close history page when reading
 
     let proxy = proxy_url.read().clone();
 
@@ -204,6 +271,10 @@ fn App() -> Element {
         font_size,
         current_story,
         on_open_settings: move |_| show_settings.set(true),
+        on_open_history: move |_| {
+          show_history.set(true);
+          current_story.set(None);
+        },
         on_refresh: handle_refresh
       }
 
@@ -230,27 +301,33 @@ fn App() -> Element {
           }
         }
 
-        if current_story.read().is_none() && !*loading.read() {
-          div { class: "space-y-16",
-            BrowseView {
-              browse_list,
-              selected_category,
-              selected_subcategory,
-              current_page: *current_page.read(),
-              on_change_page,
-              on_read: move |url| handle_read(url)
-            }
-            HistoryView {
-              history,
-              on_clear: clear_history,
-              on_read: move |url| handle_read(Some(url))
-            }
+        // Routing: history page > reader > browse
+        if *show_history.read() {
+          HistoryView {
+            history,
+            on_clear: clear_history,
+            on_read: move |url| handle_read(Some(url)),
+            on_back: move |_| show_history.set(false)
           }
         } else if let Some(story) = current_story.read().clone() {
           ReaderView {
             story,
             font_size: *font_size.read(),
+            search_query: search_query.read().clone(),
             on_back: move |_| current_story.set(None)
+          }
+        } else if !*loading.read() {
+          BrowseView {
+            browse_list,
+            selected_category,
+            selected_subcategory,
+            search_query,
+            current_page: *current_page.read(),
+            on_change_page,
+            on_change_category,
+            on_change_subcategory,
+            on_search,
+            on_read: move |url| handle_read(url)
           }
         }
       }
