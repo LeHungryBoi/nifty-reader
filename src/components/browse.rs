@@ -87,7 +87,7 @@ fn SnippetView(html: String) -> Element {
     if let Some(end_idx) = current.find("</em>") {
       let highlight_text = &current[..end_idx];
       segments.push(rsx! {
-        span { class: "bg-blue-500/30 text-blue-200 font-bold px-1 rounded mx-0.5 border border-blue-500/20 shadow-sm",
+        span { class: "font-bold text-blue-300 mx-0.5",
           "{highlight_text}"
         }
       });

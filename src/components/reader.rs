@@ -29,7 +29,7 @@ fn HighlightedParagraph(text: String, query: String) -> Element {
       segments.push(rsx! { "{&text[last_idx..mat.start()]}" });
     }
     segments.push(rsx! {
-      span { class: "bg-blue-500/30 text-blue-100 font-bold px-0.5 rounded border-b-2 border-blue-500/50",
+      span { class: "font-bold text-slate-100 underline decoration-blue-500/30 decoration-2 underline-offset-2",
         "{&text[mat.start()..mat.end()]}"
       }
     });
