@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 mod api;
 mod components;
+mod tts;
 
 use dioxus::desktop::{Config, WindowBuilder};
 use dioxus::prelude::*;
@@ -8,10 +9,21 @@ use directories::ProjectDirs;
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::PathBuf;
+use std::time::Duration;
 use tracing::info;
 
 use crate::api::{HistoryItem, Story, StorySummary, fetch_latest_stories, fetch_nifty_story};
 use crate::components::*;
+
+#[derive(Clone, Debug)]
+struct TTSState {
+    is_playing: bool,
+    current_word_index: Option<usize>,
+    playback_speed: f32,
+    selected_voice: String,
+    available_voices: Vec<crate::tts::VoiceInfo>,
+    playback_session: u64,
+}
 
 #[derive(Clone, Serialize, Deserialize, Debug)]
 struct Settings {
@@ -93,11 +105,26 @@ fn App() -> Element {
   let mut browse_list = use_signal(Vec::<StorySummary>::new);
   let mut show_settings = use_signal(|| false);
   let mut show_history = use_signal(|| false);
+  let mut show_voice_manager = use_signal(|| false);
   let mut selected_category = use_signal(|| "All".to_string());
   let mut selected_subcategory = use_signal(|| "All".to_string());
   let mut search_query = use_signal(|| String::new());
   let mut current_page = use_signal(|| 1u32);
   let proxy_url = use_signal(|| state.read().settings.proxy_url.clone());
+
+  // TTS state - single signal for all TTS state
+  let mut tts_state = use_signal(|| TTSState {
+    is_playing: false,
+    current_word_index: None,
+    playback_speed: 1.0,
+    selected_voice: "Default".to_string(),
+    available_voices: vec![],
+    playback_session: 0,
+  });
+
+  // TTS engine and voice manager (internal, not exposed to UI)
+  let mut tts_engine = use_signal(|| None::<crate::tts::TTSEngine>);
+  let mut voice_manager = use_signal(|| None::<crate::tts::VoiceManager>);
 
   let handle_refresh = move |_| {
     loading.set(true);
@@ -126,6 +153,54 @@ fn App() -> Element {
         }
       }
     });
+  });
+
+  // Initialize TTS components
+  use_effect(move || {
+    spawn(async move {
+      // Initialize TTS engine
+      let mut engine = crate::tts::TTSEngine::new();
+      if let Err(e) = engine.ensure_model_loaded().await {
+        tracing::error!("Failed to initialize TTS engine: {}", e);
+        return;
+      }
+      tts_engine.set(Some(engine));
+
+      // Initialize voice manager
+      match crate::tts::VoiceManager::new() {
+        Ok(vm) => {
+          let voices = vm.get_available_voices();
+          let mut state = tts_state.read().clone();
+          state.available_voices = voices;
+          if !state
+            .available_voices
+            .iter()
+            .any(|voice| voice.name == state.selected_voice)
+          {
+            state.selected_voice = state
+              .available_voices
+              .iter()
+              .find(|voice| voice.is_default)
+              .map(|voice| voice.name.clone())
+              .unwrap_or_else(|| "Default".to_string());
+          }
+          voice_manager.set(Some(vm));
+          tts_state.set(state);
+        }
+        Err(e) => {
+          tracing::error!("Failed to initialize voice manager: {}", e);
+        }
+      }
+    });
+  });
+
+  use_effect(move || {
+    let _story = current_story.read().clone();
+    let mut state = tts_state.read().clone();
+    state.is_playing = false;
+    state.current_word_index = None;
+    state.playback_session = state.playback_session.wrapping_add(1);
+    tts_state.set(state);
   });
 
   // Fetch when page changes
@@ -275,13 +350,104 @@ fn App() -> Element {
           show_history.set(true);
           current_story.set(None);
         },
-        on_refresh: handle_refresh
+        on_refresh: handle_refresh,
+        // TTS props
+        tts_is_playing: tts_state.read().is_playing,
+        tts_playback_speed: tts_state.read().playback_speed,
+        on_tts_play: move |_| {
+          if let Some(story) = current_story.read().clone() {
+            let mut state = tts_state.read().clone();
+            state.is_playing = true;
+            state.playback_session = state.playback_session.wrapping_add(1);
+            let session = state.playback_session;
+            let speed = state.playback_speed.max(0.5);
+            let start_index = state.current_word_index.unwrap_or(0);
+            tts_state.set(state);
+
+            spawn(async move {
+              let total_words = story
+                .paragraphs
+                .iter()
+                .flat_map(|paragraph| paragraph.split_whitespace())
+                .count();
+
+              if total_words == 0 {
+                let mut state = tts_state.read().clone();
+                state.is_playing = false;
+                state.current_word_index = None;
+                tts_state.set(state);
+                return;
+              }
+
+              let delay_ms = (240.0_f32 / speed).max(50.0) as u64;
+              for index in start_index.min(total_words - 1)..total_words {
+                let state = tts_state.read().clone();
+                if !state.is_playing || state.playback_session != session {
+                  break;
+                }
+
+                tts_state.set(TTSState {
+                  current_word_index: Some(index),
+                  ..state
+                });
+
+                tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+              }
+
+              let state = tts_state.read().clone();
+              if state.playback_session == session {
+                tts_state.set(TTSState {
+                  is_playing: false,
+                  current_word_index: None,
+                  ..state
+                });
+              }
+            });
+          }
+        },
+        on_tts_pause: move |_| {
+          let mut state = tts_state.read().clone();
+          state.is_playing = false;
+          tts_state.set(state);
+        },
+        on_tts_stop: move |_| {
+          let mut state = tts_state.read().clone();
+          state.is_playing = false;
+          state.current_word_index = None;
+          state.playback_session = state.playback_session.wrapping_add(1);
+          tts_state.set(state);
+        },
+        on_tts_speed_change: move |speed| {
+          let mut state = tts_state.read().clone();
+          state.playback_speed = speed;
+          tts_state.set(state);
+        },
+        on_tts_seek: move |_| {
+          // TODO: Implement seek logic
+        },
+        on_open_voice_manager: move |_| {
+          show_voice_manager.set(true);
+        }
       }
 
       if *show_settings.read() {
         SettingsView {
           proxy_url,
           on_close: move |_| show_settings.set(false)
+        }
+      }
+
+      if *show_voice_manager.read() {
+        crate::components::VoiceManager {
+          available_voices: tts_state.read().available_voices.clone(),
+          on_add_voice: move |_| {
+            // TODO: Implement voice file upload
+          },
+          on_remove_voice: move |voice_name| {
+            // TODO: Implement voice removal
+            tracing::info!("Remove voice: {}", voice_name);
+          },
+          on_close: move |_| show_voice_manager.set(false)
         }
       }
 
@@ -314,7 +480,16 @@ fn App() -> Element {
             story,
             font_size: *font_size.read(),
             search_query: search_query.read().clone(),
-            on_back: move |_| current_story.set(None)
+            on_back: move |_| current_story.set(None),
+            // TTS props
+            available_voices: tts_state.read().available_voices.clone(),
+            selected_voice: tts_state.read().selected_voice.clone(),
+            current_word_index: tts_state.read().current_word_index,
+            on_voice_change: move |voice| {
+              let mut state = tts_state.read().clone();
+              state.selected_voice = voice;
+              tts_state.set(state);
+            }
           }
         } else if !*loading.read() {
           BrowseView {

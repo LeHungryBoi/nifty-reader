@@ -14,3 +14,4 @@ regex = "1.10"
 tracing = "0.1"
 chrono = { version = "0.4", features = ["serde", "clock"] }
 directories = "5.0"
+# pocket-tts = "0.6.2"  # Temporarily disabled - requires cmake

@@ -9,6 +9,15 @@ pub struct HeaderProps {
   pub on_open_settings: EventHandler<()>,
   pub on_open_history: EventHandler<()>,
   pub on_refresh: EventHandler<()>,
+  // TTS props
+  pub tts_is_playing: bool,
+  pub tts_playback_speed: f32,
+  pub on_tts_play: EventHandler<()>,
+  pub on_tts_pause: EventHandler<()>,
+  pub on_tts_stop: EventHandler<()>,
+  pub on_tts_speed_change: EventHandler<f32>,
+  pub on_tts_seek: EventHandler<f32>,
+  pub on_open_voice_manager: EventHandler<()>,
 }
 
 #[component]
@@ -34,6 +43,26 @@ pub fn Header(props: HeaderProps) -> Element {
         span { "NiftyReader" }
       }
       div { class: "flex items-center gap-4",
+        if current_story.read().is_some() {
+          // TTS Controls
+          crate::components::TTSControls {
+            is_playing: props.tts_is_playing,
+            playback_speed: props.tts_playback_speed,
+            on_play: move |_| props.on_tts_play.call(()),
+            on_pause: move |_| props.on_tts_pause.call(()),
+            on_stop: move |_| props.on_tts_stop.call(()),
+            on_speed_change: move |speed| props.on_tts_speed_change.call(speed),
+            on_seek: move |position| props.on_tts_seek.call(position),
+          }
+
+          // Voice Manager Button
+          button {
+            class: "p-2 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700/30 transition-all text-lg shadow-inner",
+            onclick: move |_| props.on_open_voice_manager.call(()),
+            title: "Voice Manager",
+            "🎤"
+          }
+        }
         if current_story.read().is_some() {
           div { class: "flex items-center bg-slate-800/50 rounded-lg p-1 border border-slate-700/30",
             button {
