@@ -1,0 +1,938 @@
+- generic [ref=e2]:
+  - region
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e9]:
+        - button "Toggle navigation" [ref=e11] [cursor=pointer]
+        - link "Homepage" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - link "Sign in" [ref=e21] [cursor=pointer]:
+            - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fkyutai-labs%2Fpocket-tts
+          - button "Appearance settings" [ref=e24] [cursor=pointer]:
+            - img
+  - main [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - link "kyutai-labs" [ref=e36] [cursor=pointer]:
+            - /url: /kyutai-labs
+          - generic [ref=e37]: /
+          - strong [ref=e38]:
+            - link "pocket-tts" [ref=e39] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts
+          - generic [ref=e40]: Public
+        - generic [ref=e41]:
+          - list:
+            - listitem [ref=e42]:
+              - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkyutai-labs%2Fpocket-tts
+                - img [ref=e44]
+                - text: Notifications
+            - listitem [ref=e46]:
+              - link "Fork 449" [ref=e47] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkyutai-labs%2Fpocket-tts
+                - img [ref=e48]
+                - text: Fork
+                - generic "449" [ref=e50]
+            - listitem [ref=e51]:
+              - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkyutai-labs%2Fpocket-tts
+                - img [ref=e54]
+                - text: Star
+                - generic "4045 users starred this repository" [ref=e56]: 4k
+      - navigation "Repository" [ref=e57]:
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Code" [ref=e60] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts
+              - img [ref=e61]
+              - generic [ref=e63]: Code
+          - listitem [ref=e64]:
+            - link "Issues 32" [ref=e65] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/issues
+              - img [ref=e66]
+              - generic [ref=e69]: Issues
+              - generic "32" [ref=e70]
+          - listitem [ref=e71]:
+            - link "Pull requests 2" [ref=e72] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/pulls
+              - img [ref=e73]
+              - generic [ref=e75]: Pull requests
+              - generic "2" [ref=e76]
+          - listitem [ref=e77]:
+            - link "Actions" [ref=e78] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/actions
+              - img [ref=e79]
+              - generic [ref=e81]: Actions
+          - listitem [ref=e82]:
+            - link "Projects" [ref=e83] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/projects
+              - img [ref=e84]
+              - generic [ref=e86]: Projects
+          - listitem [ref=e87]:
+            - link "Security and quality" [ref=e88] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/security
+              - img [ref=e89]
+              - generic [ref=e91]: Security and quality
+          - listitem [ref=e92]:
+            - link "Insights" [ref=e93] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/pulse
+              - img [ref=e94]
+              - generic [ref=e96]: Insights
+    - generic [ref=e109]:
+      - heading "kyutai-labs/pocket-tts" [level=1] [ref=e111]
+      - generic [ref=e112]:
+        - generic [ref=e115]:
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - button "main branch" [ref=e119] [cursor=pointer]:
+                - generic [ref=e120]:
+                  - generic [ref=e122]:
+                    - img [ref=e124]
+                    - generic [ref=e127]: main
+                  - generic:
+                    - img
+              - generic [ref=e128]:
+                - link "Go to Branches page" [ref=e129] [cursor=pointer]:
+                  - /url: /kyutai-labs/pocket-tts/branches
+                  - img [ref=e130]
+                - link "Go to Tags page" [ref=e132] [cursor=pointer]:
+                  - /url: /kyutai-labs/pocket-tts/tags
+                  - img [ref=e133]
+            - generic [ref=e135]:
+              - button "Go to file" [ref=e138] [cursor=pointer]:
+                - generic [ref=e140]: Go to file
+              - button "Code" [ref=e141] [cursor=pointer]:
+                - generic [ref=e142]:
+                  - generic:
+                    - img
+                  - generic [ref=e143]: Code
+                  - generic:
+                    - img
+          - generic [ref=e144]:
+            - generic [ref=e145]:
+              - heading "Folders and files" [level=2] [ref=e146]
+              - table "Folders and files" [ref=e147]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e148]:
+                  - row "Latest commit History View commit history for this file." [ref=e149]:
+                    - cell "Latest commit History View commit history for this file." [ref=e150]:
+                      - generic [ref=e151]:
+                        - heading "Latest commit" [level=2] [ref=e152]
+                        - generic [ref=e155]:
+                          - heading "History" [level=2] [ref=e156]
+                          - link "View commit history for this file." [ref=e158] [cursor=pointer]:
+                            - /url: /kyutai-labs/pocket-tts/commits/main/
+                            - generic [ref=e159]:
+                              - generic:
+                                - img
+                  - row ".github/workflows, (Directory)" [ref=e160]:
+                    - cell ".github/workflows, (Directory)" [ref=e161]:
+                      - generic [ref=e162]:
+                        - img [ref=e163]
+                        - link ".github/workflows, (Directory)" [ref=e168] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/tree/main/.github/workflows
+                          - text: .github/workflows
+                    - cell [ref=e169]
+                    - cell [ref=e171]
+                  - row "docs, (Directory)" [ref=e174]:
+                    - cell "docs, (Directory)" [ref=e175]:
+                      - generic [ref=e176]:
+                        - img [ref=e177]
+                        - link "docs, (Directory)" [ref=e182] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/tree/main/docs
+                          - text: docs
+                    - cell [ref=e183]
+                    - cell [ref=e185]
+                  - row "pocket_tts, (Directory)" [ref=e188]:
+                    - cell "pocket_tts, (Directory)" [ref=e189]:
+                      - generic [ref=e190]:
+                        - img [ref=e191]
+                        - link "pocket_tts, (Directory)" [ref=e196] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/tree/main/pocket_tts
+                          - text: pocket_tts
+                    - cell [ref=e197]
+                    - cell [ref=e199]
+                  - row "scripts, (Directory)" [ref=e202]:
+                    - cell "scripts, (Directory)" [ref=e203]:
+                      - generic [ref=e204]:
+                        - img [ref=e205]
+                        - link "scripts, (Directory)" [ref=e210] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/tree/main/scripts
+                          - text: scripts
+                    - cell [ref=e211]
+                    - cell [ref=e213]
+                  - row "tests, (Directory)" [ref=e216]:
+                    - cell "tests, (Directory)" [ref=e217]:
+                      - generic [ref=e218]:
+                        - img [ref=e219]
+                        - link "tests, (Directory)" [ref=e224] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/tree/main/tests
+                          - text: tests
+                    - cell [ref=e225]
+                    - cell [ref=e227]
+                  - row ".dockerignore, (File)" [ref=e230]:
+                    - cell ".dockerignore, (File)" [ref=e231]:
+                      - generic [ref=e232]:
+                        - img [ref=e233]
+                        - link ".dockerignore, (File)" [ref=e238] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/.dockerignore
+                          - text: .dockerignore
+                    - cell [ref=e239]
+                    - cell [ref=e241]
+                  - row ".gitignore, (File)" [ref=e244]:
+                    - cell ".gitignore, (File)" [ref=e245]:
+                      - generic [ref=e246]:
+                        - img [ref=e247]
+                        - link ".gitignore, (File)" [ref=e252] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/.gitignore
+                          - text: .gitignore
+                    - cell [ref=e253]
+                    - cell [ref=e255]
+                  - row ".pre-commit-config.yaml, (File)" [ref=e258]:
+                    - cell ".pre-commit-config.yaml, (File)" [ref=e259]:
+                      - generic [ref=e260]:
+                        - img [ref=e261]
+                        - link ".pre-commit-config.yaml, (File)" [ref=e266] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/.pre-commit-config.yaml
+                          - text: .pre-commit-config.yaml
+                    - cell [ref=e267]
+                    - cell [ref=e269]
+                  - row ".python-version, (File)" [ref=e272]:
+                    - cell ".python-version, (File)" [ref=e273]:
+                      - generic [ref=e274]:
+                        - img [ref=e275]
+                        - link ".python-version, (File)" [ref=e280] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/.python-version
+                          - text: .python-version
+                    - cell [ref=e281]
+                    - cell [ref=e283]
+                  - row "AGENTS.md, (File)" [ref=e286]:
+                    - cell "AGENTS.md, (File)" [ref=e287]:
+                      - generic [ref=e288]:
+                        - img [ref=e289]
+                        - link "AGENTS.md, (File)" [ref=e294] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/AGENTS.md
+                          - text: AGENTS.md
+                    - cell [ref=e295]
+                    - cell [ref=e297]
+                  - row "CONTRIBUTING.md, (File)" [ref=e300]:
+                    - cell "CONTRIBUTING.md, (File)" [ref=e301]:
+                      - generic [ref=e302]:
+                        - img [ref=e303]
+                        - link "CONTRIBUTING.md, (File)" [ref=e308] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/CONTRIBUTING.md
+                          - text: CONTRIBUTING.md
+                    - cell [ref=e309]
+                    - cell [ref=e311]
+                  - row "Dockerfile, (File)" [ref=e314]:
+                    - cell "Dockerfile, (File)" [ref=e315]:
+                      - generic [ref=e316]:
+                        - img [ref=e317]
+                        - link "Dockerfile, (File)" [ref=e322] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/Dockerfile
+                          - text: Dockerfile
+                    - cell [ref=e323]
+                    - cell [ref=e325]
+                  - row "LICENSE, (File)" [ref=e328]:
+                    - cell "LICENSE, (File)" [ref=e329]:
+                      - generic [ref=e330]:
+                        - img [ref=e331]
+                        - link "LICENSE, (File)" [ref=e336] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/LICENSE
+                          - text: LICENSE
+                    - cell [ref=e337]
+                    - cell [ref=e339]
+                  - row "README.md, (File)" [ref=e342]:
+                    - cell "README.md, (File)" [ref=e343]:
+                      - generic [ref=e344]:
+                        - img [ref=e345]
+                        - link "README.md, (File)" [ref=e350] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/README.md
+                          - text: README.md
+                    - cell [ref=e351]
+                    - cell [ref=e353]
+                  - row "deploy.sh, (File)" [ref=e356]:
+                    - cell "deploy.sh, (File)" [ref=e357]:
+                      - generic [ref=e358]:
+                        - img [ref=e359]
+                        - link "deploy.sh, (File)" [ref=e364] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/deploy.sh
+                          - text: deploy.sh
+                    - cell [ref=e365]
+                    - cell [ref=e367]
+                  - row "docker-bake.hcl, (File)" [ref=e370]:
+                    - cell "docker-bake.hcl, (File)" [ref=e371]:
+                      - generic [ref=e372]:
+                        - img [ref=e373]
+                        - link "docker-bake.hcl, (File)" [ref=e378] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/docker-bake.hcl
+                          - text: docker-bake.hcl
+                    - cell [ref=e379]
+                    - cell [ref=e381]
+                  - row "docker-compose.yaml, (File)" [ref=e384]:
+                    - cell "docker-compose.yaml, (File)" [ref=e385]:
+                      - generic [ref=e386]:
+                        - img [ref=e387]
+                        - link "docker-compose.yaml, (File)" [ref=e392] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/docker-compose.yaml
+                          - text: docker-compose.yaml
+                    - cell [ref=e393]
+                    - cell [ref=e395]
+                  - row "mkdocs.yml, (File)" [ref=e398]:
+                    - cell "mkdocs.yml, (File)" [ref=e399]:
+                      - generic [ref=e400]:
+                        - img [ref=e401]
+                        - link "mkdocs.yml, (File)" [ref=e406] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/mkdocs.yml
+                          - text: mkdocs.yml
+                    - cell [ref=e407]
+                    - cell [ref=e409]
+                  - row "pyproject.toml, (File)" [ref=e412]:
+                    - cell "pyproject.toml, (File)" [ref=e413]:
+                      - generic [ref=e414]:
+                        - img [ref=e415]
+                        - link "pyproject.toml, (File)" [ref=e420] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/pyproject.toml
+                          - text: pyproject.toml
+                    - cell [ref=e421]
+                    - cell [ref=e423]
+                  - row "swarm-config.yaml, (File)" [ref=e426]:
+                    - cell "swarm-config.yaml, (File)" [ref=e427]:
+                      - generic [ref=e428]:
+                        - img [ref=e429]
+                        - link "swarm-config.yaml, (File)" [ref=e434] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/swarm-config.yaml
+                          - text: swarm-config.yaml
+                    - cell [ref=e435]
+                    - cell [ref=e437]
+                  - row "uv.lock, (File)" [ref=e440]:
+                    - cell "uv.lock, (File)" [ref=e441]:
+                      - generic [ref=e442]:
+                        - img [ref=e443]
+                        - link "uv.lock, (File)" [ref=e448] [cursor=pointer]:
+                          - /url: /kyutai-labs/pocket-tts/blob/main/uv.lock
+                          - text: uv.lock
+                    - cell [ref=e449]
+                    - cell [ref=e451]
+            - generic [ref=e455]:
+              - generic [ref=e456]:
+                - heading "Repository files navigation" [level=2] [ref=e457]
+                - navigation "Repository files" [ref=e458]:
+                  - list [ref=e459]:
+                    - listitem [ref=e460]:
+                      - link "README" [ref=e461] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e463]
+                        - generic [ref=e465]: README
+                    - listitem [ref=e466]:
+                      - link "Contributing" [ref=e467] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e469]
+                        - generic [ref=e471]: Contributing
+                    - listitem [ref=e472]:
+                      - link "MIT license" [ref=e473] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e475]
+                        - generic [ref=e477]: MIT license
+                - button "Outline" [ref=e478] [cursor=pointer]:
+                  - img [ref=e479]
+              - article [ref=e482]:
+                - generic [ref=e483]:
+                  - heading "Pocket TTS" [level=1] [ref=e484]
+                  - 'link "Permalink: Pocket TTS" [ref=e485] [cursor=pointer]':
+                    - /url: "#pocket-tts"
+                    - img [ref=e486]
+                - link "pocket-tts-logo-v2-transparent" [ref=e488] [cursor=pointer]:
+                  - /url: https://private-user-images.githubusercontent.com/8401624/536331102-637b5ed6-831f-4023-9b4c-741be21ab238.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwMDIwMzEsIm5iZiI6MTc3NzAwMTczMSwicGF0aCI6Ii84NDAxNjI0LzUzNjMzMTEwMi02MzdiNWVkNi04MzFmLTQwMjMtOWI0Yy03NDFiZTIxYWIyMzgucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA0MjRUMDMzNTMxWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZDZiYWFmNGYzMGQzZTZlYzUzNmYzNzA3Yzk3YjY4NTE2ODA2YjAyZjVlMDQ3YmMwZmFiMmZhYzc1ZGYxNTExMSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.f-xDcQR-RUooA5tpi6rBD2WOWzPX5Scdfgej7ZWNNIM
+                  - img "pocket-tts-logo-v2-transparent" [ref=e489]
+                - paragraph [ref=e490]: A lightweight text-to-speech (TTS) application designed to run efficiently on CPUs. Forget about the hassle of using GPUs and web APIs serving TTS models. With Kyutai's Pocket TTS, generating audio is just a pip install and a function call away.
+                - paragraph [ref=e491]: Supports Python 3.10, 3.11, 3.12, 3.13 and 3.14. Requires PyTorch 2.5+. Does not require the gpu version of PyTorch.
+                - paragraph [ref=e492]:
+                  - link "🔊 Demo" [ref=e493] [cursor=pointer]:
+                    - /url: https://kyutai.org/pocket-tts
+                  - text: "|"
+                  - link "🐱‍💻GitHub Repository" [ref=e494] [cursor=pointer]:
+                    - /url: https://github.com/kyutai-labs/pocket-tts
+                  - text: "|"
+                  - link "🤗 Hugging Face Model Card" [ref=e495] [cursor=pointer]:
+                    - /url: https://huggingface.co/kyutai/pocket-tts
+                  - text: "|"
+                  - link "⚙️ Tech report" [ref=e496] [cursor=pointer]:
+                    - /url: https://kyutai.org/blog/2026-01-13-pocket-tts
+                  - text: "|"
+                  - link "📄 Paper" [ref=e497] [cursor=pointer]:
+                    - /url: https://arxiv.org/abs/2509.06926
+                  - text: "|"
+                  - link "📚 Documentation" [ref=e498] [cursor=pointer]:
+                    - /url: https://kyutai-labs.github.io/pocket-tts/
+                - generic [ref=e499]:
+                  - heading "Main takeaways" [level=2] [ref=e500]
+                  - 'link "Permalink: Main takeaways" [ref=e501] [cursor=pointer]':
+                    - /url: "#main-takeaways"
+                    - img [ref=e502]
+                - list [ref=e504]:
+                  - listitem [ref=e505]: Runs on CPU
+                  - listitem [ref=e506]: Small model size, 100M parameters
+                  - listitem [ref=e507]: Audio streaming
+                  - listitem [ref=e508]: Low latency, ~200ms to get the first audio chunk
+                  - listitem [ref=e509]: Faster than real-time, ~6x real-time on a CPU of MacBook Air M4
+                  - listitem [ref=e510]: Uses only 2 CPU cores
+                  - listitem [ref=e511]: Python API and CLI
+                  - listitem [ref=e512]: Voice cloning
+                  - listitem [ref=e513]: "Multi-language support: english, french, german, portuguese, italian, spanish"
+                  - listitem [ref=e514]: Can handle infinitely long text inputs
+                  - listitem [ref=e515]:
+                    - link "Can run on client-side in the browser" [ref=e516] [cursor=pointer]:
+                      - /url: "#in-browser-implementations"
+                - paragraph [ref=e517]: Additional languages may be added in the future.
+                - generic [ref=e518]:
+                  - heading "Trying it from the website, without installing anything" [level=2] [ref=e519]
+                  - 'link "Permalink: Trying it from the website, without installing anything" [ref=e520] [cursor=pointer]':
+                    - /url: "#trying-it-from-the-website-without-installing-anything"
+                    - img [ref=e521]
+                - paragraph [ref=e523]:
+                  - text: Navigate to the
+                  - link "Kyutai website" [ref=e524] [cursor=pointer]:
+                    - /url: https://kyutai.org/pocket-tts
+                  - text: to try it out directly in your browser. You can input text, select different voices, and generate speech without any installation.
+                - generic [ref=e525]:
+                  - heading "Trying it with the CLI" [level=2] [ref=e526]
+                  - 'link "Permalink: Trying it with the CLI" [ref=e527] [cursor=pointer]':
+                    - /url: "#trying-it-with-the-cli"
+                    - img [ref=e528]
+                - generic [ref=e530]:
+                  - heading "The generate command" [level=3] [ref=e531]:
+                    - text: The
+                    - code [ref=e532]: generate
+                    - text: command
+                  - 'link "Permalink: The generate command" [ref=e533] [cursor=pointer]':
+                    - /url: "#the-generate-command"
+                    - img [ref=e534]
+                - paragraph [ref=e536]:
+                  - text: You can use pocket-tts directly from the command line. We recommend using
+                  - code [ref=e537]: uv
+                  - text: as it installs any dependencies on the fly in an isolated environment (uv installation instructions
+                  - link "here" [ref=e538] [cursor=pointer]:
+                    - /url: https://docs.astral.sh/uv/getting-started/installation/#standalone-installer
+                  - text: ). You can also use
+                  - code [ref=e539]: pip install pocket-tts
+                  - text: to install it manually.
+                - paragraph [ref=e540]:
+                  - text: This will generate a wav file
+                  - code [ref=e541]: ./tts_output.wav
+                  - text: saying the default text with the default voice, and display some speed statistics.
+                - generic [ref=e542]:
+                  - generic [ref=e543]:
+                    - text: uvx pocket-tts generate
+                    - generic [ref=e544]: "# or if you installed it manually with pip:"
+                    - text: pocket-tts generate
+                  - button "Copy" [ref=e546] [cursor=pointer]:
+                    - img [ref=e547]
+                - paragraph [ref=e550]:
+                  - text: Modify the voice with
+                  - code [ref=e551]: "--voice"
+                  - text: and the text with
+                  - code [ref=e552]: "--text"
+                  - text: . We provide a small catalog of voices. Choose a pretrained language model with
+                  - code [ref=e553]: "--language"
+                  - text: when running
+                  - code [ref=e554]: generate
+                  - text: ","
+                  - code [ref=e555]: export-voice
+                  - text: ", or"
+                  - code [ref=e556]: serve
+                  - text: "(default:"
+                  - code [ref=e557]: english
+                  - text: ). The
+                  - code [ref=e558]: "--config"
+                  - text: option accepts only a local YAML path for custom weights.
+                - paragraph [ref=e559]:
+                  - text: You can take a look at
+                  - link "this page" [ref=e560] [cursor=pointer]:
+                    - /url: https://huggingface.co/kyutai/tts-voices
+                  - text: which details the licenses for each voice.
+                - list [ref=e561]:
+                  - listitem [ref=e562]:
+                    - link "alba" [ref=e563] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/alba-mackenna/casual.wav
+                  - listitem [ref=e564]:
+                    - link "anna" [ref=e565] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p228_023_enhanced.wav
+                  - listitem [ref=e566]:
+                    - link "azelma" [ref=e567] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p303_023_enhanced.wav
+                  - listitem [ref=e568]:
+                    - link "bill_boerst" [ref=e569] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-zero/bill_boerst.wav
+                  - listitem [ref=e570]:
+                    - link "caro_davy" [ref=e571] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-zero/caro_davy.wav
+                  - listitem [ref=e572]:
+                    - link "charles" [ref=e573] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p254_023_enhanced.wav
+                  - listitem [ref=e574]:
+                    - link "cosette" [ref=e575] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/expresso/ex04-ex02_confused_001_channel1_499s.wav
+                  - listitem [ref=e576]:
+                    - link "eponine" [ref=e577] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p262_023_enhanced.wav
+                  - listitem [ref=e578]:
+                    - link "eve" [ref=e579] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p361_023_enhanced.wav
+                  - listitem [ref=e580]:
+                    - link "fantine" [ref=e581] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p244_023_enhanced.wav
+                  - listitem [ref=e582]:
+                    - link "george" [ref=e583] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p315_023_enhanced.wav
+                  - listitem [ref=e584]:
+                    - link "jane" [ref=e585] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p339_023_enhanced.wav
+                  - listitem [ref=e586]:
+                    - link "jean" [ref=e587] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/ears/p010/freeform_speech_01_enhanced.wav
+                  - listitem [ref=e588]:
+                    - link "javert" [ref=e589] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-donations/Butter.wav
+                  - listitem [ref=e590]:
+                    - link "marius" [ref=e591] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-donations/Selfie.wav
+                  - listitem [ref=e592]:
+                    - link "mary" [ref=e593] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p333_023_enhanced.wav
+                  - listitem [ref=e594]:
+                    - link "michael" [ref=e595] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p360_023_enhanced.wav
+                  - listitem [ref=e596]:
+                    - link "paul" [ref=e597] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p259_023_enhanced.wav
+                  - listitem [ref=e598]:
+                    - link "peter_yearsley" [ref=e599] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-zero/peter_yearsley.wav
+                  - listitem [ref=e600]:
+                    - link "stuart_bell" [ref=e601] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/voice-zero/stuart_bell.wav
+                  - listitem [ref=e602]:
+                    - link "vera" [ref=e603] [cursor=pointer]:
+                      - /url: https://huggingface.co/kyutai/tts-voices/blob/main/vctk/p229_023_enhanced.wav
+                - paragraph [ref=e604]:
+                  - text: The
+                  - code [ref=e605]: "--voice"
+                  - text: argument can also take a plain wav file as input for voice cloning. You can use your own or check out our
+                  - link "voice repository" [ref=e606] [cursor=pointer]:
+                    - /url: https://huggingface.co/kyutai/tts-voices
+                  - text: . We recommend
+                  - link "cleaning the sample" [ref=e607] [cursor=pointer]:
+                    - /url: https://podcast.adobe.com/en/enhance
+                  - text: before using it with Pocket TTS, because the audio quality of the sample is also reproduced.
+                - paragraph [ref=e608]:
+                  - text: Feel free to check out the
+                  - link "generate documentation" [ref=e609] [cursor=pointer]:
+                    - /url: https://kyutai-labs.github.io/pocket-tts/CLI%20Commands/generate/
+                  - text: for more details and examples. For trying multiple voices and prompts quickly, prefer using the
+                  - code [ref=e610]: serve
+                  - text: command.
+                - generic [ref=e611]:
+                  - heading "The serve command" [level=3] [ref=e612]:
+                    - text: The
+                    - code [ref=e613]: serve
+                    - text: command
+                  - 'link "Permalink: The serve command" [ref=e614] [cursor=pointer]':
+                    - /url: "#the-serve-command"
+                    - img [ref=e615]
+                - paragraph [ref=e617]: You can also run a local server to generate audio via HTTP requests.
+                - generic [ref=e618]:
+                  - generic [ref=e619]:
+                    - text: uvx pocket-tts serve
+                    - generic [ref=e620]: "# or if you installed it manually with pip:"
+                    - text: pocket-tts serve
+                  - button "Copy" [ref=e622] [cursor=pointer]:
+                    - img [ref=e623]
+                - paragraph [ref=e626]:
+                  - text: Navigate to
+                  - code [ref=e627]: http://localhost:8000
+                  - text: to try the web interface, it's faster than the command line as the model is kept in memory between requests.
+                - paragraph [ref=e628]:
+                  - text: You can check out the
+                  - link "serve documentation" [ref=e629] [cursor=pointer]:
+                    - /url: https://kyutai-labs.github.io/pocket-tts/CLI%20Commands/serve/
+                  - text: for more details and examples.
+                - generic [ref=e630]:
+                  - heading "The export-voice command" [level=3] [ref=e631]:
+                    - text: The
+                    - code [ref=e632]: export-voice
+                    - text: command
+                  - 'link "Permalink: The export-voice command" [ref=e633] [cursor=pointer]':
+                    - /url: "#the-export-voice-command"
+                    - img [ref=e634]
+                - paragraph [ref=e636]:
+                  - text: Processing an audio file (e.g., a .wav or .mp3) for voice cloning is relatively slow, but loading a safetensors file -- a voice embedding converted from an audio file -- is very fast. You can use the
+                  - code [ref=e637]: export-voice
+                  - text: command to do this conversion. See the
+                  - link "export-voice documentation" [ref=e638] [cursor=pointer]:
+                    - /url: https://kyutai-labs.github.io/pocket-tts/CLI%20Commands/export_voice/
+                  - text: for more details and examples.
+                - generic [ref=e639]:
+                  - heading "Using it as a Python library" [level=2] [ref=e640]
+                  - 'link "Permalink: Using it as a Python library" [ref=e641] [cursor=pointer]':
+                    - /url: "#using-it-as-a-python-library"
+                    - img [ref=e642]
+                - paragraph [ref=e644]:
+                  - text: You can try out the Python library on Colab
+                  - link "here" [ref=e645] [cursor=pointer]:
+                    - /url: https://colab.research.google.com/github/kyutai-labs/pocket-tts/blob/main/docs/pocket-tts-example.ipynb
+                  - text: .
+                - paragraph [ref=e646]: Install the package with
+                - generic [ref=e647]:
+                  - generic [ref=e648]:
+                    - text: pip install pocket-tts
+                    - generic [ref=e649]: "# or"
+                    - text: uv add pocket-tts
+                  - button "Copy" [ref=e651] [cursor=pointer]:
+                    - img [ref=e652]
+                - paragraph [ref=e655]: You can use this package as a simple Python library to generate audio from text.
+                - generic [ref=e656]:
+                  - generic [ref=e657]: "from pocket_tts import TTSModel import scipy.io.wavfile tts_model = TTSModel.load_model() voice_state = tts_model.get_state_for_audio_prompt( \"alba\" # One of the pre-made voices, see above # You can also use any voice file you have locally or from Hugging Face: # \"./some_audio.wav\" # or \"hf://kyutai/tts-voices/expresso/ex01-ex02_default_001_channel2_198s.wav\" ) audio = tts_model.generate_audio(voice_state, \"Hello world, this is a test.\") # Audio is a 1D torch tensor containing PCM data. scipy.io.wavfile.write(\"output.wav\", tts_model.sample_rate, audio.numpy())"
+                  - button "Copy" [ref=e659] [cursor=pointer]:
+                    - img [ref=e660]
+                - paragraph [ref=e663]:
+                  - text: You can have multiple voice states around if you have multiple voices you want to use.
+                  - code [ref=e664]: load_model()
+                  - text: and
+                  - code [ref=e665]: get_state_for_audio_prompt()
+                  - text: are relatively slow operations, so we recommend to keep the model and voice states in memory if you can.
+                - paragraph [ref=e666]: "For faster voice loading, you can export voice states to safetensors files:"
+                - generic [ref=e667]:
+                  - generic [ref=e668]: "from pocket_tts import TTSModel, export_model_state model = TTSModel.load_model() # Export a voice state for fast loading later model_state = model.get_state_for_audio_prompt(\"some_voice.wav\") export_model_state(model_state, \"./some_voice.safetensors\") # Later, load it quickly, this is quite fast as it's just reading the kvcache # from disk and doesn't do any others computations. model_state_copy = model.get_state_for_audio_prompt(\"./some_voice.safetensors\") audio = model.generate_audio(model_state_copy, \"Hello world!\")"
+                  - button "Copy" [ref=e670] [cursor=pointer]:
+                    - img [ref=e671]
+                - paragraph [ref=e674]:
+                  - text: You can check out the
+                  - link "Python API documentation" [ref=e675] [cursor=pointer]:
+                    - /url: https://kyutai-labs.github.io/pocket-tts/API%20Reference/python-api/
+                  - text: for more details and examples.
+                - generic [ref=e676]:
+                  - heading "Unsupported features" [level=2] [ref=e677]
+                  - 'link "Permalink: Unsupported features" [ref=e678] [cursor=pointer]':
+                    - /url: "#unsupported-features"
+                    - img [ref=e679]
+                - paragraph [ref=e681]: "At the moment, we do not support (but would love pull requests adding):"
+                - list [ref=e682]:
+                  - listitem [ref=e683]:
+                    - link "Adding silence in the text input to generate pauses." [ref=e684] [cursor=pointer]:
+                      - /url: https://github.com/kyutai-labs/pocket-tts/issues/6
+                  - listitem [ref=e685]:
+                    - link "Quantization to run the computation in int8." [ref=e686] [cursor=pointer]:
+                      - /url: https://github.com/kyutai-labs/pocket-tts/issues/7
+                - paragraph [ref=e687]: We tried running this TTS model on the GPU but did not observe a speedup compared to CPU execution, notably because we use a batch size of 1 and a very small model.
+                - generic [ref=e688]:
+                  - heading "Development and local setup" [level=2] [ref=e689]
+                  - 'link "Permalink: Development and local setup" [ref=e690] [cursor=pointer]':
+                    - /url: "#development-and-local-setup"
+                    - img [ref=e691]
+                - paragraph [ref=e693]: We accept contributions! Feel free to open issues or pull requests on GitHub.
+                - paragraph [ref=e694]:
+                  - text: You can find development instructions in the
+                  - link "CONTRIBUTING.md" [ref=e695] [cursor=pointer]:
+                    - /url: https://github.com/kyutai-labs/pocket-tts/tree/main/CONTRIBUTING.md
+                  - text: file. You'll also find there how to have an editable install of the package for local development.
+                - generic [ref=e696]:
+                  - heading "In-browser implementations" [level=2] [ref=e697]
+                  - 'link "Permalink: In-browser implementations" [ref=e698] [cursor=pointer]':
+                    - /url: "#in-browser-implementations"
+                    - img [ref=e699]
+                - paragraph [ref=e701]: "Pocket TTS is small enough to run directly in your browser in WebAssembly/JavaScript. We don't have official support for this yet, but you can try out one of these community implementations:"
+                - list [ref=e702]:
+                  - listitem [ref=e703]:
+                    - link "wasm-pocket-tts" [ref=e704] [cursor=pointer]:
+                      - /url: https://github.com/LaurentMazare/xn/tree/main/wasm-pocket-tts
+                    - text: "by @LaurentMazare: Rust port of pocket TTS with XN. Demo"
+                    - link "here" [ref=e705] [cursor=pointer]:
+                      - /url: https://laurentmazare.github.io/pocket-tts/
+                  - listitem [ref=e706]:
+                    - link "pocket-tts-onnx-export" [ref=e707] [cursor=pointer]:
+                      - /url: https://github.com/KevinAHM/pocket-tts-onnx-export
+                    - text: "by @KevinAHM: Model exported to .onnx and run using"
+                    - link "ONNX Runtime Web" [ref=e708] [cursor=pointer]:
+                      - /url: https://onnxruntime.ai/docs/tutorials/web/
+                    - text: . Demo
+                    - link "here" [ref=e709] [cursor=pointer]:
+                      - /url: https://huggingface.co/spaces/KevinAHM/pocket-tts-web
+                  - listitem [ref=e710]:
+                    - link "pocket-tts" [ref=e711] [cursor=pointer]:
+                      - /url: https://github.com/babybirdprd/pocket-tts
+                    - text: "by @babybirdprd: Candle version (Rust) with WebAssembly and PyO3 bindings, meaning it can run on the web too."
+                  - listitem [ref=e712]:
+                    - link "jax-js" [ref=e713] [cursor=pointer]:
+                      - /url: https://github.com/ekzhang/jax-js/tree/main/website/src/routes/tts
+                    - text: "by @ekzhang: Using jax-js, a ML library for the web. Demo"
+                    - link "here" [ref=e714] [cursor=pointer]:
+                      - /url: https://jax-js.com/tts
+                - generic [ref=e715]:
+                  - heading "Alterative implementations" [level=2] [ref=e716]
+                  - 'link "Permalink: Alterative implementations" [ref=e717] [cursor=pointer]':
+                    - /url: "#alterative-implementations"
+                    - img [ref=e718]
+                - list [ref=e720]:
+                  - listitem [ref=e721]:
+                    - link "pocket-tts-mlx" [ref=e722] [cursor=pointer]:
+                      - /url: https://github.com/jishnuvenugopal/pocket-tts-mlx
+                    - text: by @jishnuvenugopal - MLX backend optimized for Apple Silicon
+                  - listitem [ref=e723]:
+                    - link "pocket-tts-xn" [ref=e724] [cursor=pointer]:
+                      - /url: https://github.com/LaurentMazare/xn/tree/main/pocket-tts
+                    - text: by @LaurentMazare - A Rust port of Pocket TTS implemented with XN.
+                  - listitem [ref=e725]:
+                    - link "pocket-tts-candle" [ref=e726] [cursor=pointer]:
+                      - /url: https://github.com/babybirdprd/pocket-tts
+                    - text: by @babybirdprd - Candle version (Rust) with WebAssembly and PyO3 bindings.
+                  - listitem [ref=e727]:
+                    - link "PocketTTS.cpp" [ref=e728] [cursor=pointer]:
+                      - /url: https://github.com/VolgaGerm/PocketTTS.cpp
+                    - text: by @VolgaGerm - Single-file C++ runtime using ONNX Runtime, with CLI, HTTP server, and FFI C API.
+                  - listitem [ref=e729]:
+                    - link "sherpa-onnx" [ref=e730] [cursor=pointer]:
+                      - /url: https://github.com/k2-fsa/sherpa-onnx
+                    - text: by @csukuangfj - Run PocketTTS on
+                    - strong [ref=e731]: Windows, macOS, Linux
+                    - text: ", and embedded boards (Raspberry Pi, Jetson, RK3588, etc.) with bindings for 12 programming languages:"
+                    - strong [ref=e732]: C++, C, Python, JavaScript, Java, C#, Kotlin, Swift, Go, Dart, Rust, Pascal
+                    - text: ", plus"
+                    - link "WebAssembly" [ref=e733] [cursor=pointer]:
+                      - /url: https://huggingface.co/spaces/k2-fsa/web-assembly-en-tts-pocket
+                    - text: .
+                  - listitem [ref=e734]:
+                    - link "pocket-tts-csharp" [ref=e735] [cursor=pointer]:
+                      - /url: https://github.com/TheAjaykrishnanR/pocket-tts-csharp
+                    - text: by @TheAjaykrishnanR - A C# port of Pocket TTS implemented using
+                    - link "TorchSharp" [ref=e736] [cursor=pointer]:
+                      - /url: https://github.com/dotnet/TorchSharp
+                    - text: and
+                    - link "TorchSharp.PyBridge" [ref=e737] [cursor=pointer]:
+                      - /url: https://github.com/shaltielshmid/TorchSharp.PyBridge
+                    - text: for ease of use as a library in .NET projects.
+                - generic [ref=e738]:
+                  - heading "Projects using Pocket TTS" [level=2] [ref=e739]
+                  - 'link "Permalink: Projects using Pocket TTS" [ref=e740] [cursor=pointer]':
+                    - /url: "#projects-using-pocket-tts"
+                    - img [ref=e741]
+                - list [ref=e743]:
+                  - listitem [ref=e744]:
+                    - link "pocket-reader" [ref=e745] [cursor=pointer]:
+                      - /url: https://github.com/lukasmwerner/pocket-reader
+                    - text: by @lukasmwerner- Browser screen reader
+                  - listitem [ref=e746]:
+                    - link "pocket-tts-wyoming" [ref=e747] [cursor=pointer]:
+                      - /url: https://github.com/ikidd/pocket-tts-wyoming
+                    - text: by @ikidd - Docker container for pocket-tts using Wyoming protocol, ready for Home Assistant Voice use.
+                  - listitem [ref=e748]:
+                    - link "Sonorus" [ref=e749] [cursor=pointer]:
+                      - /url: https://www.nexusmods.com/hogwartslegacy/mods/2409
+                    - text: by @KevinAHM - Talk to any named character in Hogwarts Legacy with their original voice.
+                  - listitem [ref=e750]:
+                    - link "Mac pocket-tts" [ref=e751] [cursor=pointer]:
+                      - /url: https://github.com/slaughters85j/pocket-tts
+                    - text: by @slaughters85j - Mac Desktop App + macOS Quick Action
+                  - listitem [ref=e752]:
+                    - link "pocket-tts-openai_streaming_server" [ref=e753] [cursor=pointer]:
+                      - /url: https://github.com/teddybear082/pocket-tts-openai_streaming_server
+                    - text: by @teddybear082 - OpenAI-compatible streaming server, dockerized and with an
+                    - code [ref=e754]: .exe
+                    - text: release
+                  - listitem [ref=e755]:
+                    - link "pocket-tts-unity" [ref=e756] [cursor=pointer]:
+                      - /url: https://github.com/lookbe/pocket-tts-unity
+                    - text: by @lookbe - A Unity 6 integration for Pocket-TTS.
+                  - listitem [ref=e757]:
+                    - link "ComfyUI-Pocket-TTS" [ref=e758] [cursor=pointer]:
+                      - /url: https://github.com/ai-joe-git/ComfyUI-Pocket-TTS
+                    - text: by @ai-joe-git Lightweight CPU-based Text-to-Speech for ComfyUI
+                  - listitem [ref=e759]:
+                    - link "pocket-tts-server" [ref=e760] [cursor=pointer]:
+                      - /url: https://github.com/ai-joe-git/pocket-tts-server
+                    - text: by @ai-joe-git A lightweight, real-time voice cloning and chat server with OpenAI-compatible API. Clone any voice with just 20 seconds of audio and chat with AI using that voice instantly.
+                  - listitem [ref=e761]:
+                    - link "discord-tts" [ref=e762] [cursor=pointer]:
+                      - /url: https://github.com/alkmei/discord-tts
+                    - text: by @alkmei - Multivoice Discord text-to-speech bot that uses Pocket TTS.
+                  - listitem [ref=e763]:
+                    - link "cursed-codex" [ref=e764] [cursor=pointer]:
+                      - /url: https://github.com/dooart/cursed-codex
+                    - text: by @dooart - AI coding agent with unhinged live football commentary
+                  - listitem [ref=e765]:
+                    - link "pocket-tts-deno" [ref=e766] [cursor=pointer]:
+                      - /url: https://github.com/ohmstone/pocket-tts-deno
+                    - text: Port of
+                    - link "pocket-tts-server" [ref=e767] [cursor=pointer]:
+                      - /url: https://github.com/ai-joe-git/pocket-tts-server
+                    - text: as a wasm + onnx deno server with voice TTS API.
+                  - listitem [ref=e768]:
+                    - link "FrontPocket" [ref=e769] [cursor=pointer]:
+                      - /url: https://github.com/markd89/FrontPocket
+                    - text: by @markd89 - Front-end for Pocket-TTS to speak text from clipboard, file, CLI (hotkeys) & GUI toolbar. Change playback speed, voice, and move forward/backward between sentences instantaneously.
+                  - listitem [ref=e770]:
+                    - link "openclaw-pockettts" [ref=e771] [cursor=pointer]:
+                      - /url: https://github.com/dodgyrabbit/openclaw-pockettts
+                    - text: by @dodgyrabbit - A Docker container with the Python implementation but exposed as an OpenAI TTS API for easy integration with OpenClaw.
+                  - listitem [ref=e772]:
+                    - link "openclaw-pocketts.cpp" [ref=e773] [cursor=pointer]:
+                      - /url: https://github.com/dodgyrabbit/openclaw-pockettts.cpp
+                    - text: by @dodgyrabbit - A Docker container with the PocketTTS.cpp version, packaged for easy integration with OpenClaw.
+                - generic [ref=e774]:
+                  - heading "Prohibited use" [level=2] [ref=e775]
+                  - 'link "Permalink: Prohibited use" [ref=e776] [cursor=pointer]':
+                    - /url: "#prohibited-use"
+                    - img [ref=e777]
+                - paragraph [ref=e779]: Use of our model must comply with all applicable laws and regulations and must not result in, involve, or facilitate any illegal, harmful, deceptive, fraudulent, or unauthorized activity. Prohibited uses include, without limitation, voice impersonation or cloning without explicit and lawful consent; misinformation, disinformation, or deception (including fake news, fraudulent calls, or presenting generated content as genuine recordings of real people or events); and the generation of unlawful, harmful, libelous, abusive, harassing, discriminatory, hateful, or privacy-invasive content. We disclaim all liability for any non-compliant use.
+                - generic [ref=e780]:
+                  - heading "Authors" [level=2] [ref=e781]
+                  - 'link "Permalink: Authors" [ref=e782] [cursor=pointer]':
+                    - /url: "#authors"
+                    - img [ref=e783]
+                - paragraph [ref=e785]: Manu Orsini*, Simon Rouard*, Gabriel De Marmiesse*, Václav Volhejn, Neil Zeghidour, Alexandre Défossez
+                - paragraph [ref=e786]: "*equal contribution"
+        - generic [ref=e790]:
+          - generic [ref=e793]:
+            - heading "About" [level=2] [ref=e794]
+            - paragraph [ref=e795]: A TTS that fits in your CPU (and pocket)
+            - heading "Resources" [level=3] [ref=e796]
+            - link "Readme" [ref=e798] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e799]
+              - text: Readme
+            - heading "License" [level=3] [ref=e801]
+            - link "MIT license" [ref=e803] [cursor=pointer]:
+              - /url: "#MIT-1-ov-file"
+              - img [ref=e804]
+              - text: MIT license
+            - heading "Contributing" [level=3] [ref=e806]
+            - link "Contributing" [ref=e808] [cursor=pointer]:
+              - /url: "#contributing-ov-file"
+              - img [ref=e809]
+              - text: Contributing
+            - link "Activity" [ref=e812] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/activity
+              - img [ref=e813]
+              - text: Activity
+            - link "Custom properties" [ref=e816] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/custom-properties
+              - img [ref=e817]
+              - text: Custom properties
+            - heading "Stars" [level=3] [ref=e819]
+            - link "4k stars" [ref=e821] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/stargazers
+              - img [ref=e822]
+              - strong [ref=e824]: 4k
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e825]
+            - link "39 watching" [ref=e827] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/watchers
+              - img [ref=e828]
+              - strong [ref=e830]: "39"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e831]
+            - link "449 forks" [ref=e833] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/forks
+              - img [ref=e834]
+              - strong [ref=e836]: "449"
+              - text: forks
+            - link "Report repository" [ref=e838] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Fkyutai-labs%2Fpocket-tts&report=kyutai-labs+%28user%29
+          - generic [ref=e840]:
+            - heading "Releases 7" [level=2] [ref=e841]:
+              - link "Releases 7" [ref=e842] [cursor=pointer]:
+                - /url: /kyutai-labs/pocket-tts/releases
+                - text: Releases
+                - generic "7" [ref=e843]
+            - link "v2.0.0 Latest Apr 21, 20263 days ago" [ref=e844] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/releases/tag/v2.0.0
+              - img [ref=e845]
+              - generic [ref=e847]:
+                - generic [ref=e848]:
+                  - generic [ref=e849]: v2.0.0
+                  - 'generic "Label: Latest" [ref=e850]': Latest
+                - generic [ref=e851]: Apr 21, 20263 days ago
+            - link "+ 6 releases" [ref=e853] [cursor=pointer]:
+              - /url: /kyutai-labs/pocket-tts/releases
+          - generic "Loading latest packages" [ref=e856]:
+            - heading "Packages" [level=2] [ref=e857]:
+              - link "Packages" [ref=e858] [cursor=pointer]:
+                - /url: /orgs/kyutai-labs/packages?repo_name=pocket-tts
+          - generic "Loading contributors" [ref=e870]:
+            - generic:
+              - heading "Contributors" [level=2] [ref=e871]:
+                - link "Contributors" [ref=e872] [cursor=pointer]:
+                  - /url: /kyutai-labs/pocket-tts/graphs/contributors
+              - list [ref=e873]:
+                - listitem [ref=e874]
+                - listitem [ref=e876]
+                - listitem [ref=e878]
+          - generic [ref=e881]:
+            - heading "Languages" [level=2] [ref=e882]
+            - list [ref=e888]:
+              - listitem [ref=e889]:
+                - link "Python 91.6%" [ref=e890] [cursor=pointer]:
+                  - /url: /kyutai-labs/pocket-tts/search?l=python
+                  - img [ref=e891]
+                  - generic [ref=e893]: Python
+                  - generic [ref=e894]: 91.6%
+              - listitem [ref=e895]:
+                - link "HTML 8.0%" [ref=e896] [cursor=pointer]:
+                  - /url: /kyutai-labs/pocket-tts/search?l=html
+                  - img [ref=e897]
+                  - generic [ref=e899]: HTML
+                  - generic [ref=e900]: 8.0%
+              - listitem [ref=e901]:
+                - generic [ref=e902]:
+                  - img [ref=e903]
+                  - generic [ref=e905]: Other
+                  - generic [ref=e906]: 0.4%
+  - contentinfo [ref=e908]:
+    - heading "Footer" [level=2] [ref=e909]
+    - generic [ref=e910]:
+      - generic [ref=e911]:
+        - link "GitHub Homepage" [ref=e912] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e913]
+        - generic [ref=e915]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e916]:
+        - heading "Footer navigation" [level=3] [ref=e917]
+        - list "Footer navigation" [ref=e918]:
+          - listitem [ref=e919]:
+            - link "Terms" [ref=e920] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e921]:
+            - link "Privacy" [ref=e922] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e923]:
+            - link "Security" [ref=e924] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e925]:
+            - link "Status" [ref=e926] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e927]:
+            - link "Community" [ref=e928] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e929]:
+            - link "Docs" [ref=e930] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e931]:
+            - link "Contact" [ref=e932] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e933]:
+            - button "Manage cookies" [ref=e935] [cursor=pointer]
+          - listitem [ref=e936]:
+            - button "Do not share my personal information" [ref=e938] [cursor=pointer]

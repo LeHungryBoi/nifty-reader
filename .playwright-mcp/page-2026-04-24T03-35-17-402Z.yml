@@ -1,0 +1,2352 @@
+- generic [ref=e2]:
+  - region
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e9]:
+        - button "Toggle navigation" [ref=e11] [cursor=pointer]
+        - link "Homepage" [ref=e17] [cursor=pointer]:
+          - /url: /
+          - img [ref=e18]
+        - generic [ref=e20]:
+          - link "Sign in" [ref=e21] [cursor=pointer]:
+            - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fk2-fsa%2Fsherpa-onnx
+          - button "Appearance settings" [ref=e24] [cursor=pointer]:
+            - img
+  - main [ref=e28]:
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - link "k2-fsa" [ref=e36] [cursor=pointer]:
+            - /url: /k2-fsa
+          - generic [ref=e37]: /
+          - strong [ref=e38]:
+            - link "sherpa-onnx" [ref=e39] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx
+          - generic [ref=e40]: Public
+        - generic [ref=e41]:
+          - list:
+            - listitem [ref=e42]:
+              - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                - /url: /login?return_to=%2Fk2-fsa%2Fsherpa-onnx
+                - img [ref=e44]
+                - text: Notifications
+            - listitem [ref=e46]:
+              - link "Fork 1.4k" [ref=e47] [cursor=pointer]:
+                - /url: /login?return_to=%2Fk2-fsa%2Fsherpa-onnx
+                - img [ref=e48]
+                - text: Fork
+                - generic "1,351" [ref=e50]: 1.4k
+            - listitem [ref=e51]:
+              - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                - /url: /login?return_to=%2Fk2-fsa%2Fsherpa-onnx
+                - img [ref=e54]
+                - text: Star
+                - generic "11784 users starred this repository" [ref=e56]: 11.8k
+      - navigation "Repository" [ref=e57]:
+        - list [ref=e58]:
+          - listitem [ref=e59]:
+            - link "Code" [ref=e60] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx
+              - img [ref=e61]
+              - generic [ref=e63]: Code
+          - listitem [ref=e64]:
+            - link "Issues 508" [ref=e65] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/issues
+              - img [ref=e66]
+              - generic [ref=e69]: Issues
+              - generic "508" [ref=e70]
+          - listitem [ref=e71]:
+            - link "Pull requests 40" [ref=e72] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/pulls
+              - img [ref=e73]
+              - generic [ref=e75]: Pull requests
+              - generic "40" [ref=e76]
+          - listitem [ref=e77]:
+            - link "Discussions" [ref=e78] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/discussions
+              - img [ref=e79]
+              - generic [ref=e81]: Discussions
+          - listitem [ref=e82]:
+            - link "Actions" [ref=e83] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/actions
+              - img [ref=e84]
+              - generic [ref=e86]: Actions
+          - listitem [ref=e87]:
+            - link "Projects" [ref=e88] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/projects
+              - img [ref=e89]
+              - generic [ref=e91]: Projects
+          - listitem [ref=e92]
+          - listitem [ref=e93]
+        - button "Additional navigation options" [ref=e97] [cursor=pointer]:
+          - img
+    - generic [ref=e110]:
+      - heading "k2-fsa/sherpa-onnx" [level=1] [ref=e112]
+      - generic [ref=e113]:
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - generic [ref=e118]:
+              - button "master branch" [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]:
+                  - generic [ref=e123]:
+                    - img [ref=e125]
+                    - generic [ref=e128]: master
+                  - generic:
+                    - img
+              - generic [ref=e129]:
+                - link "Go to Branches page" [ref=e130] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/branches
+                  - img [ref=e131]
+                - link "Go to Tags page" [ref=e133] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/tags
+                  - img [ref=e134]
+            - generic [ref=e136]:
+              - button "Go to file" [ref=e139] [cursor=pointer]:
+                - generic [ref=e141]: Go to file
+              - button "Code" [ref=e142] [cursor=pointer]:
+                - generic [ref=e143]:
+                  - generic:
+                    - img
+                  - generic [ref=e144]: Code
+                  - generic:
+                    - img
+          - generic [ref=e145]:
+            - generic [ref=e146]:
+              - heading "Folders and files" [level=2] [ref=e147]
+              - table "Folders and files" [ref=e148]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e149]:
+                  - row "Latest commit csukuangfj commits by csukuangfj Add two Piper Chinese TTS models (#3546) Open commit details pending Commit d49e8f4 · Apr 24, 20262 minutes ago History View commit history for this file." [ref=e150]:
+                    - cell "Latest commit csukuangfj commits by csukuangfj Add two Piper Chinese TTS models (#3546) Open commit details pending Commit d49e8f4 · Apr 24, 20262 minutes ago History View commit history for this file." [ref=e151]:
+                      - generic [ref=e152]:
+                        - heading "Latest commit" [level=2] [ref=e153]
+                        - generic [ref=e154]:
+                          - generic [ref=e156]:
+                            - link "csukuangfj" [ref=e157] [cursor=pointer]:
+                              - /url: /csukuangfj
+                              - img "csukuangfj" [ref=e158]
+                            - link "commits by csukuangfj" [ref=e159] [cursor=pointer]:
+                              - /url: /k2-fsa/sherpa-onnx/commits?author=csukuangfj
+                              - text: csukuangfj
+                          - generic [ref=e160]:
+                            - generic [ref=e162]:
+                              - link "Add two Piper Chinese TTS models (" [ref=e163] [cursor=pointer]:
+                                - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                              - link "#3546" [ref=e164] [cursor=pointer]:
+                                - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3546
+                              - link ")" [ref=e165] [cursor=pointer]:
+                                - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                            - button "Open commit details" [ref=e166] [cursor=pointer]:
+                              - img [ref=e167]
+                            - button "pending" [ref=e169] [cursor=pointer]:
+                              - img [ref=e170]
+                        - generic [ref=e172]:
+                          - generic [ref=e174]:
+                            - link "Commit d49e8f4" [ref=e175] [cursor=pointer]:
+                              - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                              - text: d49e8f4
+                            - text: ·
+                            - generic "Apr 24, 2026, 11:32 AM GMT+8" [ref=e176]: Apr 24, 20262 minutes ago
+                          - generic [ref=e177]:
+                            - heading "History" [level=2] [ref=e178]
+                            - link "View commit history for this file." [ref=e180] [cursor=pointer]:
+                              - /url: /k2-fsa/sherpa-onnx/commits/master/
+                              - generic [ref=e181]:
+                                - generic:
+                                  - img
+                  - row ".github, (Directory) Add two Piper Chinese TTS models (#3546) Apr 24, 20262 minutes ago" [ref=e182]:
+                    - cell ".github, (Directory)" [ref=e183]:
+                      - generic [ref=e184]:
+                        - img [ref=e185]
+                        - link ".github, (Directory)" [ref=e190] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/.github
+                          - text: .github
+                    - cell "Add two Piper Chinese TTS models (#3546)" [ref=e191]:
+                      - generic [ref=e193]:
+                        - link "Add two Piper Chinese TTS models (" [ref=e194] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                        - link "#3546" [ref=e195] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3546
+                        - link ")" [ref=e196] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                    - cell "Apr 24, 20262 minutes ago" [ref=e197]:
+                      - generic [ref=e198]: Apr 24, 20262 minutes ago
+                  - row "android, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e199]:
+                    - cell "android, (Directory)" [ref=e200]:
+                      - generic [ref=e201]:
+                        - img [ref=e202]
+                        - link "android, (Directory)" [ref=e207] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/android
+                          - text: android
+                    - cell "Release v1.12.39 (#3521)" [ref=e208]:
+                      - generic [ref=e210]:
+                        - link "Release v1.12.39 (" [ref=e211] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e212] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e213] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e214]:
+                      - generic [ref=e215]: Apr 17, 2026last week
+                  - row "c-api-examples, (Directory) Add C API and CXX API for Cohere transcribe models (#3457) Apr 2, 20263 weeks ago" [ref=e216]:
+                    - cell "c-api-examples, (Directory)" [ref=e217]:
+                      - generic [ref=e218]:
+                        - img [ref=e219]
+                        - link "c-api-examples, (Directory)" [ref=e224] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/c-api-examples
+                          - text: c-api-examples
+                    - cell "Add C API and CXX API for Cohere transcribe models (#3457)" [ref=e225]:
+                      - generic [ref=e227]:
+                        - link "Add C API and CXX API for Cohere transcribe models (" [ref=e228] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6ee89f02429f1bd5a0d44e60974915b7b8664e8f
+                        - link "#3457" [ref=e229] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3457
+                        - link ")" [ref=e230] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6ee89f02429f1bd5a0d44e60974915b7b8664e8f
+                    - cell "Apr 2, 20263 weeks ago" [ref=e231]:
+                      - generic [ref=e232]: Apr 2, 20263 weeks ago
+                  - row "cmake, (Directory) Add script to download all dependencies for offline use (#3506) Apr 13, 20262 weeks ago" [ref=e233]:
+                    - cell "cmake, (Directory)" [ref=e234]:
+                      - generic [ref=e235]:
+                        - img [ref=e236]
+                        - link "cmake, (Directory)" [ref=e241] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/cmake
+                          - text: cmake
+                    - cell "Add script to download all dependencies for offline use (#3506)" [ref=e242]:
+                      - generic [ref=e244]:
+                        - link "Add script to download all dependencies for offline use (" [ref=e245] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/a561f976b06463cf5590beed99370705e91dbd51
+                        - link "#3506" [ref=e246] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3506
+                        - link ")" [ref=e247] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/a561f976b06463cf5590beed99370705e91dbd51
+                    - cell "Apr 13, 20262 weeks ago" [ref=e248]:
+                      - generic [ref=e249]: Apr 13, 20262 weeks ago
+                  - row "cxx-api-examples, (Directory) Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea… Apr 7, 20262 weeks ago" [ref=e250]:
+                    - cell "cxx-api-examples, (Directory)" [ref=e251]:
+                      - generic [ref=e252]:
+                        - img [ref=e253]
+                        - link "cxx-api-examples, (Directory)" [ref=e258] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/cxx-api-examples
+                          - text: cxx-api-examples
+                    - cell "Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea…" [ref=e259]:
+                      - link "Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea…" [ref=e262] [cursor=pointer]:
+                        - /url: /k2-fsa/sherpa-onnx/commit/14fcde5efbd6b9e3ef2c5600b593dcda9c9629d3
+                    - cell "Apr 7, 20262 weeks ago" [ref=e263]:
+                      - generic [ref=e264]: Apr 7, 20262 weeks ago
+                  - row "dart-api-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e265]:
+                    - cell "dart-api-examples, (Directory)" [ref=e266]:
+                      - generic [ref=e267]:
+                        - img [ref=e268]
+                        - link "dart-api-examples, (Directory)" [ref=e273] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/dart-api-examples
+                          - text: dart-api-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e274]:
+                      - generic [ref=e276]:
+                        - link "Release v1.12.39 (" [ref=e277] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e278] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e279] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e280]:
+                      - generic [ref=e281]: Apr 17, 2026last week
+                  - row "dotnet-examples, (Directory) Fix Qwen3ASR hotwords handling (#3477) Apr 7, 20262 weeks ago" [ref=e282]:
+                    - cell "dotnet-examples, (Directory)" [ref=e283]:
+                      - generic [ref=e284]:
+                        - img [ref=e285]
+                        - link "dotnet-examples, (Directory)" [ref=e290] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/dotnet-examples
+                          - text: dotnet-examples
+                    - cell "Fix Qwen3ASR hotwords handling (#3477)" [ref=e291]:
+                      - generic [ref=e293]:
+                        - link "Fix Qwen3ASR hotwords handling (" [ref=e294] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/23185f893056eaf5c13e5c46b5efda276e61d945
+                        - link "#3477" [ref=e295] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3477
+                        - link ")" [ref=e296] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/23185f893056eaf5c13e5c46b5efda276e61d945
+                    - cell "Apr 7, 20262 weeks ago" [ref=e297]:
+                      - generic [ref=e298]: Apr 7, 20262 weeks ago
+                  - row "ffmpeg-examples, (Directory) Fix style issues (#1458) Oct 24, 20242 years ago" [ref=e299]:
+                    - cell "ffmpeg-examples, (Directory)" [ref=e300]:
+                      - generic [ref=e301]:
+                        - img [ref=e302]
+                        - link "ffmpeg-examples, (Directory)" [ref=e307] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/ffmpeg-examples
+                          - text: ffmpeg-examples
+                    - cell "Fix style issues (#1458)" [ref=e308]:
+                      - generic [ref=e310]:
+                        - link "Fix style issues (" [ref=e311] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/b3e05f6dc42d52823d8dd99fe61e52643cb454f0
+                        - link "#1458" [ref=e312] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1458
+                        - link ")" [ref=e313] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/b3e05f6dc42d52823d8dd99fe61e52643cb454f0
+                    - cell "Oct 24, 20242 years ago" [ref=e314]:
+                      - generic [ref=e315]: Oct 24, 20242 years ago
+                  - row "flutter-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e316]:
+                    - cell "flutter-examples, (Directory)" [ref=e317]:
+                      - generic [ref=e318]:
+                        - img [ref=e319]
+                        - link "flutter-examples, (Directory)" [ref=e324] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/flutter-examples
+                          - text: flutter-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e325]:
+                      - generic [ref=e327]:
+                        - link "Release v1.12.39 (" [ref=e328] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e329] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e330] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e331]:
+                      - generic [ref=e332]: Apr 17, 2026last week
+                  - row "flutter, (Directory) Fix publishing dart packages for Android (#3522) Apr 20, 20264 days ago" [ref=e333]:
+                    - cell "flutter, (Directory)" [ref=e334]:
+                      - generic [ref=e335]:
+                        - img [ref=e336]
+                        - link "flutter, (Directory)" [ref=e341] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/flutter
+                          - text: flutter
+                    - cell "Fix publishing dart packages for Android (#3522)" [ref=e342]:
+                      - generic [ref=e344]:
+                        - link "Fix publishing dart packages for Android (" [ref=e345] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7921bb04e9f95ab5a5063fa0ddd2d96e79b53e1c
+                        - link "#3522" [ref=e346] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3522
+                        - link ")" [ref=e347] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7921bb04e9f95ab5a5063fa0ddd2d96e79b53e1c
+                    - cell "Apr 20, 20264 days ago" [ref=e348]:
+                      - generic [ref=e349]: Apr 20, 20264 days ago
+                  - row "go-api-examples, (Directory) Add Go API for Cohere Transcribe (#3466) Apr 3, 20263 weeks ago" [ref=e350]:
+                    - cell "go-api-examples, (Directory)" [ref=e351]:
+                      - generic [ref=e352]:
+                        - img [ref=e353]
+                        - link "go-api-examples, (Directory)" [ref=e358] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/go-api-examples
+                          - text: go-api-examples
+                    - cell "Add Go API for Cohere Transcribe (#3466)" [ref=e359]:
+                      - generic [ref=e361]:
+                        - link "Add Go API for Cohere Transcribe (" [ref=e362] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/3fabf52948492c97811a45de5cfa0282db6408cd
+                        - link "#3466" [ref=e363] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3466
+                        - link ")" [ref=e364] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/3fabf52948492c97811a45de5cfa0282db6408cd
+                    - cell "Apr 3, 20263 weeks ago" [ref=e365]:
+                      - generic [ref=e366]: Apr 3, 20263 weeks ago
+                  - row "harmony-os, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e367]:
+                    - cell "harmony-os, (Directory)" [ref=e368]:
+                      - generic [ref=e369]:
+                        - img [ref=e370]
+                        - link "harmony-os, (Directory)" [ref=e375] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/harmony-os
+                          - text: harmony-os
+                    - cell "Release v1.12.39 (#3521)" [ref=e376]:
+                      - generic [ref=e378]:
+                        - link "Release v1.12.39 (" [ref=e379] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e380] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e381] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e382]:
+                      - generic [ref=e383]: Apr 17, 2026last week
+                  - row "ios-swift, (Directory) fix ios build script (#2645) Oct 8, 20256 months ago" [ref=e384]:
+                    - cell "ios-swift, (Directory)" [ref=e385]:
+                      - generic [ref=e386]:
+                        - img [ref=e387]
+                        - link "ios-swift, (Directory)" [ref=e392] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/ios-swift
+                          - text: ios-swift
+                    - cell "fix ios build script (#2645)" [ref=e393]:
+                      - generic [ref=e395]:
+                        - link "fix ios build script (" [ref=e396] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/8f3d6f2edf3426f2fb3e17c62e97340ab1107a1e
+                        - link "#2645" [ref=e397] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2645
+                        - link ")" [ref=e398] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/8f3d6f2edf3426f2fb3e17c62e97340ab1107a1e
+                    - cell "Oct 8, 20256 months ago" [ref=e399]:
+                      - generic [ref=e400]: Oct 8, 20256 months ago
+                  - row "ios-swiftui, (Directory) Remove cppjieba (#2664) Oct 10, 20256 months ago" [ref=e401]:
+                    - cell "ios-swiftui, (Directory)" [ref=e402]:
+                      - generic [ref=e403]:
+                        - img [ref=e404]
+                        - link "ios-swiftui, (Directory)" [ref=e409] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/ios-swiftui
+                          - text: ios-swiftui
+                    - cell "Remove cppjieba (#2664)" [ref=e410]:
+                      - generic [ref=e412]:
+                        - link "Remove cppjieba (" [ref=e413] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/8568fc4e5d92be1562f1946c2af90d96355ec117
+                        - link "#2664" [ref=e414] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2664
+                        - link ")" [ref=e415] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/8568fc4e5d92be1562f1946c2af90d96355ec117
+                    - cell "Oct 10, 20256 months ago" [ref=e416]:
+                      - generic [ref=e417]: Oct 10, 20256 months ago
+                  - row "java-api-examples, (Directory) Add Java and Kotlin API for Cohere Transcribe (#3461) Apr 3, 20263 weeks ago" [ref=e418]:
+                    - cell "java-api-examples, (Directory)" [ref=e419]:
+                      - generic [ref=e420]:
+                        - img [ref=e421]
+                        - link "java-api-examples, (Directory)" [ref=e426] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/java-api-examples
+                          - text: java-api-examples
+                    - cell "Add Java and Kotlin API for Cohere Transcribe (#3461)" [ref=e427]:
+                      - generic [ref=e429]:
+                        - link "Add Java and Kotlin API for Cohere Transcribe (" [ref=e430] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/99206ad98d83ae849622790d439e246e8040c6be
+                        - link "#3461" [ref=e431] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3461
+                        - link ")" [ref=e432] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/99206ad98d83ae849622790d439e246e8040c6be
+                    - cell "Apr 3, 20263 weeks ago" [ref=e433]:
+                      - generic [ref=e434]: Apr 3, 20263 weeks ago
+                  - row "kotlin-api-examples, (Directory) Add Java and Kotlin API for Cohere Transcribe (#3461) Apr 3, 20263 weeks ago" [ref=e435]:
+                    - cell "kotlin-api-examples, (Directory)" [ref=e436]:
+                      - generic [ref=e437]:
+                        - img [ref=e438]
+                        - link "kotlin-api-examples, (Directory)" [ref=e443] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/kotlin-api-examples
+                          - text: kotlin-api-examples
+                    - cell "Add Java and Kotlin API for Cohere Transcribe (#3461)" [ref=e444]:
+                      - generic [ref=e446]:
+                        - link "Add Java and Kotlin API for Cohere Transcribe (" [ref=e447] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/99206ad98d83ae849622790d439e246e8040c6be
+                        - link "#3461" [ref=e448] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3461
+                        - link ")" [ref=e449] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/99206ad98d83ae849622790d439e246e8040c6be
+                    - cell "Apr 3, 20263 weeks ago" [ref=e450]:
+                      - generic [ref=e451]: Apr 3, 20263 weeks ago
+                  - row "lazarus-examples, (Directory) Fix typos in the project (#3293) Mar 12, 2026last month" [ref=e452]:
+                    - cell "lazarus-examples, (Directory)" [ref=e453]:
+                      - generic [ref=e454]:
+                        - img [ref=e455]
+                        - link "lazarus-examples, (Directory)" [ref=e460] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/lazarus-examples
+                          - text: lazarus-examples
+                    - cell "Fix typos in the project (#3293)" [ref=e461]:
+                      - generic [ref=e463]:
+                        - link "Fix typos in the project (" [ref=e464] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/abaf2860bb12c942b0a7da99f769343d7d43f2a7
+                        - link "#3293" [ref=e465] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3293
+                        - link ")" [ref=e466] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/abaf2860bb12c942b0a7da99f769343d7d43f2a7
+                    - cell "Mar 12, 2026last month" [ref=e467]:
+                      - generic [ref=e468]: Mar 12, 2026last month
+                  - row "mfc-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e469]:
+                    - cell "mfc-examples, (Directory)" [ref=e470]:
+                      - generic [ref=e471]:
+                        - img [ref=e472]
+                        - link "mfc-examples, (Directory)" [ref=e477] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/mfc-examples
+                          - text: mfc-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e478]:
+                      - generic [ref=e480]:
+                        - link "Release v1.12.39 (" [ref=e481] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e482] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e483] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e484]:
+                      - generic [ref=e485]: Apr 17, 2026last week
+                  - row "nodejs-addon-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e486]:
+                    - cell "nodejs-addon-examples, (Directory)" [ref=e487]:
+                      - generic [ref=e488]:
+                        - img [ref=e489]
+                        - link "nodejs-addon-examples, (Directory)" [ref=e494] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/nodejs-addon-examples
+                          - text: nodejs-addon-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e495]:
+                      - generic [ref=e497]:
+                        - link "Release v1.12.39 (" [ref=e498] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e499] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e500] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e501]:
+                      - generic [ref=e502]: Apr 17, 2026last week
+                  - row "nodejs-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e503]:
+                    - cell "nodejs-examples, (Directory)" [ref=e504]:
+                      - generic [ref=e505]:
+                        - img [ref=e506]
+                        - link "nodejs-examples, (Directory)" [ref=e511] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/nodejs-examples
+                          - text: nodejs-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e512]:
+                      - generic [ref=e514]:
+                        - link "Release v1.12.39 (" [ref=e515] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e516] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e517] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e518]:
+                      - generic [ref=e519]: Apr 17, 2026last week
+                  - row "pascal-api-examples, (Directory) Add Pascal API for Cohere Transcribe (#3463) Apr 3, 20263 weeks ago" [ref=e520]:
+                    - cell "pascal-api-examples, (Directory)" [ref=e521]:
+                      - generic [ref=e522]:
+                        - img [ref=e523]
+                        - link "pascal-api-examples, (Directory)" [ref=e528] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/pascal-api-examples
+                          - text: pascal-api-examples
+                    - cell "Add Pascal API for Cohere Transcribe (#3463)" [ref=e529]:
+                      - generic [ref=e531]:
+                        - link "Add Pascal API for Cohere Transcribe (" [ref=e532] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/f1098aa93a2a544da64738833ca362466bcbfb44
+                        - link "#3463" [ref=e533] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3463
+                        - link ")" [ref=e534] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/f1098aa93a2a544da64738833ca362466bcbfb44
+                    - cell "Apr 3, 20263 weeks ago" [ref=e535]:
+                      - generic [ref=e536]: Apr 3, 20263 weeks ago
+                  - row "python-api-examples, (Directory) Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea… Apr 7, 20262 weeks ago" [ref=e537]:
+                    - cell "python-api-examples, (Directory)" [ref=e538]:
+                      - generic [ref=e539]:
+                        - img [ref=e540]
+                        - link "python-api-examples, (Directory)" [ref=e545] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/python-api-examples
+                          - text: python-api-examples
+                    - cell "Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea…" [ref=e546]:
+                      - link "Add per-stream language hint for Qwen3-ASR (and tighten scaffold clea…" [ref=e549] [cursor=pointer]:
+                        - /url: /k2-fsa/sherpa-onnx/commit/14fcde5efbd6b9e3ef2c5600b593dcda9c9629d3
+                    - cell "Apr 7, 20262 weeks ago" [ref=e550]:
+                      - generic [ref=e551]: Apr 7, 20262 weeks ago
+                  - row "rust-api-examples, (Directory) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e552]:
+                    - cell "rust-api-examples, (Directory)" [ref=e553]:
+                      - generic [ref=e554]:
+                        - img [ref=e555]
+                        - link "rust-api-examples, (Directory)" [ref=e560] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/rust-api-examples
+                          - text: rust-api-examples
+                    - cell "Release v1.12.39 (#3521)" [ref=e561]:
+                      - generic [ref=e563]:
+                        - link "Release v1.12.39 (" [ref=e564] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e565] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e566] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e567]:
+                      - generic [ref=e568]: Apr 17, 2026last week
+                  - row "scripts, (Directory) Add two Piper Chinese TTS models (#3546) Apr 24, 20262 minutes ago" [ref=e569]:
+                    - cell "scripts, (Directory)" [ref=e570]:
+                      - generic [ref=e571]:
+                        - img [ref=e572]
+                        - link "scripts, (Directory)" [ref=e577] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/scripts
+                          - text: scripts
+                    - cell "Add two Piper Chinese TTS models (#3546)" [ref=e578]:
+                      - generic [ref=e580]:
+                        - link "Add two Piper Chinese TTS models (" [ref=e581] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                        - link "#3546" [ref=e582] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3546
+                        - link ")" [ref=e583] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                    - cell "Apr 24, 20262 minutes ago" [ref=e584]:
+                      - generic [ref=e585]: Apr 24, 20262 minutes ago
+                  - row "sherpa-onnx, (Directory) Add two Piper Chinese TTS models (#3546) Apr 24, 20262 minutes ago" [ref=e586]:
+                    - cell "sherpa-onnx, (Directory)" [ref=e587]:
+                      - generic [ref=e588]:
+                        - img [ref=e589]
+                        - link "sherpa-onnx, (Directory)" [ref=e594] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/sherpa-onnx
+                          - text: sherpa-onnx
+                    - cell "Add two Piper Chinese TTS models (#3546)" [ref=e595]:
+                      - generic [ref=e597]:
+                        - link "Add two Piper Chinese TTS models (" [ref=e598] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                        - link "#3546" [ref=e599] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3546
+                        - link ")" [ref=e600] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d49e8f40ece9d72f42ba749e0222ef8e9775de3b
+                    - cell "Apr 24, 20262 minutes ago" [ref=e601]:
+                      - generic [ref=e602]: Apr 24, 20262 minutes ago
+                  - row "swift-api-examples, (Directory) Update openfst to v1.8.5 and fix compiler warnings. (#3495) Apr 11, 20262 weeks ago" [ref=e603]:
+                    - cell "swift-api-examples, (Directory)" [ref=e604]:
+                      - generic [ref=e605]:
+                        - img [ref=e606]
+                        - link "swift-api-examples, (Directory)" [ref=e611] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/swift-api-examples
+                          - text: swift-api-examples
+                    - cell "Update openfst to v1.8.5 and fix compiler warnings. (#3495)" [ref=e612]:
+                      - generic [ref=e614]:
+                        - link "Update openfst to v1.8.5 and fix compiler warnings. (" [ref=e615] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                        - link "#3495" [ref=e616] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3495
+                        - link ")" [ref=e617] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                    - cell "Apr 11, 20262 weeks ago" [ref=e618]:
+                      - generic [ref=e619]: Apr 11, 20262 weeks ago
+                  - row "tauri-examples, (Directory) Add Tauri APP demo for VAD+ASR from a microphone (#3540) Apr 22, 20262 days ago" [ref=e620]:
+                    - cell "tauri-examples, (Directory)" [ref=e621]:
+                      - generic [ref=e622]:
+                        - img [ref=e623]
+                        - link "tauri-examples, (Directory)" [ref=e628] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/tauri-examples
+                          - text: tauri-examples
+                    - cell "Add Tauri APP demo for VAD+ASR from a microphone (#3540)" [ref=e629]:
+                      - generic [ref=e631]:
+                        - link "Add Tauri APP demo for VAD+ASR from a microphone (" [ref=e632] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/fed731b8d8c44f8e2cf7979e95160bef0d74f175
+                        - link "#3540" [ref=e633] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3540
+                        - link ")" [ref=e634] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/fed731b8d8c44f8e2cf7979e95160bef0d74f175
+                    - cell "Apr 22, 20262 days ago" [ref=e635]:
+                      - generic [ref=e636]: Apr 22, 20262 days ago
+                  - row "toolchains, (Directory) Update openfst to v1.8.5 and fix compiler warnings. (#3495) Apr 11, 20262 weeks ago" [ref=e637]:
+                    - cell "toolchains, (Directory)" [ref=e638]:
+                      - generic [ref=e639]:
+                        - img [ref=e640]
+                        - link "toolchains, (Directory)" [ref=e645] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/toolchains
+                          - text: toolchains
+                    - cell "Update openfst to v1.8.5 and fix compiler warnings. (#3495)" [ref=e646]:
+                      - generic [ref=e648]:
+                        - link "Update openfst to v1.8.5 and fix compiler warnings. (" [ref=e649] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                        - link "#3495" [ref=e650] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3495
+                        - link ")" [ref=e651] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                    - cell "Apr 11, 20262 weeks ago" [ref=e652]:
+                      - generic [ref=e653]: Apr 11, 20262 weeks ago
+                  - row "wasm, (Directory) Add JavaScript API for Cohere Transcribe. (#3458) Apr 2, 20263 weeks ago" [ref=e654]:
+                    - cell "wasm, (Directory)" [ref=e655]:
+                      - generic [ref=e656]:
+                        - img [ref=e657]
+                        - link "wasm, (Directory)" [ref=e662] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/tree/master/wasm
+                          - text: wasm
+                    - cell "Add JavaScript API for Cohere Transcribe. (#3458)" [ref=e663]:
+                      - generic [ref=e665]:
+                        - link "Add JavaScript API for Cohere Transcribe. (" [ref=e666] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d4465bcbdf0f81060c3939ccf94438e94f1b00ff
+                        - link "#3458" [ref=e667] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3458
+                        - link ")" [ref=e668] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d4465bcbdf0f81060c3939ccf94438e94f1b00ff
+                    - cell "Apr 2, 20263 weeks ago" [ref=e669]:
+                      - generic [ref=e670]: Apr 2, 20263 weeks ago
+                  - row ".clang-format, (File) add java wrapper suppport (#117) Apr 15, 20233 years ago" [ref=e671]:
+                    - cell ".clang-format, (File)" [ref=e672]:
+                      - generic [ref=e673]:
+                        - img [ref=e674]
+                        - link ".clang-format, (File)" [ref=e679] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/.clang-format
+                          - text: .clang-format
+                    - cell "add java wrapper suppport (#117)" [ref=e680]:
+                      - generic [ref=e682]:
+                        - link "add java wrapper suppport (" [ref=e683] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/4b5d2887cb1b90042b115a584c3ce391e5011b1a
+                        - link "#117" [ref=e684] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/117
+                        - link ")" [ref=e685] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/4b5d2887cb1b90042b115a584c3ce391e5011b1a
+                    - cell "Apr 15, 20233 years ago" [ref=e686]:
+                      - generic [ref=e687]: Apr 15, 20233 years ago
+                  - row ".clang-tidy, (File) Support clang-tidy (#1034) Jun 19, 20242 years ago" [ref=e688]:
+                    - cell ".clang-tidy, (File)" [ref=e689]:
+                      - generic [ref=e690]:
+                        - img [ref=e691]
+                        - link ".clang-tidy, (File)" [ref=e696] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/.clang-tidy
+                          - text: .clang-tidy
+                    - cell "Support clang-tidy (#1034)" [ref=e697]:
+                      - generic [ref=e699]:
+                        - link "Support clang-tidy (" [ref=e700] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/a11c8599710dbbd2484e93b452acf2bb7196354f
+                        - link "#1034" [ref=e701] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1034
+                        - link ")" [ref=e702] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/a11c8599710dbbd2484e93b452acf2bb7196354f
+                    - cell "Jun 19, 20242 years ago" [ref=e703]:
+                      - generic [ref=e704]: Jun 19, 20242 years ago
+                  - row ".flake8, (File) add offline websocket server/client (#98) Mar 29, 20233 years ago" [ref=e705]:
+                    - cell ".flake8, (File)" [ref=e706]:
+                      - generic [ref=e707]:
+                        - img [ref=e708]
+                        - link ".flake8, (File)" [ref=e713] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/.flake8
+                          - text: .flake8
+                    - cell "add offline websocket server/client (#98)" [ref=e714]:
+                      - generic [ref=e716]:
+                        - link "add offline websocket server/client (" [ref=e717] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6707ec41247a71b0f04515b0736c007e43ed1ac8
+                        - link "#98" [ref=e718] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/98
+                        - link ")" [ref=e719] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6707ec41247a71b0f04515b0736c007e43ed1ac8
+                    - cell "Mar 29, 20233 years ago" [ref=e720]:
+                      - generic [ref=e721]: Mar 29, 20233 years ago
+                  - row ".gitignore, (File) Add C++ runtime and Python API for Cohere Transcribe (#3456) Apr 2, 20263 weeks ago" [ref=e722]:
+                    - cell ".gitignore, (File)" [ref=e723]:
+                      - generic [ref=e724]:
+                        - img [ref=e725]
+                        - link ".gitignore, (File)" [ref=e730] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/.gitignore
+                          - text: .gitignore
+                    - cell "Add C++ runtime and Python API for Cohere Transcribe (#3456)" [ref=e731]:
+                      - generic [ref=e733]:
+                        - link "Add C++ runtime and Python API for Cohere Transcribe (" [ref=e734] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6fb6f7d693cde6829e53e2aa3d754ba6b6c6d295
+                        - link "#3456" [ref=e735] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3456
+                        - link ")" [ref=e736] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/6fb6f7d693cde6829e53e2aa3d754ba6b6c6d295
+                    - cell "Apr 2, 20263 weeks ago" [ref=e737]:
+                      - generic [ref=e738]: Apr 2, 20263 weeks ago
+                  - row "CHANGELOG.md, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e739]:
+                    - cell "CHANGELOG.md, (File)" [ref=e740]:
+                      - generic [ref=e741]:
+                        - img [ref=e742]
+                        - link "CHANGELOG.md, (File)" [ref=e747] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/CHANGELOG.md
+                          - text: CHANGELOG.md
+                    - cell "Release v1.12.39 (#3521)" [ref=e748]:
+                      - generic [ref=e750]:
+                        - link "Release v1.12.39 (" [ref=e751] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e752] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e753] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e754]:
+                      - generic [ref=e755]: Apr 17, 2026last week
+                  - row "CMakeLists.txt, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e756]:
+                    - cell "CMakeLists.txt, (File)" [ref=e757]:
+                      - generic [ref=e758]:
+                        - img [ref=e759]
+                        - link "CMakeLists.txt, (File)" [ref=e764] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/CMakeLists.txt
+                          - text: CMakeLists.txt
+                    - cell "Release v1.12.39 (#3521)" [ref=e765]:
+                      - generic [ref=e767]:
+                        - link "Release v1.12.39 (" [ref=e768] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e769] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e770] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e771]:
+                      - generic [ref=e772]: Apr 17, 2026last week
+                  - row "CPPLINT.cfg, (File) Use static libraries for MFC examples (#210) Jul 13, 20233 years ago" [ref=e773]:
+                    - cell "CPPLINT.cfg, (File)" [ref=e774]:
+                      - generic [ref=e775]:
+                        - img [ref=e776]
+                        - link "CPPLINT.cfg, (File)" [ref=e781] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/CPPLINT.cfg
+                          - text: CPPLINT.cfg
+                    - cell "Use static libraries for MFC examples (#210)" [ref=e782]:
+                      - generic [ref=e784]:
+                        - link "Use static libraries for MFC examples (" [ref=e785] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/bebc1f1398e77b5b1be00893cd1e0f058924d7bd
+                        - link "#210" [ref=e786] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/210
+                        - link ")" [ref=e787] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/bebc1f1398e77b5b1be00893cd1e0f058924d7bd
+                    - cell "Jul 13, 20233 years ago" [ref=e788]:
+                      - generic [ref=e789]: Jul 13, 20233 years ago
+                  - row "LICENSE, (File) Use standard apache 2.0 license (#53) Feb 22, 20233 years ago" [ref=e790]:
+                    - cell "LICENSE, (File)" [ref=e791]:
+                      - generic [ref=e792]:
+                        - img [ref=e793]
+                        - link "LICENSE, (File)" [ref=e798] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/LICENSE
+                          - text: LICENSE
+                    - cell "Use standard apache 2.0 license (#53)" [ref=e799]:
+                      - generic [ref=e801]:
+                        - link "Use standard apache 2.0 license (" [ref=e802] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/1c6f79f096e910ffbfc700e975782ec4f2a55d6d
+                        - link "#53" [ref=e803] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/53
+                        - link ")" [ref=e804] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/1c6f79f096e910ffbfc700e975782ec4f2a55d6d
+                    - cell "Feb 22, 20233 years ago" [ref=e805]:
+                      - generic [ref=e806]: Feb 22, 20233 years ago
+                  - row "MANIFEST.in, (File) Fix building wheels from source. (#632) Mar 4, 20242 years ago" [ref=e807]:
+                    - cell "MANIFEST.in, (File)" [ref=e808]:
+                      - generic [ref=e809]:
+                        - img [ref=e810]
+                        - link "MANIFEST.in, (File)" [ref=e815] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/MANIFEST.in
+                          - text: MANIFEST.in
+                    - cell "Fix building wheels from source. (#632)" [ref=e816]:
+                      - generic [ref=e818]:
+                        - link "Fix building wheels from source. (" [ref=e819] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/5dc2eaf2b44ae29aed83c9d9016c5d1e43994183
+                        - link "#632" [ref=e820] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/632
+                        - link ")" [ref=e821] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/5dc2eaf2b44ae29aed83c9d9016c5d1e43994183
+                    - cell "Mar 4, 20242 years ago" [ref=e822]:
+                      - generic [ref=e823]: Mar 4, 20242 years ago
+                  - row "README.md, (File) update onnxruntime package name and hash for riscv64-spacemit (#3481) Apr 8, 20262 weeks ago" [ref=e824]:
+                    - cell "README.md, (File)" [ref=e825]:
+                      - generic [ref=e826]:
+                        - img [ref=e827]
+                        - link "README.md, (File)" [ref=e832] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/README.md
+                          - text: README.md
+                    - cell "update onnxruntime package name and hash for riscv64-spacemit (#3481)" [ref=e833]:
+                      - generic [ref=e835]:
+                        - link "update onnxruntime package name and hash for riscv64-spacemit (" [ref=e836] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/27c8da5f12864ec72f9114c9cb166953be69f9a8
+                        - link "#3481" [ref=e837] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3481
+                        - link ")" [ref=e838] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/27c8da5f12864ec72f9114c9cb166953be69f9a8
+                    - cell "Apr 8, 20262 weeks ago" [ref=e839]:
+                      - generic [ref=e840]: Apr 8, 20262 weeks ago
+                  - row "build-aarch64-linux-gnu.sh, (File) Fix building wheels (#2619) Sep 22, 20257 months ago" [ref=e841]:
+                    - cell "build-aarch64-linux-gnu.sh, (File)" [ref=e842]:
+                      - generic [ref=e843]:
+                        - img [ref=e844]
+                        - link "build-aarch64-linux-gnu.sh, (File)" [ref=e849] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-aarch64-linux-gnu.sh
+                          - text: build-aarch64-linux-gnu.sh
+                    - cell "Fix building wheels (#2619)" [ref=e850]:
+                      - generic [ref=e852]:
+                        - link "Fix building wheels (" [ref=e853] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/aecc39418dd6ab5e2d52b9a60e5fb9d836fd5c29
+                        - link "#2619" [ref=e854] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2619
+                        - link ")" [ref=e855] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/aecc39418dd6ab5e2d52b9a60e5fb9d836fd5c29
+                    - cell "Sep 22, 20257 months ago" [ref=e856]:
+                      - generic [ref=e857]: Sep 22, 20257 months ago
+                  - row "build-android-arm64-v8a.sh, (File) Use onnxruntime 1.24.3 for Android (#3494) Apr 9, 20262 weeks ago" [ref=e858]:
+                    - cell "build-android-arm64-v8a.sh, (File)" [ref=e859]:
+                      - generic [ref=e860]:
+                        - img [ref=e861]
+                        - link "build-android-arm64-v8a.sh, (File)" [ref=e866] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-android-arm64-v8a.sh
+                          - text: build-android-arm64-v8a.sh
+                    - cell "Use onnxruntime 1.24.3 for Android (#3494)" [ref=e867]:
+                      - generic [ref=e869]:
+                        - link "Use onnxruntime 1.24.3 for Android (" [ref=e870] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                        - link "#3494" [ref=e871] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3494
+                        - link ")" [ref=e872] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                    - cell "Apr 9, 20262 weeks ago" [ref=e873]:
+                      - generic [ref=e874]: Apr 9, 20262 weeks ago
+                  - row "build-android-armv7-eabi.sh, (File) Use onnxruntime 1.24.3 for Android (#3494) Apr 9, 20262 weeks ago" [ref=e875]:
+                    - cell "build-android-armv7-eabi.sh, (File)" [ref=e876]:
+                      - generic [ref=e877]:
+                        - img [ref=e878]
+                        - link "build-android-armv7-eabi.sh, (File)" [ref=e883] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-android-armv7-eabi.sh
+                          - text: build-android-armv7-eabi.sh
+                    - cell "Use onnxruntime 1.24.3 for Android (#3494)" [ref=e884]:
+                      - generic [ref=e886]:
+                        - link "Use onnxruntime 1.24.3 for Android (" [ref=e887] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                        - link "#3494" [ref=e888] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3494
+                        - link ")" [ref=e889] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                    - cell "Apr 9, 20262 weeks ago" [ref=e890]:
+                      - generic [ref=e891]: Apr 9, 20262 weeks ago
+                  - row "build-android-x86-64.sh, (File) Use onnxruntime 1.24.3 for Android (#3494) Apr 9, 20262 weeks ago" [ref=e892]:
+                    - cell "build-android-x86-64.sh, (File)" [ref=e893]:
+                      - generic [ref=e894]:
+                        - img [ref=e895]
+                        - link "build-android-x86-64.sh, (File)" [ref=e900] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-android-x86-64.sh
+                          - text: build-android-x86-64.sh
+                    - cell "Use onnxruntime 1.24.3 for Android (#3494)" [ref=e901]:
+                      - generic [ref=e903]:
+                        - link "Use onnxruntime 1.24.3 for Android (" [ref=e904] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                        - link "#3494" [ref=e905] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3494
+                        - link ")" [ref=e906] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                    - cell "Apr 9, 20262 weeks ago" [ref=e907]:
+                      - generic [ref=e908]: Apr 9, 20262 weeks ago
+                  - row "build-android-x86.sh, (File) Use onnxruntime 1.24.3 for Android (#3494) Apr 9, 20262 weeks ago" [ref=e909]:
+                    - cell "build-android-x86.sh, (File)" [ref=e910]:
+                      - generic [ref=e911]:
+                        - img [ref=e912]
+                        - link "build-android-x86.sh, (File)" [ref=e917] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-android-x86.sh
+                          - text: build-android-x86.sh
+                    - cell "Use onnxruntime 1.24.3 for Android (#3494)" [ref=e918]:
+                      - generic [ref=e920]:
+                        - link "Use onnxruntime 1.24.3 for Android (" [ref=e921] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                        - link "#3494" [ref=e922] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3494
+                        - link ")" [ref=e923] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/354513162b2be56a543a15bb4214dc9acccd433b
+                    - cell "Apr 9, 20262 weeks ago" [ref=e924]:
+                      - generic [ref=e925]: Apr 9, 20262 weeks ago
+                  - row "build-arm-linux-gnueabihf.sh, (File) Fix 32-bit arm CI (#2276) Jun 3, 202511 months ago" [ref=e926]:
+                    - cell "build-arm-linux-gnueabihf.sh, (File)" [ref=e927]:
+                      - generic [ref=e928]:
+                        - img [ref=e929]
+                        - link "build-arm-linux-gnueabihf.sh, (File)" [ref=e934] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-arm-linux-gnueabihf.sh
+                          - text: build-arm-linux-gnueabihf.sh
+                    - cell "Fix 32-bit arm CI (#2276)" [ref=e935]:
+                      - generic [ref=e937]:
+                        - link "Fix 32-bit arm CI (" [ref=e938] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/9539af5f5c0be7f34716b5a9e7aa728b6ba04ec4
+                        - link "#2276" [ref=e939] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2276
+                        - link ")" [ref=e940] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/9539af5f5c0be7f34716b5a9e7aa728b6ba04ec4
+                    - cell "Jun 3, 202511 months ago" [ref=e941]:
+                      - generic [ref=e942]: Jun 3, 202511 months ago
+                  - row "build-axcl-linux-aarch64.sh, (File) Refactor sense voice impl (#2873) Dec 8, 20254 months ago" [ref=e943]:
+                    - cell "build-axcl-linux-aarch64.sh, (File)" [ref=e944]:
+                      - generic [ref=e945]:
+                        - img [ref=e946]
+                        - link "build-axcl-linux-aarch64.sh, (File)" [ref=e951] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-axcl-linux-aarch64.sh
+                          - text: build-axcl-linux-aarch64.sh
+                    - cell "Refactor sense voice impl (#2873)" [ref=e952]:
+                      - generic [ref=e954]:
+                        - link "Refactor sense voice impl (" [ref=e955] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/f201a29fa53354b52d5bfc56f70ae697a607640c
+                        - link "#2873" [ref=e956] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2873
+                        - link ")" [ref=e957] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/f201a29fa53354b52d5bfc56f70ae697a607640c
+                    - cell "Dec 8, 20254 months ago" [ref=e958]:
+                      - generic [ref=e959]: Dec 8, 20254 months ago
+                  - row "build-axera-linux-aarch64.sh, (File) Support AXERA ax630, ax650, and axcl backends. (#2849) Dec 3, 20254 months ago" [ref=e960]:
+                    - cell "build-axera-linux-aarch64.sh, (File)" [ref=e961]:
+                      - generic [ref=e962]:
+                        - img [ref=e963]
+                        - link "build-axera-linux-aarch64.sh, (File)" [ref=e968] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-axera-linux-aarch64.sh
+                          - text: build-axera-linux-aarch64.sh
+                    - cell "Support AXERA ax630, ax650, and axcl backends. (#2849)" [ref=e969]:
+                      - generic [ref=e971]:
+                        - link "Support AXERA ax630, ax650, and axcl backends. (" [ref=e972] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/89b7e9f42712bbd1767acb2b83a3dc119f877b6a
+                        - link "#2849" [ref=e973] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2849
+                        - link ")" [ref=e974] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/89b7e9f42712bbd1767acb2b83a3dc119f877b6a
+                    - cell "Dec 3, 20254 months ago" [ref=e975]:
+                      - generic [ref=e976]: Dec 3, 20254 months ago
+                  - row "build-ios-no-tts.sh, (File) Fix building sherpa-onnx (#2262) May 29, 202511 months ago" [ref=e977]:
+                    - cell "build-ios-no-tts.sh, (File)" [ref=e978]:
+                      - generic [ref=e979]:
+                        - img [ref=e980]
+                        - link "build-ios-no-tts.sh, (File)" [ref=e985] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ios-no-tts.sh
+                          - text: build-ios-no-tts.sh
+                    - cell "Fix building sherpa-onnx (#2262)" [ref=e986]:
+                      - generic [ref=e988]:
+                        - link "Fix building sherpa-onnx (" [ref=e989] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/0bb325cecd6b5f583d1c4cf698c2bbaa141c3f90
+                        - link "#2262" [ref=e990] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2262
+                        - link ")" [ref=e991] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/0bb325cecd6b5f583d1c4cf698c2bbaa141c3f90
+                    - cell "May 29, 202511 months ago" [ref=e992]:
+                      - generic [ref=e993]: May 29, 202511 months ago
+                  - row "build-ios-shared.sh, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e994]:
+                    - cell "build-ios-shared.sh, (File)" [ref=e995]:
+                      - generic [ref=e996]:
+                        - img [ref=e997]
+                        - link "build-ios-shared.sh, (File)" [ref=e1002] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ios-shared.sh
+                          - text: build-ios-shared.sh
+                    - cell "Release v1.12.39 (#3521)" [ref=e1003]:
+                      - generic [ref=e1005]:
+                        - link "Release v1.12.39 (" [ref=e1006] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e1007] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e1008] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e1009]:
+                      - generic [ref=e1010]: Apr 17, 2026last week
+                  - row "build-ios.sh, (File) Update openfst to v1.8.5 and fix compiler warnings. (#3495) Apr 11, 20262 weeks ago" [ref=e1011]:
+                    - cell "build-ios.sh, (File)" [ref=e1012]:
+                      - generic [ref=e1013]:
+                        - img [ref=e1014]
+                        - link "build-ios.sh, (File)" [ref=e1019] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ios.sh
+                          - text: build-ios.sh
+                    - cell "Update openfst to v1.8.5 and fix compiler warnings. (#3495)" [ref=e1020]:
+                      - generic [ref=e1022]:
+                        - link "Update openfst to v1.8.5 and fix compiler warnings. (" [ref=e1023] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                        - link "#3495" [ref=e1024] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3495
+                        - link ")" [ref=e1025] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                    - cell "Apr 11, 20262 weeks ago" [ref=e1026]:
+                      - generic [ref=e1027]: Apr 11, 20262 weeks ago
+                  - row "build-ohos-arm64-v8a.sh, (File) Publish sherpa_onnx.har for HarmonyOS (#1572) Nov 28, 20242 years ago" [ref=e1028]:
+                    - cell "build-ohos-arm64-v8a.sh, (File)" [ref=e1029]:
+                      - generic [ref=e1030]:
+                        - img [ref=e1031]
+                        - link "build-ohos-arm64-v8a.sh, (File)" [ref=e1036] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ohos-arm64-v8a.sh
+                          - text: build-ohos-arm64-v8a.sh
+                    - cell "Publish sherpa_onnx.har for HarmonyOS (#1572)" [ref=e1037]:
+                      - generic [ref=e1039]:
+                        - link "Publish" [ref=e1040] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - code [ref=e1041]:
+                          - link "sherpa_onnx.har" [ref=e1042] [cursor=pointer]:
+                            - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - link "for HarmonyOS (" [ref=e1043] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - link "#1572" [ref=e1044] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1572
+                        - link ")" [ref=e1045] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                    - cell "Nov 28, 20242 years ago" [ref=e1046]:
+                      - generic [ref=e1047]: Nov 28, 20242 years ago
+                  - row "build-ohos-armeabi-v7a.sh, (File) HarmonyOS support for VAD. (#1561) Nov 24, 20242 years ago" [ref=e1048]:
+                    - cell "build-ohos-armeabi-v7a.sh, (File)" [ref=e1049]:
+                      - generic [ref=e1050]:
+                        - img [ref=e1051]
+                        - link "build-ohos-armeabi-v7a.sh, (File)" [ref=e1056] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ohos-armeabi-v7a.sh
+                          - text: build-ohos-armeabi-v7a.sh
+                    - cell "HarmonyOS support for VAD. (#1561)" [ref=e1057]:
+                      - generic [ref=e1059]:
+                        - link "HarmonyOS support for VAD. (" [ref=e1060] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/31d6206fde528a7bca7a7610e944f405b880ae89
+                        - link "#1561" [ref=e1061] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1561
+                        - link ")" [ref=e1062] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/31d6206fde528a7bca7a7610e944f405b880ae89
+                    - cell "Nov 24, 20242 years ago" [ref=e1063]:
+                      - generic [ref=e1064]: Nov 24, 20242 years ago
+                  - row "build-ohos-x86-64.sh, (File) Publish sherpa_onnx.har for HarmonyOS (#1572) Nov 28, 20242 years ago" [ref=e1065]:
+                    - cell "build-ohos-x86-64.sh, (File)" [ref=e1066]:
+                      - generic [ref=e1067]:
+                        - img [ref=e1068]
+                        - link "build-ohos-x86-64.sh, (File)" [ref=e1073] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-ohos-x86-64.sh
+                          - text: build-ohos-x86-64.sh
+                    - cell "Publish sherpa_onnx.har for HarmonyOS (#1572)" [ref=e1074]:
+                      - generic [ref=e1076]:
+                        - link "Publish" [ref=e1077] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - code [ref=e1078]:
+                          - link "sherpa_onnx.har" [ref=e1079] [cursor=pointer]:
+                            - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - link "for HarmonyOS (" [ref=e1080] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                        - link "#1572" [ref=e1081] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1572
+                        - link ")" [ref=e1082] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/315d8e2a478ab86de0d11347e6dbc423d809deb1
+                    - cell "Nov 28, 20242 years ago" [ref=e1083]:
+                      - generic [ref=e1084]: Nov 28, 20242 years ago
+                  - row "build-riscv64-linux-gnu-spacemit.sh, (File) Add spacemit ort ep for spacemit riscv cpus (#2837) Dec 2, 20254 months ago" [ref=e1085]:
+                    - cell "build-riscv64-linux-gnu-spacemit.sh, (File)" [ref=e1086]:
+                      - generic [ref=e1087]:
+                        - img [ref=e1088]
+                        - link "build-riscv64-linux-gnu-spacemit.sh, (File)" [ref=e1093] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-riscv64-linux-gnu-spacemit.sh
+                          - text: build-riscv64-linux-gnu-spacemit.sh
+                    - cell "Add spacemit ort ep for spacemit riscv cpus (#2837)" [ref=e1094]:
+                      - generic [ref=e1096]:
+                        - link "Add spacemit ort ep for spacemit riscv cpus (" [ref=e1097] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/586cd19e225bed3a50c3d0a554736a61a0b33191
+                        - link "#2837" [ref=e1098] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2837
+                        - link ")" [ref=e1099] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/586cd19e225bed3a50c3d0a554736a61a0b33191
+                    - cell "Dec 2, 20254 months ago" [ref=e1100]:
+                      - generic [ref=e1101]: Dec 2, 20254 months ago
+                  - row "build-riscv64-linux-gnu.sh, (File) Build websocket related binaries for embedded systems. (#1327) Sep 8, 20242 years ago" [ref=e1102]:
+                    - cell "build-riscv64-linux-gnu.sh, (File)" [ref=e1103]:
+                      - generic [ref=e1104]:
+                        - img [ref=e1105]
+                        - link "build-riscv64-linux-gnu.sh, (File)" [ref=e1110] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-riscv64-linux-gnu.sh
+                          - text: build-riscv64-linux-gnu.sh
+                    - cell "Build websocket related binaries for embedded systems. (#1327)" [ref=e1111]:
+                      - generic [ref=e1113]:
+                        - link "Build websocket related binaries for embedded systems. (" [ref=e1114] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/ae2bc17168ce2f4fad76d3606c51235efbc5ad20
+                        - link "#1327" [ref=e1115] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/1327
+                        - link ")" [ref=e1116] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/ae2bc17168ce2f4fad76d3606c51235efbc5ad20
+                    - cell "Sep 8, 20242 years ago" [ref=e1117]:
+                      - generic [ref=e1118]: Sep 8, 20242 years ago
+                  - row "build-rknn-linux-aarch64.sh, (File) Fix building wheels (#2619) Sep 22, 20257 months ago" [ref=e1119]:
+                    - cell "build-rknn-linux-aarch64.sh, (File)" [ref=e1120]:
+                      - generic [ref=e1121]:
+                        - img [ref=e1122]
+                        - link "build-rknn-linux-aarch64.sh, (File)" [ref=e1127] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-rknn-linux-aarch64.sh
+                          - text: build-rknn-linux-aarch64.sh
+                    - cell "Fix building wheels (#2619)" [ref=e1128]:
+                      - generic [ref=e1130]:
+                        - link "Fix building wheels (" [ref=e1131] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/aecc39418dd6ab5e2d52b9a60e5fb9d836fd5c29
+                        - link "#2619" [ref=e1132] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2619
+                        - link ")" [ref=e1133] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/aecc39418dd6ab5e2d52b9a60e5fb9d836fd5c29
+                    - cell "Sep 22, 20257 months ago" [ref=e1134]:
+                      - generic [ref=e1135]: Sep 22, 20257 months ago
+                  - row "build-swift-macos.sh, (File) Update openfst to v1.8.5 and fix compiler warnings. (#3495) Apr 11, 20262 weeks ago" [ref=e1136]:
+                    - cell "build-swift-macos.sh, (File)" [ref=e1137]:
+                      - generic [ref=e1138]:
+                        - img [ref=e1139]
+                        - link "build-swift-macos.sh, (File)" [ref=e1144] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-swift-macos.sh
+                          - text: build-swift-macos.sh
+                    - cell "Update openfst to v1.8.5 and fix compiler warnings. (#3495)" [ref=e1145]:
+                      - generic [ref=e1147]:
+                        - link "Update openfst to v1.8.5 and fix compiler warnings. (" [ref=e1148] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                        - link "#3495" [ref=e1149] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3495
+                        - link ")" [ref=e1150] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/932f9164ec942b0dc7599cc2aa11499b76cf74bd
+                    - cell "Apr 11, 20262 weeks ago" [ref=e1151]:
+                      - generic [ref=e1152]: Apr 11, 20262 weeks ago
+                  - row "build-wasm-simd-asr.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1153]:
+                    - cell "build-wasm-simd-asr.sh, (File)" [ref=e1154]:
+                      - generic [ref=e1155]:
+                        - img [ref=e1156]
+                        - link "build-wasm-simd-asr.sh, (File)" [ref=e1161] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-asr.sh
+                          - text: build-wasm-simd-asr.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1162]:
+                      - generic [ref=e1164]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1165] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1166] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1167] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1168]:
+                      - generic [ref=e1169]: Mar 13, 2025last year
+                  - row "build-wasm-simd-kws.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1170]:
+                    - cell "build-wasm-simd-kws.sh, (File)" [ref=e1171]:
+                      - generic [ref=e1172]:
+                        - img [ref=e1173]
+                        - link "build-wasm-simd-kws.sh, (File)" [ref=e1178] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-kws.sh
+                          - text: build-wasm-simd-kws.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1179]:
+                      - generic [ref=e1181]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1182] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1183] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1184] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1185]:
+                      - generic [ref=e1186]: Mar 13, 2025last year
+                  - row "build-wasm-simd-nodejs.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1187]:
+                    - cell "build-wasm-simd-nodejs.sh, (File)" [ref=e1188]:
+                      - generic [ref=e1189]:
+                        - img [ref=e1190]
+                        - link "build-wasm-simd-nodejs.sh, (File)" [ref=e1195] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-nodejs.sh
+                          - text: build-wasm-simd-nodejs.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1196]:
+                      - generic [ref=e1198]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1199] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1200] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1201] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1202]:
+                      - generic [ref=e1203]: Mar 13, 2025last year
+                  - row "build-wasm-simd-speaker-diarization.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1204]:
+                    - cell "build-wasm-simd-speaker-diarization.sh, (File)" [ref=e1205]:
+                      - generic [ref=e1206]:
+                        - img [ref=e1207]
+                        - link "build-wasm-simd-speaker-diarization.sh, (File)" [ref=e1212] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-speaker-diarization.sh
+                          - text: build-wasm-simd-speaker-diarization.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1213]:
+                      - generic [ref=e1215]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1216] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1217] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1218] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1219]:
+                      - generic [ref=e1220]: Mar 13, 2025last year
+                  - row "build-wasm-simd-speech-enhancement.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1221]:
+                    - cell "build-wasm-simd-speech-enhancement.sh, (File)" [ref=e1222]:
+                      - generic [ref=e1223]:
+                        - img [ref=e1224]
+                        - link "build-wasm-simd-speech-enhancement.sh, (File)" [ref=e1229] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-speech-enhancement.sh
+                          - text: build-wasm-simd-speech-enhancement.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1230]:
+                      - generic [ref=e1232]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1233] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1234] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1235] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1236]:
+                      - generic [ref=e1237]: Mar 13, 2025last year
+                  - row "build-wasm-simd-tts.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1238]:
+                    - cell "build-wasm-simd-tts.sh, (File)" [ref=e1239]:
+                      - generic [ref=e1240]:
+                        - img [ref=e1241]
+                        - link "build-wasm-simd-tts.sh, (File)" [ref=e1246] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-tts.sh
+                          - text: build-wasm-simd-tts.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1247]:
+                      - generic [ref=e1249]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1250] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1251] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1252] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1253]:
+                      - generic [ref=e1254]: Mar 13, 2025last year
+                  - row "build-wasm-simd-vad-asr.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1255]:
+                    - cell "build-wasm-simd-vad-asr.sh, (File)" [ref=e1256]:
+                      - generic [ref=e1257]:
+                        - img [ref=e1258]
+                        - link "build-wasm-simd-vad-asr.sh, (File)" [ref=e1263] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-vad-asr.sh
+                          - text: build-wasm-simd-vad-asr.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1264]:
+                      - generic [ref=e1266]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1267] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1268] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1269] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1270]:
+                      - generic [ref=e1271]: Mar 13, 2025last year
+                  - row "build-wasm-simd-vad.sh, (File) Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002) Mar 13, 2025last year" [ref=e1272]:
+                    - cell "build-wasm-simd-vad.sh, (File)" [ref=e1273]:
+                      - generic [ref=e1274]:
+                        - img [ref=e1275]
+                        - link "build-wasm-simd-vad.sh, (File)" [ref=e1280] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/build-wasm-simd-vad.sh
+                          - text: build-wasm-simd-vad.sh
+                    - cell "Add WebAssembly (WASM) for speech enhancement GTCRN models (#2002)" [ref=e1281]:
+                      - generic [ref=e1283]:
+                        - link "Add WebAssembly (WASM) for speech enhancement GTCRN models (" [ref=e1284] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                        - link "#2002" [ref=e1285] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/2002
+                        - link ")" [ref=e1286] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/d320fdf65e2052fddb8a0466320825394d4ed7a9
+                    - cell "Mar 13, 2025last year" [ref=e1287]:
+                      - generic [ref=e1288]: Mar 13, 2025last year
+                  - row "jitpack.yml, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e1289]:
+                    - cell "jitpack.yml, (File)" [ref=e1290]:
+                      - generic [ref=e1291]:
+                        - img [ref=e1292]
+                        - link "jitpack.yml, (File)" [ref=e1297] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/jitpack.yml
+                          - text: jitpack.yml
+                    - cell "Release v1.12.39 (#3521)" [ref=e1298]:
+                      - generic [ref=e1300]:
+                        - link "Release v1.12.39 (" [ref=e1301] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e1302] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e1303] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e1304]:
+                      - generic [ref=e1305]: Apr 17, 2026last week
+                  - row "new-release.sh, (File) Add Tauri APP demo for VAD+ASR from a microphone (#3540) Apr 22, 20262 days ago" [ref=e1306]:
+                    - cell "new-release.sh, (File)" [ref=e1307]:
+                      - generic [ref=e1308]:
+                        - img [ref=e1309]
+                        - link "new-release.sh, (File)" [ref=e1314] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/new-release.sh
+                          - text: new-release.sh
+                    - cell "Add Tauri APP demo for VAD+ASR from a microphone (#3540)" [ref=e1315]:
+                      - generic [ref=e1317]:
+                        - link "Add Tauri APP demo for VAD+ASR from a microphone (" [ref=e1318] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/fed731b8d8c44f8e2cf7979e95160bef0d74f175
+                        - link "#3540" [ref=e1319] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3540
+                        - link ")" [ref=e1320] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/fed731b8d8c44f8e2cf7979e95160bef0d74f175
+                    - cell "Apr 22, 20262 days ago" [ref=e1321]:
+                      - generic [ref=e1322]: Apr 22, 20262 days ago
+                  - row "pom.xml, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e1323]:
+                    - cell "pom.xml, (File)" [ref=e1324]:
+                      - generic [ref=e1325]:
+                        - img [ref=e1326]
+                        - link "pom.xml, (File)" [ref=e1331] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/pom.xml
+                          - text: pom.xml
+                    - cell "Release v1.12.39 (#3521)" [ref=e1332]:
+                      - generic [ref=e1334]:
+                        - link "Release v1.12.39 (" [ref=e1335] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e1336] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e1337] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e1338]:
+                      - generic [ref=e1339]: Apr 17, 2026last week
+                  - row "release.sh, (File) Publish pre-compiled libs for Android. (#217) Jul 15, 20233 years ago" [ref=e1340]:
+                    - cell "release.sh, (File)" [ref=e1341]:
+                      - generic [ref=e1342]:
+                        - img [ref=e1343]
+                        - link "release.sh, (File)" [ref=e1348] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/release.sh
+                          - text: release.sh
+                    - cell "Publish pre-compiled libs for Android. (#217)" [ref=e1349]:
+                      - generic [ref=e1351]:
+                        - link "Publish pre-compiled libs for Android. (" [ref=e1352] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/5d820b88ef7a4c5d19c49806b8492bf1ebba7fc5
+                        - link "#217" [ref=e1353] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/217
+                        - link ")" [ref=e1354] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/5d820b88ef7a4c5d19c49806b8492bf1ebba7fc5
+                    - cell "Jul 15, 20233 years ago" [ref=e1355]:
+                      - generic [ref=e1356]: Jul 15, 20233 years ago
+                  - row "setup.py, (File) Release v1.12.39 (#3521) Apr 17, 2026last week" [ref=e1357]:
+                    - cell "setup.py, (File)" [ref=e1358]:
+                      - generic [ref=e1359]:
+                        - img [ref=e1360]
+                        - link "setup.py, (File)" [ref=e1365] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/blob/master/setup.py
+                          - text: setup.py
+                    - cell "Release v1.12.39 (#3521)" [ref=e1366]:
+                      - generic [ref=e1368]:
+                        - link "Release v1.12.39 (" [ref=e1369] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                        - link "#3521" [ref=e1370] [cursor=pointer]:
+                          - /url: https://github.com/k2-fsa/sherpa-onnx/pull/3521
+                        - link ")" [ref=e1371] [cursor=pointer]:
+                          - /url: /k2-fsa/sherpa-onnx/commit/7288d15e3e31a7bd589b2ba88828d521e7a6b140
+                    - cell "Apr 17, 2026last week" [ref=e1372]:
+                      - generic [ref=e1373]: Apr 17, 2026last week
+            - generic [ref=e1375]:
+              - generic [ref=e1376]:
+                - heading "Repository files navigation" [level=2] [ref=e1377]
+                - navigation "Repository files" [ref=e1378]:
+                  - list [ref=e1379]:
+                    - listitem [ref=e1380]:
+                      - link "README" [ref=e1381] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e1383]
+                        - generic [ref=e1385]: README
+                    - listitem [ref=e1386]:
+                      - link "Apache-2.0 license" [ref=e1387] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e1389]
+                        - generic [ref=e1391]: Apache-2.0 license
+                - button "Outline" [ref=e1392] [cursor=pointer]:
+                  - img [ref=e1393]
+              - article [ref=e1396]:
+                - generic [ref=e1397]:
+                  - heading "Supported functions" [level=3] [ref=e1398]
+                  - 'link "Permalink: Supported functions" [ref=e1399] [cursor=pointer]':
+                    - /url: "#supported-functions"
+                    - img [ref=e1400]
+                - table [ref=e1403]:
+                  - rowgroup [ref=e1404]:
+                    - row "Speech recognition Speech synthesis Source separation" [ref=e1405]:
+                      - columnheader "Speech recognition" [ref=e1406]
+                      - columnheader "Speech synthesis" [ref=e1407]:
+                        - link "Speech synthesis" [ref=e1408] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/tts/all-in-one.html
+                      - columnheader "Source separation" [ref=e1409]:
+                        - link "Source separation" [ref=e1410] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/source-separation/index.html
+                  - rowgroup [ref=e1411]:
+                    - row "✔️ ✔️ ✔️" [ref=e1412]:
+                      - cell "✔️" [ref=e1413]
+                      - cell "✔️" [ref=e1414]
+                      - cell "✔️" [ref=e1415]
+                - table [ref=e1417]:
+                  - rowgroup [ref=e1418]:
+                    - row "Speaker identification Speaker diarization Speaker verification" [ref=e1419]:
+                      - columnheader "Speaker identification" [ref=e1420]
+                      - columnheader "Speaker diarization" [ref=e1421]:
+                        - link "Speaker diarization" [ref=e1422] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/index.html
+                      - columnheader "Speaker verification" [ref=e1423]
+                  - rowgroup [ref=e1424]:
+                    - row "✔️ ✔️ ✔️" [ref=e1425]:
+                      - cell "✔️" [ref=e1426]
+                      - cell "✔️" [ref=e1427]
+                      - cell "✔️" [ref=e1428]
+                - table [ref=e1430]:
+                  - rowgroup [ref=e1431]:
+                    - row "Spoken Language identification Audio tagging Voice activity detection" [ref=e1432]:
+                      - columnheader "Spoken Language identification" [ref=e1433]:
+                        - link "Spoken Language identification" [ref=e1434] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/spoken-language-identification/index.html
+                      - columnheader "Audio tagging" [ref=e1435]:
+                        - link "Audio tagging" [ref=e1436] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/audio-tagging/index.html
+                      - columnheader "Voice activity detection" [ref=e1437]:
+                        - link "Voice activity detection" [ref=e1438] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/vad/index.html
+                  - rowgroup [ref=e1439]:
+                    - row "✔️ ✔️ ✔️" [ref=e1440]:
+                      - cell "✔️" [ref=e1441]
+                      - cell "✔️" [ref=e1442]
+                      - cell "✔️" [ref=e1443]
+                - table [ref=e1445]:
+                  - rowgroup [ref=e1446]:
+                    - row "Keyword spotting Add punctuation Speech enhancement" [ref=e1447]:
+                      - columnheader "Keyword spotting" [ref=e1448]:
+                        - link "Keyword spotting" [ref=e1449] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/kws/index.html
+                      - columnheader "Add punctuation" [ref=e1450]:
+                        - link "Add punctuation" [ref=e1451] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/punctuation/index.html
+                      - columnheader "Speech enhancement" [ref=e1452]:
+                        - link "Speech enhancement" [ref=e1453] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/speech-enhancement/index.html
+                  - rowgroup [ref=e1454]:
+                    - row "✔️ ✔️ ✔️" [ref=e1455]:
+                      - cell "✔️" [ref=e1456]
+                      - cell "✔️" [ref=e1457]
+                      - cell "✔️" [ref=e1458]
+                - generic [ref=e1459]:
+                  - heading "Supported platforms" [level=3] [ref=e1460]
+                  - 'link "Permalink: Supported platforms" [ref=e1461] [cursor=pointer]':
+                    - /url: "#supported-platforms"
+                    - img [ref=e1462]
+                - table [ref=e1465]:
+                  - rowgroup [ref=e1466]:
+                    - row "Architecture Android iOS Windows macOS linux HarmonyOS" [ref=e1467]:
+                      - columnheader "Architecture" [ref=e1468]
+                      - columnheader "Android" [ref=e1469]
+                      - columnheader "iOS" [ref=e1470]
+                      - columnheader "Windows" [ref=e1471]
+                      - columnheader "macOS" [ref=e1472]
+                      - columnheader "linux" [ref=e1473]
+                      - columnheader "HarmonyOS" [ref=e1474]
+                  - rowgroup [ref=e1475]:
+                    - row "x64 ✔️ ✔️ ✔️ ✔️ ✔️" [ref=e1476]:
+                      - cell "x64" [ref=e1477]
+                      - cell "✔️" [ref=e1478]
+                      - cell [ref=e1479]
+                      - cell "✔️" [ref=e1480]
+                      - cell "✔️" [ref=e1481]
+                      - cell "✔️" [ref=e1482]
+                      - cell "✔️" [ref=e1483]
+                    - row "x86 ✔️ ✔️" [ref=e1484]:
+                      - cell "x86" [ref=e1485]
+                      - cell "✔️" [ref=e1486]
+                      - cell [ref=e1487]
+                      - cell "✔️" [ref=e1488]
+                      - cell [ref=e1489]
+                      - cell [ref=e1490]
+                      - cell [ref=e1491]
+                    - row "arm64 ✔️ ✔️ ✔️ ✔️ ✔️ ✔️" [ref=e1492]:
+                      - cell "arm64" [ref=e1493]
+                      - cell "✔️" [ref=e1494]
+                      - cell "✔️" [ref=e1495]
+                      - cell "✔️" [ref=e1496]
+                      - cell "✔️" [ref=e1497]
+                      - cell "✔️" [ref=e1498]
+                      - cell "✔️" [ref=e1499]
+                    - row "arm32 ✔️ ✔️ ✔️" [ref=e1500]:
+                      - cell "arm32" [ref=e1501]
+                      - cell "✔️" [ref=e1502]
+                      - cell [ref=e1503]
+                      - cell [ref=e1504]
+                      - cell [ref=e1505]
+                      - cell "✔️" [ref=e1506]
+                      - cell "✔️" [ref=e1507]
+                    - row "riscv64 ✔️" [ref=e1508]:
+                      - cell "riscv64" [ref=e1509]
+                      - cell [ref=e1510]
+                      - cell [ref=e1511]
+                      - cell [ref=e1512]
+                      - cell [ref=e1513]
+                      - cell "✔️" [ref=e1514]
+                      - cell [ref=e1515]
+                - generic [ref=e1516]:
+                  - heading "Supported programming languages" [level=3] [ref=e1517]
+                  - 'link "Permalink: Supported programming languages" [ref=e1518] [cursor=pointer]':
+                    - /url: "#supported-programming-languages"
+                    - img [ref=e1519]
+                - table [ref=e1522]:
+                  - rowgroup [ref=e1523]:
+                    - row "1. C++ 2. C 3. Python 4. JavaScript" [ref=e1524]:
+                      - columnheader "1. C++" [ref=e1525]
+                      - columnheader "2. C" [ref=e1526]
+                      - columnheader "3. Python" [ref=e1527]
+                      - columnheader "4. JavaScript" [ref=e1528]
+                  - rowgroup [ref=e1529]:
+                    - row "✔️ ✔️ ✔️ ✔️" [ref=e1530]:
+                      - cell "✔️" [ref=e1531]
+                      - cell "✔️" [ref=e1532]
+                      - cell "✔️" [ref=e1533]
+                      - cell "✔️" [ref=e1534]
+                - table [ref=e1536]:
+                  - rowgroup [ref=e1537]:
+                    - row "5. Java 6. C# 7. Kotlin 8. Swift" [ref=e1538]:
+                      - columnheader "5. Java" [ref=e1539]
+                      - columnheader "6. C#" [ref=e1540]
+                      - columnheader "7. Kotlin" [ref=e1541]
+                      - columnheader "8. Swift" [ref=e1542]
+                  - rowgroup [ref=e1543]:
+                    - row "✔️ ✔️ ✔️ ✔️" [ref=e1544]:
+                      - cell "✔️" [ref=e1545]
+                      - cell "✔️" [ref=e1546]
+                      - cell "✔️" [ref=e1547]
+                      - cell "✔️" [ref=e1548]
+                - table [ref=e1550]:
+                  - rowgroup [ref=e1551]:
+                    - row "9. Go 10. Dart 11. Rust 12. Pascal" [ref=e1552]:
+                      - columnheader "9. Go" [ref=e1553]
+                      - columnheader "10. Dart" [ref=e1554]
+                      - columnheader "11. Rust" [ref=e1555]
+                      - columnheader "12. Pascal" [ref=e1556]
+                  - rowgroup [ref=e1557]:
+                    - row "✔️ ✔️ ✔️ ✔️" [ref=e1558]:
+                      - cell "✔️" [ref=e1559]
+                      - cell "✔️" [ref=e1560]
+                      - cell "✔️" [ref=e1561]
+                      - cell "✔️" [ref=e1562]
+                - paragraph [ref=e1563]: It also supports WebAssembly.
+                - generic [ref=e1564]:
+                  - heading "Supported NPUs" [level=3] [ref=e1565]
+                  - 'link "Permalink: Supported NPUs" [ref=e1566] [cursor=pointer]':
+                    - /url: "#supported-npus"
+                    - img [ref=e1567]
+                - table [ref=e1570]:
+                  - rowgroup [ref=e1571]:
+                    - row "1. Rockchip NPU (RKNN) 2. Qualcomm NPU (QNN) 3. Ascend NPU" [ref=e1572]:
+                      - columnheader "1. Rockchip NPU (RKNN)" [ref=e1573]:
+                        - link "1. Rockchip NPU (RKNN)" [ref=e1574] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/rknn/index.html
+                      - columnheader "2. Qualcomm NPU (QNN)" [ref=e1575]:
+                        - link "2. Qualcomm NPU (QNN)" [ref=e1576] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/qnn/index.html
+                      - columnheader "3. Ascend NPU" [ref=e1577]:
+                        - link "3. Ascend NPU" [ref=e1578] [cursor=pointer]:
+                          - /url: https://k2-fsa.github.io/sherpa/onnx/ascend/index.html
+                  - rowgroup [ref=e1579]:
+                    - row "✔️ ✔️ ✔️" [ref=e1580]:
+                      - cell "✔️" [ref=e1581]
+                      - cell "✔️" [ref=e1582]
+                      - cell "✔️" [ref=e1583]
+                - table [ref=e1585]:
+                  - rowgroup [ref=e1586]:
+                    - row "4. Axera NPU" [ref=e1587]:
+                      - columnheader "4. Axera NPU" [ref=e1588]:
+                        - link "4. Axera NPU" [ref=e1589] [cursor=pointer]:
+                          - /url: https://axera-tech.com/Skill/166.html
+                  - rowgroup [ref=e1590]:
+                    - row "✔️" [ref=e1591]:
+                      - cell "✔️" [ref=e1592]
+                - paragraph [ref=e1593]:
+                  - link "Join our discord" [ref=e1594] [cursor=pointer]:
+                    - /url: https://discord.gg/fJdxzg2VbG
+                - generic [ref=e1595]:
+                  - heading "Introduction" [level=2] [ref=e1596]
+                  - 'link "Permalink: Introduction" [ref=e1597] [cursor=pointer]':
+                    - /url: "#introduction"
+                    - img [ref=e1598]
+                - paragraph [ref=e1600]:
+                  - text: This repository supports running the following functions
+                  - strong [ref=e1601]: locally
+                - list [ref=e1602]:
+                  - listitem [ref=e1603]: Speech-to-text (i.e., ASR); both streaming and non-streaming are supported
+                  - listitem [ref=e1604]: Text-to-speech (i.e., TTS)
+                  - listitem [ref=e1605]: Speaker diarization
+                  - listitem [ref=e1606]: Speaker identification
+                  - listitem [ref=e1607]: Speaker verification
+                  - listitem [ref=e1608]: Spoken language identification
+                  - listitem [ref=e1609]: Audio tagging
+                  - listitem [ref=e1610]:
+                    - text: VAD (e.g.,
+                    - link "silero-vad" [ref=e1611] [cursor=pointer]:
+                      - /url: https://github.com/snakers4/silero-vad
+                    - text: )
+                  - listitem [ref=e1612]:
+                    - text: Speech enhancement (e.g.,
+                    - link "gtcrn" [ref=e1613] [cursor=pointer]:
+                      - /url: https://github.com/Xiaobin-Rong/gtcrn
+                    - text: ","
+                    - link "DPDFNet" [ref=e1614] [cursor=pointer]:
+                      - /url: https://github.com/ceva-ip/DPDFNet
+                    - text: )
+                  - listitem [ref=e1615]: Keyword spotting
+                  - listitem [ref=e1616]:
+                    - text: Source separation (e.g.,
+                    - link "spleeter" [ref=e1617] [cursor=pointer]:
+                      - /url: https://github.com/deezer/spleeter
+                    - text: ","
+                    - link "UVR" [ref=e1618] [cursor=pointer]:
+                      - /url: https://github.com/Anjok07/ultimatevocalremovergui
+                    - text: )
+                - paragraph [ref=e1619]: "on the following platforms and operating systems:"
+                - list [ref=e1620]:
+                  - listitem [ref=e1621]:
+                    - text: x86,
+                    - code [ref=e1622]: x86_64
+                    - text: ", 32-bit ARM, 64-bit ARM (arm64, aarch64), RISC-V (riscv64),"
+                    - strong [ref=e1623]: RK NPU
+                    - text: ","
+                    - strong [ref=e1624]: Ascend NPU
+                  - listitem [ref=e1625]: Linux, macOS, Windows, openKylin
+                  - listitem [ref=e1626]: Android, WearOS
+                  - listitem [ref=e1627]: iOS
+                  - listitem [ref=e1628]: HarmonyOS
+                  - listitem [ref=e1629]: NodeJS
+                  - listitem [ref=e1630]: WebAssembly
+                  - listitem [ref=e1631]:
+                    - link "NVIDIA Jetson Orin NX" [ref=e1632] [cursor=pointer]:
+                      - /url: https://developer.download.nvidia.com/assets/embedded/secure/jetson/orin_nx/docs/Jetson_Orin_NX_DS-10712-001_v0.5.pdf?RCPGu9Q6OVAOv7a7vgtwc9-BLScXRIWq6cSLuditMALECJ_dOj27DgnqAPGVnT2VpiNpQan9SyFy-9zRykR58CokzbXwjSA7Gj819e91AXPrWkGZR3oS1VLxiDEpJa_Y0lr7UT-N4GnXtb8NlUkP4GkCkkF_FQivGPrAucCUywL481GH_WpP_p7ziHU1Wg==&t=eyJscyI6ImdzZW8iLCJsc2QiOiJodHRwczovL3d3dy5nb29nbGUuY29tLmhrLyJ9
+                    - text: (Support running on both CPU and GPU)
+                  - listitem [ref=e1633]:
+                    - link "NVIDIA Jetson Nano B01" [ref=e1634] [cursor=pointer]:
+                      - /url: https://www.seeedstudio.com/blog/2020/01/16/new-revision-of-jetson-nano-dev-kit-now-supports-new-jetson-nano-module/
+                    - text: (Support running on both CPU and GPU)
+                  - listitem [ref=e1635]:
+                    - link "Raspberry Pi" [ref=e1636] [cursor=pointer]:
+                      - /url: https://www.raspberrypi.com/
+                  - listitem [ref=e1637]:
+                    - link "RV1126" [ref=e1638] [cursor=pointer]:
+                      - /url: https://www.rock-chips.com/uploads/pdf/2022.8.26/191/RV1126%20Brief%20Datasheet.pdf
+                  - listitem [ref=e1639]:
+                    - link "LicheePi4A" [ref=e1640] [cursor=pointer]:
+                      - /url: https://sipeed.com/licheepi4a
+                  - listitem [ref=e1641]:
+                    - link "VisionFive 2" [ref=e1642] [cursor=pointer]:
+                      - /url: https://www.starfivetech.com/en/site/boards
+                  - listitem [ref=e1643]:
+                    - link "旭日X3派" [ref=e1644] [cursor=pointer]:
+                      - /url: https://developer.horizon.ai/api/v1/fileData/documents_pi/index.html
+                  - listitem [ref=e1645]:
+                    - link "爱芯派" [ref=e1646] [cursor=pointer]:
+                      - /url: https://wiki.sipeed.com/hardware/zh/maixIII/ax-pi/axpi.html
+                  - listitem [ref=e1647]:
+                    - link "RK3588" [ref=e1648] [cursor=pointer]:
+                      - /url: https://www.rock-chips.com/uploads/pdf/2022.8.26/192/RK3588%20Brief%20Datasheet.pdf
+                  - listitem [ref=e1649]:
+                    - link "SpacemiT-K1" [ref=e1650] [cursor=pointer]:
+                      - /url: https://cdn-resource.spacemit.com/file/chip/K1/K1_brief_zh.pdf
+                  - listitem [ref=e1651]:
+                    - link "SpacemiT-K3" [ref=e1652] [cursor=pointer]:
+                      - /url: https://cdn-resource.spacemit.com/file/chip/K3/K3_brief_zh.pdf
+                  - listitem [ref=e1653]: etc
+                - paragraph [ref=e1654]: with the following APIs
+                - list [ref=e1655]:
+                  - listitem [ref=e1656]:
+                    - text: C++, C, Python, Go,
+                    - code [ref=e1657]: C#
+                  - listitem [ref=e1658]: Java, Kotlin, JavaScript
+                  - listitem [ref=e1659]: Swift, Rust
+                  - listitem [ref=e1660]: Dart, Object Pascal
+                - generic [ref=e1661]:
+                  - heading "Links for Huggingface Spaces" [level=3] [ref=e1662]
+                  - 'link "Permalink: Links for Huggingface Spaces" [ref=e1663] [cursor=pointer]':
+                    - /url: "#links-for-huggingface-spaces"
+                    - img [ref=e1664]
+                - group [ref=e1666]:
+                  - generic "You can visit the following Huggingface spaces to try sherpa-onnx without installing anything. All you need is a browser." [ref=e1667] [cursor=pointer]
+                - generic [ref=e1668]:
+                  - heading "Links for pre-built Android APKs" [level=3] [ref=e1669]
+                  - 'link "Permalink: Links for pre-built Android APKs" [ref=e1670] [cursor=pointer]':
+                    - /url: "#links-for-pre-built-android-apks"
+                    - img [ref=e1671]
+                - group [ref=e1673]:
+                  - generic "You can find pre-built Android APKs for this repository in the following table" [ref=e1674] [cursor=pointer]
+                - generic [ref=e1675]:
+                  - heading "Links for pre-built Flutter APPs" [level=3] [ref=e1676]
+                  - 'link "Permalink: Links for pre-built Flutter APPs" [ref=e1677] [cursor=pointer]':
+                    - /url: "#links-for-pre-built-flutter-apps"
+                    - img [ref=e1678]
+                - group [ref=e1680]:
+                  - generic "Details" [ref=e1681] [cursor=pointer]
+                - generic [ref=e1682]:
+                  - heading "Links for pre-built Lazarus APPs" [level=3] [ref=e1683]
+                  - 'link "Permalink: Links for pre-built Lazarus APPs" [ref=e1684] [cursor=pointer]':
+                    - /url: "#links-for-pre-built-lazarus-apps"
+                    - img [ref=e1685]
+                - group [ref=e1687]:
+                  - generic "Details" [ref=e1688] [cursor=pointer]
+                - generic [ref=e1689]:
+                  - heading "Links for pre-trained models" [level=3] [ref=e1690]
+                  - 'link "Permalink: Links for pre-trained models" [ref=e1691] [cursor=pointer]':
+                    - /url: "#links-for-pre-trained-models"
+                    - img [ref=e1692]
+                - group [ref=e1694]:
+                  - generic "Details" [ref=e1695] [cursor=pointer]
+                - generic [ref=e1696]:
+                  - heading "Some pre-trained ASR models (Streaming)" [level=4] [ref=e1697]
+                  - 'link "Permalink: Some pre-trained ASR models (Streaming)" [ref=e1698] [cursor=pointer]':
+                    - /url: "#some-pre-trained-asr-models-streaming"
+                    - img [ref=e1699]
+                - group [ref=e1701]:
+                  - generic "Details" [ref=e1702] [cursor=pointer]
+                - generic [ref=e1703]:
+                  - heading "Some pre-trained ASR models (Non-Streaming)" [level=4] [ref=e1704]
+                  - 'link "Permalink: Some pre-trained ASR models (Non-Streaming)" [ref=e1705] [cursor=pointer]':
+                    - /url: "#some-pre-trained-asr-models-non-streaming"
+                    - img [ref=e1706]
+                - group [ref=e1708]:
+                  - generic "Details" [ref=e1709] [cursor=pointer]
+                - generic [ref=e1710]:
+                  - heading "Useful links" [level=3] [ref=e1711]
+                  - 'link "Permalink: Useful links" [ref=e1712] [cursor=pointer]':
+                    - /url: "#useful-links"
+                    - img [ref=e1713]
+                - list [ref=e1715]:
+                  - listitem [ref=e1716]:
+                    - text: "Documentation:"
+                    - link "https://k2-fsa.github.io/sherpa/onnx/" [ref=e1717] [cursor=pointer]:
+                      - /url: https://k2-fsa.github.io/sherpa/onnx/
+                  - listitem [ref=e1718]:
+                    - text: "Bilibili 演示视频:"
+                    - link "https://search.bilibili.com/all?keyword=%E6%96%B0%E4%B8%80%E4%BB%A3Kaldi" [ref=e1719] [cursor=pointer]:
+                      - /url: https://search.bilibili.com/all?keyword=%E6%96%B0%E4%B8%80%E4%BB%A3Kaldi
+                - generic [ref=e1720]:
+                  - heading "How to reach us" [level=3] [ref=e1721]
+                  - 'link "Permalink: How to reach us" [ref=e1722] [cursor=pointer]':
+                    - /url: "#how-to-reach-us"
+                    - img [ref=e1723]
+                - paragraph [ref=e1725]:
+                  - text: Please see
+                  - link "https://k2-fsa.github.io/sherpa/social-groups.html" [ref=e1726] [cursor=pointer]:
+                    - /url: https://k2-fsa.github.io/sherpa/social-groups.html
+                  - text: for 新一代 Kaldi
+                  - strong [ref=e1727]: 微信交流群
+                  - text: and
+                  - strong [ref=e1728]: QQ 交流群
+                  - text: .
+                - generic [ref=e1729]:
+                  - heading "Projects using sherpa-onnx" [level=2] [ref=e1730]
+                  - 'link "Permalink: Projects using sherpa-onnx" [ref=e1731] [cursor=pointer]':
+                    - /url: "#projects-using-sherpa-onnx"
+                    - img [ref=e1732]
+                - generic [ref=e1734]:
+                  - heading "Speed of Sound" [level=3] [ref=e1735]:
+                    - link "Speed of Sound" [ref=e1736] [cursor=pointer]:
+                      - /url: https://github.com/zugaldia/speedofsound
+                  - 'link "Permalink: Speed of Sound" [ref=e1737] [cursor=pointer]':
+                    - /url: "#speed-of-sound"
+                    - img [ref=e1738]
+                - blockquote [ref=e1740]:
+                  - paragraph [ref=e1741]: A voice-typing application for the Linux desktop (GTK4/Adwaita). It captures microphone audio, transcribes it offline using Sherpa ONNX ASR models, optionally polishes the text with an LLM, and types the result into the active window via XDG Remote Desktop Portal keyboard simulation.
+                - generic [ref=e1742]:
+                  - heading "VoxSherpa TTS" [level=3] [ref=e1743]:
+                    - link "VoxSherpa TTS" [ref=e1744] [cursor=pointer]:
+                      - /url: https://github.com/CodeBySonu95/VoxSherpa-TTS
+                  - 'link "Permalink: VoxSherpa TTS" [ref=e1745] [cursor=pointer]':
+                    - /url: "#voxsherpa-tts"
+                    - img [ref=e1746]
+                - blockquote [ref=e1748]:
+                  - paragraph [ref=e1749]: VoxSherpa TTS is a 100% offline Android Text-to-Speech app powered by Sherpa-ONNX. It supports Kokoro-82M, Piper, and VITS engines with multilingual support including Hindi, English, British English, Japanese, Chinese and 50+ more languages.
+                - list [ref=e1750]:
+                  - listitem [ref=e1751]:
+                    - link "Download APK v1.0-beta" [ref=e1752] [cursor=pointer]:
+                      - /url: https://huggingface.co/CodeBySonu95/Sherpa-onnx-models/resolve/main/VoxSherpa-TTS_test.apk
+                  - listitem [ref=e1753]: Android 11+ · 100% offline · No telemetry
+                - table [ref=e1756]:
+                  - rowgroup [ref=e1757]:
+                    - row "Generate Models Library Settings" [ref=e1758]:
+                      - columnheader "Generate" [ref=e1759]
+                      - columnheader "Models" [ref=e1760]
+                      - columnheader "Library" [ref=e1761]
+                      - columnheader "Settings" [ref=e1762]
+                  - rowgroup [ref=e1763]:
+                    - row [ref=e1764]:
+                      - cell [ref=e1765]:
+                        - link [ref=e1766] [cursor=pointer]:
+                          - /url: https://raw.githubusercontent.com/CodeBySonu95/VoxSherpa-TTS/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1.jpg
+                          - img [ref=e1767]
+                      - cell [ref=e1768]:
+                        - link [ref=e1769] [cursor=pointer]:
+                          - /url: https://raw.githubusercontent.com/CodeBySonu95/VoxSherpa-TTS/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2.jpg
+                          - img [ref=e1770]
+                      - cell [ref=e1771]:
+                        - link [ref=e1772] [cursor=pointer]:
+                          - /url: https://raw.githubusercontent.com/CodeBySonu95/VoxSherpa-TTS/main/fastlane/metadata/android/en-US/images/phoneScreenshots/3.jpg
+                          - img [ref=e1773]
+                      - cell [ref=e1774]:
+                        - link [ref=e1775] [cursor=pointer]:
+                          - /url: https://raw.githubusercontent.com/CodeBySonu95/VoxSherpa-TTS/main/fastlane/metadata/android/en-US/images/phoneScreenshots/4.jpg
+                          - img [ref=e1776]
+                - separator [ref=e1777]
+                - generic [ref=e1778]:
+                  - heading "BreezeApp from MediaTek Research" [level=3] [ref=e1779]:
+                    - link "BreezeApp" [ref=e1780] [cursor=pointer]:
+                      - /url: https://github.com/mtkresearch/BreezeApp
+                    - text: from
+                    - link "MediaTek Research" [ref=e1781] [cursor=pointer]:
+                      - /url: https://github.com/mtkresearch
+                  - 'link "Permalink: BreezeApp from MediaTek Research" [ref=e1782] [cursor=pointer]':
+                    - /url: "#breezeapp-from-mediatek-research"
+                    - img [ref=e1783]
+                - blockquote [ref=e1785]:
+                  - paragraph [ref=e1786]: BreezeAPP is a mobile AI application developed for both Android and iOS platforms. Users can download it directly from the App Store and enjoy a variety of features offline, including speech-to-text, text-to-speech, text-based chatbot interactions, and image question-answering
+                - list [ref=e1787]:
+                  - listitem [ref=e1788]:
+                    - link "Download APK for BreezeAPP" [ref=e1789] [cursor=pointer]:
+                      - /url: https://huggingface.co/MediaTek-Research/BreezeApp/resolve/main/BreezeApp.apk
+                  - listitem [ref=e1790]:
+                    - link "APK 中国镜像" [ref=e1791] [cursor=pointer]:
+                      - /url: https://hf-mirror.com/MediaTek-Research/BreezeApp/blob/main/BreezeApp.apk
+                - table [ref=e1793]:
+                  - rowgroup [ref=e1794]:
+                    - row "1 2 3" [ref=e1795]:
+                      - columnheader "1" [ref=e1796]
+                      - columnheader "2" [ref=e1797]
+                      - columnheader "3" [ref=e1798]
+                  - rowgroup [ref=e1799]:
+                    - row [ref=e1800]:
+                      - cell [ref=e1801]:
+                        - link [ref=e1802] [cursor=pointer]:
+                          - /url: https://private-user-images.githubusercontent.com/5284924/458309379-1cdbc057-b893-4de6-9e9c-f1d7dfd1d992.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwMDIwMTQsIm5iZiI6MTc3NzAwMTcxNCwicGF0aCI6Ii81Mjg0OTI0LzQ1ODMwOTM3OS0xY2RiYzA1Ny1iODkzLTRkZTYtOWU5Yy1mMWQ3ZGZkMWQ5OTIucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA0MjRUMDMzNTE0WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9ZjRmNjZlMmVkNGMzMTdmZTY2OGI2YzNkYTU2ODIwMzVhNmVlZTIzZTc2ZTRiNjlkMWRlMmQxM2ZlNDM3ZDZjNSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.99nC609KGuIKd_GfNgS5imxJHm06SA68gShAPIVRgxA
+                      - cell [ref=e1803]:
+                        - link [ref=e1804] [cursor=pointer]:
+                          - /url: https://private-user-images.githubusercontent.com/5284924/458309706-d77cd98e-b057-442f-860d-d5befd5c769b.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwMDIwMTQsIm5iZiI6MTc3NzAwMTcxNCwicGF0aCI6Ii81Mjg0OTI0LzQ1ODMwOTcwNi1kNzdjZDk4ZS1iMDU3LTQ0MmYtODYwZC1kNWJlZmQ1Yzc2OWIucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA0MjRUMDMzNTE0WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9MTI3N2Y5ZjU1YzY5MTM3NmNmMGQ1MzdmZmYxNjAwZjg4Yzk0ODQwMWZjZmQzMDVlZGQ5Y2U2YWQ1MWY5YTlkNSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.uYAMyjfFYt2puDk4JKVbaMTAXZvVK8uNFm9HrGAA8NY
+                      - cell [ref=e1805]:
+                        - link [ref=e1806] [cursor=pointer]:
+                          - /url: https://private-user-images.githubusercontent.com/5284924/458309201-57e546bf-3d39-45b9-b392-b48ca4fb3c58.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwMDIwMTQsIm5iZiI6MTc3NzAwMTcxNCwicGF0aCI6Ii81Mjg0OTI0LzQ1ODMwOTIwMS01N2U1NDZiZi0zZDM5LTQ1YjktYjM5Mi1iNDhjYTRmYjNjNTgucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA0MjRUMDMzNTE0WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9NTcwYmVjZDBkMjdhZDI3NWZjMjFiZmJkMjdlMDI3MDY2NGYxMTc4MjZiYjNlNjM3OWZkZGYxNjRhNGVmZDE1ZCZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.6fJK_oZi2vDRMYrfC9Z2mShHZe7d05p-6pjT2CN7zNk
+                - generic [ref=e1807]:
+                  - heading "Open-LLM-VTuber" [level=3] [ref=e1808]:
+                    - link "Open-LLM-VTuber" [ref=e1809] [cursor=pointer]:
+                      - /url: https://github.com/t41372/Open-LLM-VTuber
+                  - 'link "Permalink: Open-LLM-VTuber" [ref=e1810] [cursor=pointer]':
+                    - /url: "#open-llm-vtuber"
+                    - img [ref=e1811]
+                - paragraph [ref=e1813]: Talk to any LLM with hands-free voice interaction, voice interruption, and Live2D taking face running locally across platforms
+                - paragraph [ref=e1814]:
+                  - text: See also
+                  - link "https://github.com/t41372/Open-LLM-VTuber/pull/50" [ref=e1815] [cursor=pointer]:
+                    - /url: https://github.com/t41372/Open-LLM-VTuber/pull/50
+                - generic [ref=e1816]:
+                  - heading "voiceapi" [level=3] [ref=e1817]:
+                    - link "voiceapi" [ref=e1818] [cursor=pointer]:
+                      - /url: https://github.com/ruzhila/voiceapi
+                  - 'link "Permalink: voiceapi" [ref=e1819] [cursor=pointer]':
+                    - /url: "#voiceapi"
+                    - img [ref=e1820]
+                - group [ref=e1822]:
+                  - generic "Streaming ASR and TTS based on FastAPI" [ref=e1823] [cursor=pointer]
+                - generic [ref=e1824]:
+                  - heading "腾讯会议摸鱼工具 TMSpeech" [level=3] [ref=e1825]:
+                    - link "腾讯会议摸鱼工具 TMSpeech" [ref=e1826] [cursor=pointer]:
+                      - /url: https://github.com/jxlpzqc/TMSpeech
+                  - 'link "Permalink: 腾讯会议摸鱼工具 TMSpeech" [ref=e1827] [cursor=pointer]':
+                    - /url: "#腾讯会议摸鱼工具-tmspeech"
+                    - img [ref=e1828]
+                - paragraph [ref=e1830]: Uses streaming ASR in C# with graphical user interface.
+                - paragraph [ref=e1831]:
+                  - text: "Video demo in Chinese:"
+                  - link "【开源】Windows实时字幕软件（网课/开会必备）" [ref=e1832] [cursor=pointer]:
+                    - /url: https://www.bilibili.com/video/BV1rX4y1p7Nx
+                - generic [ref=e1833]:
+                  - heading "lol互动助手" [level=3] [ref=e1834]:
+                    - link "lol互动助手" [ref=e1835] [cursor=pointer]:
+                      - /url: https://github.com/l1veIn/lol-wom-electron
+                  - 'link "Permalink: lol互动助手" [ref=e1836] [cursor=pointer]':
+                    - /url: "#lol互动助手"
+                    - img [ref=e1837]
+                - paragraph [ref=e1839]:
+                  - text: It uses the JavaScript API of sherpa-onnx along with
+                  - link "Electron" [ref=e1840] [cursor=pointer]:
+                    - /url: https://electronjs.org/
+                - paragraph [ref=e1841]:
+                  - text: "Video demo in Chinese:"
+                  - link "爆了！炫神教你开打字挂！真正影响胜率的英雄联盟工具！英雄联盟的最后一块拼图！和游戏中的每个人无障碍沟通！" [ref=e1842] [cursor=pointer]:
+                    - /url: https://www.bilibili.com/video/BV142tje9E74
+                - generic [ref=e1843]:
+                  - heading "Sherpa-ONNX 语音识别服务器" [level=3] [ref=e1844]:
+                    - link "Sherpa-ONNX 语音识别服务器" [ref=e1845] [cursor=pointer]:
+                      - /url: https://github.com/hfyydd/sherpa-onnx-server
+                  - 'link "Permalink: Sherpa-ONNX 语音识别服务器" [ref=e1846] [cursor=pointer]':
+                    - /url: "#sherpa-onnx-语音识别服务器"
+                    - img [ref=e1847]
+                - paragraph [ref=e1849]: A server based on nodejs providing Restful API for speech recognition.
+                - generic [ref=e1850]:
+                  - heading "QSmartAssistant" [level=3] [ref=e1851]:
+                    - link "QSmartAssistant" [ref=e1852] [cursor=pointer]:
+                      - /url: https://github.com/xinhecuican/QSmartAssistant
+                  - 'link "Permalink: QSmartAssistant" [ref=e1853] [cursor=pointer]':
+                    - /url: "#qsmartassistant"
+                    - img [ref=e1854]
+                - paragraph [ref=e1856]: 一个模块化，全过程可离线，低占用率的对话机器人/智能音箱
+                - paragraph [ref=e1857]:
+                  - text: It uses QT. Both
+                  - link "ASR" [ref=e1858] [cursor=pointer]:
+                    - /url: https://github.com/xinhecuican/QSmartAssistant/blob/master/doc/%E5%AE%89%E8%A3%85.md#asr
+                  - text: and
+                  - link "TTS" [ref=e1859] [cursor=pointer]:
+                    - /url: https://github.com/xinhecuican/QSmartAssistant/blob/master/doc/%E5%AE%89%E8%A3%85.md#tts
+                  - text: are used.
+                - generic [ref=e1860]:
+                  - heading "Flutter-EasySpeechRecognition" [level=3] [ref=e1861]:
+                    - link "Flutter-EasySpeechRecognition" [ref=e1862] [cursor=pointer]:
+                      - /url: https://github.com/Jason-chen-coder/Flutter-EasySpeechRecognition
+                  - 'link "Permalink: Flutter-EasySpeechRecognition" [ref=e1863] [cursor=pointer]':
+                    - /url: "#flutter-easyspeechrecognition"
+                    - img [ref=e1864]
+                - paragraph [ref=e1866]:
+                  - text: It extends
+                  - link "./flutter-examples/streaming_asr" [ref=e1867] [cursor=pointer]:
+                    - /url: /k2-fsa/sherpa-onnx/blob/master/flutter-examples/streaming_asr
+                  - text: by downloading models inside the app to reduce the size of the app.
+                - paragraph [ref=e1868]:
+                  - text: "Note:"
+                  - link "[Team B] Sherpa AI backend" [ref=e1869] [cursor=pointer]:
+                    - /url: https://github.com/umgc/spring2025/pull/82
+                  - text: also uses sherpa-onnx in a Flutter APP.
+                - generic [ref=e1870]:
+                  - heading "sherpa-onnx-unity" [level=3] [ref=e1871]:
+                    - link "sherpa-onnx-unity" [ref=e1872] [cursor=pointer]:
+                      - /url: https://github.com/xue-fei/sherpa-onnx-unity
+                  - 'link "Permalink: sherpa-onnx-unity" [ref=e1873] [cursor=pointer]':
+                    - /url: "#sherpa-onnx-unity"
+                    - img [ref=e1874]
+                - paragraph [ref=e1876]:
+                  - text: sherpa-onnx in Unity. See also
+                  - link "#1695" [ref=e1877] [cursor=pointer]:
+                    - /url: https://github.com/k2-fsa/sherpa-onnx/issues/1695
+                  - text: ","
+                  - link "#1892" [ref=e1878] [cursor=pointer]:
+                    - /url: https://github.com/k2-fsa/sherpa-onnx/issues/1892
+                  - text: ", and"
+                  - link "#1859" [ref=e1879] [cursor=pointer]:
+                    - /url: https://github.com/k2-fsa/sherpa-onnx/issues/1859
+                - generic [ref=e1880]:
+                  - heading "xiaozhi-esp32-server" [level=3] [ref=e1881]:
+                    - link "xiaozhi-esp32-server" [ref=e1882] [cursor=pointer]:
+                      - /url: https://github.com/xinnan-tech/xiaozhi-esp32-server
+                  - 'link "Permalink: xiaozhi-esp32-server" [ref=e1883] [cursor=pointer]':
+                    - /url: "#xiaozhi-esp32-server"
+                    - img [ref=e1884]
+                - paragraph [ref=e1886]: 本项目为xiaozhi-esp32提供后端服务，帮助您快速搭建ESP32设备控制服务器 Backend service for xiaozhi-esp32, helps you quickly build an ESP32 device control server.
+                - paragraph [ref=e1887]: See also
+                - list [ref=e1888]:
+                  - listitem [ref=e1889]:
+                    - link "ASR新增轻量级sherpa-onnx-asr" [ref=e1890] [cursor=pointer]:
+                      - /url: https://github.com/xinnan-tech/xiaozhi-esp32-server/issues/315
+                  - listitem [ref=e1891]:
+                    - 'link "feat: ASR增加sherpa-onnx模型" [ref=e1892] [cursor=pointer]':
+                      - /url: https://github.com/xinnan-tech/xiaozhi-esp32-server/pull/379
+                - generic [ref=e1893]:
+                  - heading "KaithemAutomation" [level=3] [ref=e1894]:
+                    - link "KaithemAutomation" [ref=e1895] [cursor=pointer]:
+                      - /url: https://github.com/EternityForest/KaithemAutomation
+                  - 'link "Permalink: KaithemAutomation" [ref=e1896] [cursor=pointer]':
+                    - /url: "#kaithemautomation"
+                    - img [ref=e1897]
+                - paragraph [ref=e1899]: Pure Python, GUI-focused home automation/consumer grade SCADA.
+                - paragraph [ref=e1900]:
+                  - text: It uses TTS from sherpa-onnx. See also
+                  - link "✨ Speak command that uses the new globally configured TTS model." [ref=e1901] [cursor=pointer]:
+                    - /url: https://github.com/EternityForest/KaithemAutomation/commit/8e64d2b138725e426532f7d66bb69dd0b4f53693
+                - generic [ref=e1902]:
+                  - heading "Open-XiaoAI KWS" [level=3] [ref=e1903]:
+                    - link "Open-XiaoAI KWS" [ref=e1904] [cursor=pointer]:
+                      - /url: https://github.com/idootop/open-xiaoai-kws
+                  - 'link "Permalink: Open-XiaoAI KWS" [ref=e1905] [cursor=pointer]':
+                    - /url: "#open-xiaoai-kws"
+                    - img [ref=e1906]
+                - paragraph [ref=e1908]: Enable custom wake word for XiaoAi Speakers. 让小爱音箱支持自定义唤醒词。
+                - paragraph [ref=e1909]:
+                  - text: "Video demo in Chinese:"
+                  - link "小爱同学启动～˶╹ꇴ╹˶！" [ref=e1910] [cursor=pointer]:
+                    - /url: https://www.bilibili.com/video/BV1YfVUz5EMj
+                - generic [ref=e1911]:
+                  - heading "C++ WebSocket ASR Server" [level=3] [ref=e1912]:
+                    - link "C++ WebSocket ASR Server" [ref=e1913] [cursor=pointer]:
+                      - /url: https://github.com/mawwalker/stt-server
+                  - 'link "Permalink: C++ WebSocket ASR Server" [ref=e1914] [cursor=pointer]':
+                    - /url: "#c-websocket-asr-server"
+                    - img [ref=e1915]
+                - paragraph [ref=e1917]: It provides a WebSocket server based on C++ for ASR using sherpa-onnx.
+                - generic [ref=e1918]:
+                  - heading "Go WebSocket Server" [level=3] [ref=e1919]:
+                    - link "Go WebSocket Server" [ref=e1920] [cursor=pointer]:
+                      - /url: https://github.com/bbeyondllove/asr_server
+                  - 'link "Permalink: Go WebSocket Server" [ref=e1921] [cursor=pointer]':
+                    - /url: "#go-websocket-server"
+                    - img [ref=e1922]
+                - paragraph [ref=e1924]: It provides a WebSocket server based on the Go programming language for sherpa-onnx.
+                - generic [ref=e1925]:
+                  - heading "Making robot Paimon, Ep10 \"The AI Part 1\"" [level=3] [ref=e1926]:
+                    - link "Making robot Paimon, Ep10 \"The AI Part 1\"" [ref=e1927] [cursor=pointer]:
+                      - /url: https://www.youtube.com/watch?v=KxPKkwxGWZs
+                  - 'link "Permalink: Making robot Paimon, Ep10 \"The AI Part 1\"" [ref=e1928] [cursor=pointer]':
+                    - /url: "#making-robot-paimon-ep10-the-ai-part-1"
+                    - img [ref=e1929]
+                - paragraph [ref=e1931]:
+                  - text: It is a
+                  - link "YouTube video" [ref=e1932] [cursor=pointer]:
+                    - /url: https://www.youtube.com/watch?v=KxPKkwxGWZs
+                  - text: ", showing how the author tried to use AI so he can have a conversation with Paimon."
+                - paragraph [ref=e1933]: It uses sherpa-onnx for speech-to-text and text-to-speech.
+                - table [ref=e1935]:
+                  - rowgroup [ref=e1936]:
+                    - row "1" [ref=e1937]:
+                      - columnheader "1" [ref=e1938]
+                  - rowgroup [ref=e1939]:
+                    - row [ref=e1940]:
+                      - cell [ref=e1941]:
+                        - link [ref=e1942] [cursor=pointer]:
+                          - /url: https://private-user-images.githubusercontent.com/5284924/442579664-f6eea2d5-1807-42cb-9160-be8da2971e1f.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzcwMDIwMTQsIm5iZiI6MTc3NzAwMTcxNCwicGF0aCI6Ii81Mjg0OTI0LzQ0MjU3OTY2NC1mNmVlYTJkNS0xODA3LTQyY2ItOTE2MC1iZThkYTI5NzFlMWYucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDQyNCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA0MjRUMDMzNTE0WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9Yjc5NDA0Y2FmOTRjOTk5ZjkxOGQ4ZWZiMzY5MzQ1NjA2ZmI4OTkzMDczNGIzYTNhMmI2YjhlNTIzODcwYTVmMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGcG5nIn0.H6rWWlCme7MxZFuUM9O0W8Fsy_bZ5k9n-6KXkMoc4nA
+                - generic [ref=e1943]:
+                  - heading "TtsReader - Desktop application" [level=3] [ref=e1944]:
+                    - link "TtsReader - Desktop application" [ref=e1945] [cursor=pointer]:
+                      - /url: https://github.com/ys-pro-duction/TtsReader
+                  - 'link "Permalink: TtsReader - Desktop application" [ref=e1946] [cursor=pointer]':
+                    - /url: "#ttsreader---desktop-application"
+                    - img [ref=e1947]
+                - paragraph [ref=e1949]: A desktop text-to-speech application built using Kotlin Multiplatform.
+                - generic [ref=e1950]:
+                  - heading "MentraOS" [level=3] [ref=e1951]:
+                    - link "MentraOS" [ref=e1952] [cursor=pointer]:
+                      - /url: https://github.com/Mentra-Community/MentraOS
+                  - 'link "Permalink: MentraOS" [ref=e1953] [cursor=pointer]':
+                    - /url: "#mentraos"
+                    - img [ref=e1954]
+                - blockquote [ref=e1956]:
+                  - paragraph [ref=e1957]: Smart glasses OS, with dozens of built-in apps. Users get AI assistant, notifications, translation, screen mirror, captions, and more. Devs get to write 1 app that runs on any pair of smart glasses.
+                - paragraph [ref=e1958]:
+                  - text: It uses sherpa-onnx for real-time speech recognition on iOS and Android devices. See also
+                  - link "Mentra-Community/MentraOS#861" [ref=e1959] [cursor=pointer]:
+                    - /url: https://github.com/Mentra-Community/MentraOS/pull/861
+                - paragraph [ref=e1960]: It uses Swift for iOS and Java for Android.
+                - generic [ref=e1961]:
+                  - heading "flet_sherpa_onnx" [level=3] [ref=e1962]:
+                    - link "flet_sherpa_onnx" [ref=e1963] [cursor=pointer]:
+                      - /url: https://github.com/SamYuan1990/flet_sherpa_onnx
+                  - 'link "Permalink: flet_sherpa_onnx" [ref=e1964] [cursor=pointer]':
+                    - /url: "#flet_sherpa_onnx"
+                    - img [ref=e1965]
+                - paragraph [ref=e1967]:
+                  - text: Flet ASR/STT component based on sherpa-onnx. Example
+                  - link "a chat box agent" [ref=e1968] [cursor=pointer]:
+                    - /url: https://github.com/SamYuan1990/i18n-agent-action
+                - generic [ref=e1969]:
+                  - heading "achatbot-go" [level=3] [ref=e1970]:
+                    - link "achatbot-go" [ref=e1971] [cursor=pointer]:
+                      - /url: https://github.com/ai-bot-pro/achatbot-go
+                  - 'link "Permalink: achatbot-go" [ref=e1972] [cursor=pointer]':
+                    - /url: "#achatbot-go"
+                    - img [ref=e1973]
+                - paragraph [ref=e1975]: a multimodal chatbot based on go with sherpa-onnx's speech lib api.
+                - generic [ref=e1976]:
+                  - heading "fcitx5-vinput" [level=3] [ref=e1977]:
+                    - link "fcitx5-vinput" [ref=e1978] [cursor=pointer]:
+                      - /url: https://github.com/xifan2333/fcitx5-vinput
+                  - 'link "Permalink: fcitx5-vinput" [ref=e1979] [cursor=pointer]':
+                    - /url: "#fcitx5-vinput"
+                    - img [ref=e1980]
+                - paragraph [ref=e1982]:
+                  - text: Local offline voice input plugin for
+                  - link "Fcitx5" [ref=e1983] [cursor=pointer]:
+                    - /url: https://github.com/fcitx/fcitx5
+                  - text: (Linux input method framework). It uses C++ with offline ASR for speech recognition, supporting push-to-talk, command mode, and optional LLM post-processing.
+                - paragraph [ref=e1984]:
+                  - text: "Video demo in Chinese:"
+                  - link "fcitx5-vinput" [ref=e1985] [cursor=pointer]:
+                    - /url: https://www.bilibili.com/video/BV1a6cUzVE6F
+                - generic [ref=e1986]:
+                  - heading "Wake Word" [level=3] [ref=e1987]:
+                    - link "Wake Word" [ref=e1988] [cursor=pointer]:
+                      - /url: https://github.com/analyticsinmotion/wake-word
+                  - 'link "Permalink: Wake Word" [ref=e1989] [cursor=pointer]':
+                    - /url: "#wake-word"
+                    - img [ref=e1990]
+                - paragraph [ref=e1992]:
+                  - text: A VS Code extension for hands-free voice-activated coding. It uses sherpa-onnx for real-time keyword spotting (KWS) to detect custom wake phrases and trigger VS Code commands by voice. Audio capture is handled by
+                  - link "decibri" [ref=e1993] [cursor=pointer]:
+                    - /url: https://github.com/analyticsinmotion/decibri
+                  - text: ", a cross-platform Node.js microphone streaming library with prebuilt native binaries."
+                - list [ref=e1994]:
+                  - listitem [ref=e1995]:
+                    - link "VS Code Marketplace" [ref=e1996] [cursor=pointer]:
+                      - /url: https://marketplace.visualstudio.com/items?itemName=analytics-in-motion.wake-word
+                  - listitem [ref=e1997]:
+                    - link "Open VSX" [ref=e1998] [cursor=pointer]:
+                      - /url: https://open-vsx.org/extension/analytics-in-motion/wake-word
+                  - listitem [ref=e1999]:
+                    - link "decibri integration guides for sherpa-onnx" [ref=e2000] [cursor=pointer]:
+                      - /url: https://decibri.dev/docs/node/integrations/sherpa-onnx-stt.html
+        - generic [ref=e2004]:
+          - generic [ref=e2007]:
+            - heading "About" [level=2] [ref=e2008]
+            - paragraph [ref=e2009]: Speech-to-text, text-to-speech, speaker diarization, speech enhancement, source separation, and VAD using next-gen Kaldi with onnxruntime without Internet connection. Support embedded systems, Android, iOS, HarmonyOS, Raspberry Pi, RISC-V, RK NPU, Axera NPU, Ascend NPU, x86_64 servers, websocket server/client, support 12 programming languages
+            - generic [ref=e2010]:
+              - img [ref=e2011]
+              - link "k2-fsa.github.io/sherpa/onnx/index.html" [ref=e2014] [cursor=pointer]:
+                - /url: https://k2-fsa.github.io/sherpa/onnx/index.html
+            - heading "Topics" [level=3] [ref=e2015]
+            - generic [ref=e2017]:
+              - link "android" [ref=e2018] [cursor=pointer]:
+                - /url: /topics/android
+              - link "windows" [ref=e2019] [cursor=pointer]:
+                - /url: /topics/windows
+              - link "macos" [ref=e2020] [cursor=pointer]:
+                - /url: /topics/macos
+              - link "linux" [ref=e2021] [cursor=pointer]:
+                - /url: /topics/linux
+              - link "lazarus" [ref=e2022] [cursor=pointer]:
+                - /url: /topics/lazarus
+              - link "raspberry-pi" [ref=e2023] [cursor=pointer]:
+                - /url: /topics/raspberry-pi
+              - link "ios" [ref=e2024] [cursor=pointer]:
+                - /url: /topics/ios
+              - link "text-to-speech" [ref=e2025] [cursor=pointer]:
+                - /url: /topics/text-to-speech
+              - link "csharp" [ref=e2026] [cursor=pointer]:
+                - /url: /topics/csharp
+              - link "cpp" [ref=e2027] [cursor=pointer]:
+                - /url: /topics/cpp
+              - link "dotnet" [ref=e2028] [cursor=pointer]:
+                - /url: /topics/dotnet
+              - link "speech-to-text" [ref=e2029] [cursor=pointer]:
+                - /url: /topics/speech-to-text
+              - link "aarch64" [ref=e2030] [cursor=pointer]:
+                - /url: /topics/aarch64
+              - link "mfc" [ref=e2031] [cursor=pointer]:
+                - /url: /topics/mfc
+              - link "risc-v" [ref=e2032] [cursor=pointer]:
+                - /url: /topics/risc-v
+              - link "object-pascal" [ref=e2033] [cursor=pointer]:
+                - /url: /topics/object-pascal
+              - link "asr" [ref=e2034] [cursor=pointer]:
+                - /url: /topics/asr
+              - link "arm32" [ref=e2035] [cursor=pointer]:
+                - /url: /topics/arm32
+              - link "onnx" [ref=e2036] [cursor=pointer]:
+                - /url: /topics/onnx
+              - link "vits" [ref=e2037] [cursor=pointer]:
+                - /url: /topics/vits
+            - heading "Resources" [level=3] [ref=e2038]
+            - link "Readme" [ref=e2040] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e2041]
+              - text: Readme
+            - heading "License" [level=3] [ref=e2043]
+            - link "Apache-2.0 license" [ref=e2045] [cursor=pointer]:
+              - /url: "#Apache-2.0-1-ov-file"
+              - img [ref=e2046]
+              - text: Apache-2.0 license
+            - link "Activity" [ref=e2049] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/activity
+              - img [ref=e2050]
+              - text: Activity
+            - link "Custom properties" [ref=e2053] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/custom-properties
+              - img [ref=e2054]
+              - text: Custom properties
+            - heading "Stars" [level=3] [ref=e2056]
+            - link "11.8k stars" [ref=e2058] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/stargazers
+              - img [ref=e2059]
+              - strong [ref=e2061]: 11.8k
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e2062]
+            - link "106 watching" [ref=e2064] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/watchers
+              - img [ref=e2065]
+              - strong [ref=e2067]: "106"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e2068]
+            - link "1.4k forks" [ref=e2070] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/forks
+              - img [ref=e2071]
+              - strong [ref=e2073]: 1.4k
+              - text: forks
+            - link "Report repository" [ref=e2075] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Fk2-fsa%2Fsherpa-onnx&report=k2-fsa+%28user%29
+          - generic [ref=e2077]:
+            - heading "Releases 175" [level=2] [ref=e2078]:
+              - link "Releases 175" [ref=e2079] [cursor=pointer]:
+                - /url: /k2-fsa/sherpa-onnx/releases
+                - text: Releases
+                - generic "175" [ref=e2080]
+            - link "v1.12.39 Latest Apr 17, 2026last week" [ref=e2081] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/releases/tag/v1.12.39
+              - img [ref=e2082]
+              - generic [ref=e2084]:
+                - generic [ref=e2085]:
+                  - generic [ref=e2086]: v1.12.39
+                  - 'generic "Label: Latest" [ref=e2087]': Latest
+                - generic [ref=e2088]: Apr 17, 2026last week
+            - link "+ 174 releases" [ref=e2090] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/releases
+          - generic [ref=e2092]:
+            - heading "Contributors 204" [level=2] [ref=e2093]:
+              - link "Contributors 204" [ref=e2094] [cursor=pointer]:
+                - /url: /k2-fsa/sherpa-onnx/graphs/contributors
+                - text: Contributors
+                - generic "204" [ref=e2095]
+            - list [ref=e2096]:
+              - listitem [ref=e2097]:
+                - link "@csukuangfj" [ref=e2098] [cursor=pointer]:
+                  - /url: https://github.com/csukuangfj
+                  - img "@csukuangfj" [ref=e2099]
+              - listitem [ref=e2100]:
+                - link "@pkufool" [ref=e2101] [cursor=pointer]:
+                  - /url: https://github.com/pkufool
+                  - img "@pkufool" [ref=e2102]
+              - listitem [ref=e2103]:
+                - link "@Wasser1462" [ref=e2104] [cursor=pointer]:
+                  - /url: https://github.com/Wasser1462
+                  - img "@Wasser1462" [ref=e2105]
+              - listitem [ref=e2106]:
+                - link "@ZhaoChaoqun" [ref=e2107] [cursor=pointer]:
+                  - /url: https://github.com/ZhaoChaoqun
+                  - img "@ZhaoChaoqun" [ref=e2108]
+              - listitem [ref=e2109]:
+                - link "@pingfengluo" [ref=e2110] [cursor=pointer]:
+                  - /url: https://github.com/pingfengluo
+                  - img "@pingfengluo" [ref=e2111]
+              - listitem [ref=e2112]:
+                - link "@manickavela29" [ref=e2113] [cursor=pointer]:
+                  - /url: https://github.com/manickavela29
+                  - img "@manickavela29" [ref=e2114]
+              - listitem [ref=e2115]:
+                - link "@yujinqiu" [ref=e2116] [cursor=pointer]:
+                  - /url: https://github.com/yujinqiu
+                  - img "@yujinqiu" [ref=e2117]
+              - listitem [ref=e2118]:
+                - link "@KarelVesely84" [ref=e2119] [cursor=pointer]:
+                  - /url: https://github.com/KarelVesely84
+                  - img "@KarelVesely84" [ref=e2120]
+              - listitem [ref=e2121]:
+                - link "@vsd-vector" [ref=e2122] [cursor=pointer]:
+                  - /url: https://github.com/vsd-vector
+                  - img "@vsd-vector" [ref=e2123]
+              - listitem [ref=e2124]:
+                - link "@zhaomingwork" [ref=e2125] [cursor=pointer]:
+                  - /url: https://github.com/zhaomingwork
+                  - img "@zhaomingwork" [ref=e2126]
+              - listitem [ref=e2127]:
+                - link "@jingzhaoou" [ref=e2128] [cursor=pointer]:
+                  - /url: https://github.com/jingzhaoou
+                  - img "@jingzhaoou" [ref=e2129]
+              - listitem [ref=e2130]:
+                - link "@frankyoujian" [ref=e2131] [cursor=pointer]:
+                  - /url: https://github.com/frankyoujian
+                  - img "@frankyoujian" [ref=e2132]
+              - listitem [ref=e2133]:
+                - link "@chiiyeh" [ref=e2134] [cursor=pointer]:
+                  - /url: https://github.com/chiiyeh
+                  - img "@chiiyeh" [ref=e2135]
+              - listitem [ref=e2136]:
+                - link "@manyeyes" [ref=e2137] [cursor=pointer]:
+                  - /url: https://github.com/manyeyes
+                  - img "@manyeyes" [ref=e2138]
+            - link "+ 190 contributors" [ref=e2140] [cursor=pointer]:
+              - /url: /k2-fsa/sherpa-onnx/graphs/contributors
+          - generic [ref=e2142]:
+            - heading "Languages" [level=2] [ref=e2143]
+            - list [ref=e2153]:
+              - listitem [ref=e2154]:
+                - link "C++ 37.7%" [ref=e2155] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=c%2B%2B
+                  - img [ref=e2156]
+                  - generic [ref=e2158]: C++
+                  - generic [ref=e2159]: 37.7%
+              - listitem [ref=e2160]:
+                - link "Python 17.3%" [ref=e2161] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=python
+                  - img [ref=e2162]
+                  - generic [ref=e2164]: Python
+                  - generic [ref=e2165]: 17.3%
+              - listitem [ref=e2166]:
+                - link "Shell 6.9%" [ref=e2167] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=shell
+                  - img [ref=e2168]
+                  - generic [ref=e2170]: Shell
+                  - generic [ref=e2171]: 6.9%
+              - listitem [ref=e2172]:
+                - link "JavaScript 5.1%" [ref=e2173] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=javascript
+                  - img [ref=e2174]
+                  - generic [ref=e2176]: JavaScript
+                  - generic [ref=e2177]: 5.1%
+              - listitem [ref=e2178]:
+                - link "Rust 4.5%" [ref=e2179] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=rust
+                  - img [ref=e2180]
+                  - generic [ref=e2182]: Rust
+                  - generic [ref=e2183]: 4.5%
+              - listitem [ref=e2184]:
+                - link "Dart 4.4%" [ref=e2185] [cursor=pointer]:
+                  - /url: /k2-fsa/sherpa-onnx/search?l=dart
+                  - img [ref=e2186]
+                  - generic [ref=e2188]: Dart
+                  - generic [ref=e2189]: 4.4%
+              - listitem [ref=e2190]:
+                - generic [ref=e2191]:
+                  - img [ref=e2192]
+                  - generic [ref=e2194]: Other
+                  - generic [ref=e2195]: 24.1%
+  - contentinfo [ref=e2197]:
+    - heading "Footer" [level=2] [ref=e2198]
+    - generic [ref=e2199]:
+      - generic [ref=e2200]:
+        - link "GitHub Homepage" [ref=e2201] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e2202]
+        - generic [ref=e2204]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e2205]:
+        - heading "Footer navigation" [level=3] [ref=e2206]
+        - list "Footer navigation" [ref=e2207]:
+          - listitem [ref=e2208]:
+            - link "Terms" [ref=e2209] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e2210]:
+            - link "Privacy" [ref=e2211] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e2212]:
+            - link "Security" [ref=e2213] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e2214]:
+            - link "Status" [ref=e2215] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e2216]:
+            - link "Community" [ref=e2217] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e2218]:
+            - link "Docs" [ref=e2219] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e2220]:
+            - link "Contact" [ref=e2221] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e2222]:
+            - button "Manage cookies" [ref=e2224] [cursor=pointer]
+          - listitem [ref=e2225]:
+            - button "Do not share my personal information" [ref=e2227] [cursor=pointer]

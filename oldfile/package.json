@@ -1,0 +1,39 @@
+{
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "daisyui": "^4.12.24",
+    "tailwindcss": "^3.4.19"
+  },
+  "name": "nifty-reader",
+  "version": "1.0.0",
+  "description": "Desktop reader application for https://search.niftyarchives.org/ Built with Dioxus (Rust)",
+  "main": "src/tailwind.config.js",
+  "scripts": {
+    "clear": "cls",
+    "build-css": "tailwindcss -c ./src/tailwind.config.js -i ./src/input.css -o ./src/assets/main.css",
+    "watch-css": "tailwindcss -c ./src/tailwind.config.js -i ./src/input.css -o ./src/assets/main.css --watch",
+    "watch-rust": "cargo watch -i \"docs/site-parsing-reference/*\" -x \"run --bin nifty-reader\"",
+    "dev": "npm run clear && concurrently \"npm run watch-css\" \"npm run watch-rust\"",
+    "start": "npm run dev",
+    "download-models": "cargo run --no-default-features --bin download-models",
+    "voice-train": "cargo run --no-default-features --bin voice-cli -- train",
+    "voice-generate": "cargo run --no-default-features --bin voice-cli -- generate",
+    "voice-list": "cargo run --no-default-features --bin voice-cli -- list-voices",
+    "build": "npm run build-css && cargo build --release --bin nifty-reader",
+    "build-voice-cli": "cargo build --release --no-default-features --bin voice-cli",
+    "build-download-models": "cargo build --release --no-default-features --bin download-models",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeHungryBoi/nifty-reader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LeHungryBoi/nifty-reader/issues"
+  },
+  "homepage": "https://github.com/LeHungryBoi/nifty-reader#readme"
+}

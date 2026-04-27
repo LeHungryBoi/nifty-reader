@@ -1,0 +1,7 @@
+---
+description: Project entry point for all agents
+globs:
+alwaysApply: true
+---
+
+Read `agent.md` in the project root before doing anything else.

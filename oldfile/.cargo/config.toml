@@ -1,0 +1,28 @@
+[build]
+rustc-wrapper = "sccache"
+incremental = false
+
+[env]
+SCCACHE_DIR = "D:\\_Utils\\Cache\\sccache"
+SCCACHE_CACHE_SIZE = "15G"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+    "-C", "linker=rust-lld",
+    "--cfg", "slint_no_build_rs"
+]
+
+[package.metadata.slint]
+hot-reload = true
+
+[profile.dev]
+opt-level = 1  
+overflow-checks = false
+incremental = false
+lto = "off"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 6
+strip = true

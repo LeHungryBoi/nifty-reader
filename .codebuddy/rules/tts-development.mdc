@@ -1,0 +1,7 @@
+---
+description: Project entry point for all agents
+alwaysApply: true
+enabled: true
+---
+
+Read `agent.md` in the project root before doing anything else.

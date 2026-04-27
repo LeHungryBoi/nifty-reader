@@ -1,0 +1,526 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e9]:
+          - button "Toggle navigation" [ref=e11] [cursor=pointer]
+          - link "Homepage" [ref=e17] [cursor=pointer]:
+            - /url: /
+            - img [ref=e18]
+          - generic [ref=e20]:
+            - link "Sign in" [ref=e21] [cursor=pointer]:
+              - /url: /login?return_to=https%3A%2F%2Fgithub.com%2FLaurentMazare%2Fxn%2Fblob%2Fmain%2Fpocket-tts%2FCargo.toml
+            - button "Appearance settings" [ref=e24] [cursor=pointer]:
+              - img
+    - main [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - img [ref=e33]
+            - link "LaurentMazare" [ref=e36] [cursor=pointer]:
+              - /url: /LaurentMazare
+            - generic [ref=e37]: /
+            - strong [ref=e38]:
+              - link "xn" [ref=e39] [cursor=pointer]:
+                - /url: /LaurentMazare/xn
+            - generic [ref=e40]: Public
+          - generic [ref=e41]:
+            - list:
+              - listitem [ref=e42]:
+                - link "You must be signed in to change notification settings" [ref=e43] [cursor=pointer]:
+                  - /url: /login?return_to=%2FLaurentMazare%2Fxn
+                  - img [ref=e44]
+                  - text: Notifications
+              - listitem [ref=e46]:
+                - link "Fork 4" [ref=e47] [cursor=pointer]:
+                  - /url: /login?return_to=%2FLaurentMazare%2Fxn
+                  - img [ref=e48]
+                  - text: Fork
+                  - generic "4" [ref=e50]
+              - listitem [ref=e51]:
+                - link "You must be signed in to star a repository" [ref=e53] [cursor=pointer]:
+                  - /url: /login?return_to=%2FLaurentMazare%2Fxn
+                  - img [ref=e54]
+                  - text: Star
+                  - generic "59 users starred this repository" [ref=e56]: "59"
+        - navigation "Repository" [ref=e57]:
+          - list [ref=e58]:
+            - listitem [ref=e59]:
+              - link "Code" [ref=e60] [cursor=pointer]:
+                - /url: /LaurentMazare/xn
+                - img [ref=e61]
+                - generic [ref=e63]: Code
+            - listitem [ref=e64]:
+              - link "Issues" [ref=e65] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/issues
+                - img [ref=e66]
+                - generic [ref=e69]: Issues
+            - listitem [ref=e70]:
+              - link "Pull requests 1" [ref=e71] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/pulls
+                - img [ref=e72]
+                - generic [ref=e74]: Pull requests
+                - generic "1" [ref=e75]
+            - listitem [ref=e76]:
+              - link "Actions" [ref=e77] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/actions
+                - img [ref=e78]
+                - generic [ref=e80]: Actions
+            - listitem [ref=e81]:
+              - link "Projects" [ref=e82] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/projects
+                - img [ref=e83]
+                - generic [ref=e85]: Projects
+            - listitem [ref=e86]:
+              - link "Security and quality" [ref=e87] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/security
+                - img [ref=e88]
+                - generic [ref=e90]: Security and quality
+            - listitem [ref=e91]:
+              - link "Insights" [ref=e92] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/pulse
+                - img [ref=e93]
+                - generic [ref=e95]: Insights
+      - generic [ref=e106]:
+        - generic [ref=e110]:
+          - generic [ref=e111]:
+            - heading "Expand file tree" [level=2] [ref=e113]:
+              - button "Expand file tree" [ref=e114] [cursor=pointer]:
+                - img [ref=e115]
+            - button "main branch" [ref=e119] [cursor=pointer]:
+              - generic [ref=e120]:
+                - generic [ref=e122]:
+                  - img [ref=e124]
+                  - generic [ref=e127]: main
+                - generic:
+                  - img
+            - generic [ref=e129]:
+              - navigation "Breadcrumbs" [ref=e130]:
+                - heading "Breadcrumbs" [level=2] [ref=e131]
+                - list [ref=e132]:
+                  - listitem [ref=e133]:
+                    - link "xn" [ref=e134] [cursor=pointer]:
+                      - /url: /LaurentMazare/xn/tree/main
+                  - listitem [ref=e135]:
+                    - text: /
+                    - link "pocket-tts" [ref=e136] [cursor=pointer]:
+                      - /url: /LaurentMazare/xn/tree/main/pocket-tts
+              - generic [ref=e137]:
+                - text: /
+                - heading "Cargo.toml" [level=1] [ref=e138]
+              - button "Copy path" [ref=e139] [cursor=pointer]:
+                - img [ref=e140]
+          - generic [ref=e145]:
+            - generic [ref=e148]:
+              - img [ref=e150]
+              - combobox "Go to file" [ref=e152]
+            - button "More file actions" [ref=e153] [cursor=pointer]:
+              - img [ref=e154]
+        - generic [ref=e156]:
+          - generic [ref=e158]:
+            - heading "Latest commit" [level=2] [ref=e159]
+            - generic [ref=e162]:
+              - heading "History" [level=2] [ref=e163]
+              - link "View commit history for this file." [ref=e165] [cursor=pointer]:
+                - /url: /LaurentMazare/xn/commits/main/pocket-tts/Cargo.toml
+                - generic [ref=e166]:
+                  - generic:
+                    - img
+          - generic [ref=e168]:
+            - generic "999 Bytes" [ref=e172]: 43 lines (38 loc) · 999 Bytes
+            - generic [ref=e174]:
+              - heading "File metadata and controls" [level=2] [ref=e175]
+              - list "File view" [ref=e177]:
+                - listitem [ref=e178]:
+                  - button "Code" [ref=e179] [cursor=pointer]:
+                    - generic [ref=e181]: Code
+                - listitem [ref=e182]:
+                  - button "Blame" [ref=e183] [cursor=pointer]:
+                    - generic [ref=e185]: Blame
+              - generic [ref=e186]:
+                - generic [ref=e187]:
+                  - generic [ref=e188]:
+                    - link "Raw" [ref=e190] [cursor=pointer]:
+                      - /url: https://github.com/LaurentMazare/xn/raw/refs/heads/main/pocket-tts/Cargo.toml
+                      - generic [ref=e192]: Raw
+                    - button "Copy raw file" [ref=e194] [cursor=pointer]:
+                      - img [ref=e195]
+                    - button "Download raw file" [ref=e199] [cursor=pointer]:
+                      - img [ref=e200]
+                  - generic [ref=e203]:
+                    - button "You must be signed in to make or propose changes" [disabled] [ref=e205]:
+                      - img [ref=e206]
+                    - button "More edit options" [ref=e209] [cursor=pointer]:
+                      - img [ref=e210]
+                - button "Open symbols panel" [ref=e212] [cursor=pointer]:
+                  - img [ref=e213]
+            - region [ref=e216]:
+              - generic [ref=e220]:
+                - textbox "file content" [ref=e225]: "[package] name = \"ptts\" version.workspace = true edition = \"2024\" autoexamples = false description.workspace = true repository.workspace = true keywords.workspace = true categories.workspace = true license.workspace = true [dependencies] xn = { workspace = true } rand = { workspace = true, features = [\"std_rng\"] } rand_distr = { workspace = true } serde = { workspace = true } tracing = { workspace = true } tracing-subscriber = { workspace = true } sentencepiece = { workspace = true, optional = true } [dev-dependencies] anyhow = { workspace = true } clap = { workspace = true } half = { workspace = true } hf-hub = { workspace = true } rubato = { workspace = true } libc = { workspace = true } serde_json = { workspace = true } symphonia = { workspace = true } tracing-chrome = { workspace = true } [features] default = [] cuda = [\"xn/cuda\"] accelerate = [\"xn/accelerate\"] sp = [\"dep:sentencepiece\"] [[example]] name = \"pocket_tts\" required-features = [\"sp\"] [[example]] name = \"quantize\""
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic [ref=e226]:
+                        - generic [ref=e227] [cursor=pointer]: "1"
+                        - generic [ref=e228] [cursor=pointer]: "2"
+                        - generic [ref=e229] [cursor=pointer]: "3"
+                        - generic [ref=e230] [cursor=pointer]: "4"
+                        - generic [ref=e231] [cursor=pointer]: "5"
+                        - generic [ref=e232] [cursor=pointer]: "6"
+                        - generic [ref=e233] [cursor=pointer]: "7"
+                        - generic [ref=e234] [cursor=pointer]: "8"
+                        - generic [ref=e235] [cursor=pointer]: "9"
+                        - generic [ref=e236] [cursor=pointer]: "10"
+                        - generic [ref=e237] [cursor=pointer]: "11"
+                        - generic [ref=e238] [cursor=pointer]: "12"
+                        - generic [ref=e239] [cursor=pointer]: "13"
+                        - generic [ref=e240] [cursor=pointer]: "14"
+                        - generic [ref=e241] [cursor=pointer]: "15"
+                        - generic [ref=e242] [cursor=pointer]: "16"
+                        - generic [ref=e243] [cursor=pointer]: "17"
+                        - generic [ref=e244] [cursor=pointer]: "18"
+                        - generic [ref=e245] [cursor=pointer]: "19"
+                        - generic [ref=e246] [cursor=pointer]: "20"
+                        - generic [ref=e247] [cursor=pointer]: "21"
+                        - generic [ref=e248] [cursor=pointer]: "22"
+                        - generic [ref=e249] [cursor=pointer]: "23"
+                        - generic [ref=e250] [cursor=pointer]: "24"
+                        - generic [ref=e251] [cursor=pointer]: "25"
+                        - generic [ref=e252] [cursor=pointer]: "26"
+                        - generic [ref=e253] [cursor=pointer]: "27"
+                        - generic [ref=e254] [cursor=pointer]: "28"
+                        - generic [ref=e255] [cursor=pointer]: "29"
+                        - generic [ref=e256] [cursor=pointer]: "30"
+                        - generic [ref=e257] [cursor=pointer]: "31"
+                        - generic [ref=e258] [cursor=pointer]: "32"
+                        - generic [ref=e259] [cursor=pointer]: "33"
+                        - generic [ref=e260] [cursor=pointer]: "34"
+                        - generic [ref=e261] [cursor=pointer]: "35"
+                        - generic [ref=e262] [cursor=pointer]: "36"
+                        - generic [ref=e263] [cursor=pointer]: "37"
+                        - generic [ref=e264] [cursor=pointer]: "38"
+                        - generic [ref=e265] [cursor=pointer]: "39"
+                        - generic [ref=e266] [cursor=pointer]: "40"
+                        - generic [ref=e267] [cursor=pointer]: "41"
+                        - generic [ref=e268] [cursor=pointer]: "42"
+                        - generic [ref=e269] [cursor=pointer]: "43"
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "["
+                              - generic: package
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: name
+                              - text: =
+                              - generic:
+                                - generic: "\""
+                                - text: ptts
+                                - generic: "\""
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: version.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: edition
+                              - text: =
+                              - generic:
+                                - generic: "\""
+                                - text: "2024"
+                                - generic: "\""
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: autoexamples
+                              - text: =
+                              - generic: "false"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: description.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: repository.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: keywords.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: categories.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: license.workspace
+                              - text: =
+                              - generic: "true"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "["
+                              - generic: dependencies
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: xn
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: rand
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: ","
+                              - generic: features
+                              - text: = [
+                              - generic:
+                                - generic: "\""
+                                - text: std_rng
+                                - generic: "\""
+                              - text: "] }"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: rand_distr
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: serde
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: tracing
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: tracing-subscriber
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: sentencepiece
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: ","
+                              - generic: optional
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "["
+                              - generic: dev-dependencies
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: anyhow
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: clap
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: half
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: hf-hub
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: rubato
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: libc
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: serde_json
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: symphonia
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: tracing-chrome
+                              - text: "= {"
+                              - generic: workspace
+                              - text: =
+                              - generic: "true"
+                              - text: "}"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "["
+                              - generic: features
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: default
+                              - text: = []
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: cuda
+                              - text: = [
+                              - generic:
+                                - generic: "\""
+                                - text: xn/cuda
+                                - generic: "\""
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: accelerate
+                              - text: = [
+                              - generic:
+                                - generic: "\""
+                                - text: xn/accelerate
+                                - generic: "\""
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: sp
+                              - text: = [
+                              - generic:
+                                - generic: "\""
+                                - text: dep:sentencepiece
+                                - generic: "\""
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "[["
+                              - generic: example
+                              - text: "]]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: name
+                              - text: =
+                              - generic:
+                                - generic: "\""
+                                - text: pocket_tts
+                                - generic: "\""
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: required-features
+                              - text: = [
+                              - generic:
+                                - generic: "\""
+                                - text: sp
+                                - generic: "\""
+                              - text: "]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - text: "[["
+                              - generic: example
+                              - text: "]]"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: name
+                              - text: =
+                              - generic:
+                                - generic: "\""
+                                - text: quantize
+                                - generic: "\""
+  - alert [ref=e273]

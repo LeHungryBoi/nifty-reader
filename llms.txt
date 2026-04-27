@@ -1,0 +1,69 @@
+# Nifty Reader — LLM File Index
+
+> This file helps LLMs quickly find relevant files without scanning the whole repo.
+> Read agent.md first for instructions and rules.
+> This file is a project state file — update it when files are added, removed, or renamed.
+
+## Entry Points
+
+agent.md — Rules, commands, where to find things, up-to-date rules, and boundaries for all AI agents. Read this first.
+README.md — Human-facing project overview and setup instructions.
+
+## Specifications (spec/)
+
+spec/architecture.md — Crate layout, source file map, library usage per crate, data flow between components. Shared codebase understanding — always up to date.
+spec/roadmap.md — Feature implementation status, active migration plans (TTS + UI framework), technical debt, priorities.
+
+## Component Specs (spec/com_spec/)
+
+spec/com_spec/sherpa-onnx.md — New TTS system spec using sherpa-onnx (ONNX Runtime). Contains Rust API and migration details.
+spec/com_spec/pocket-tts.md — Legacy TTS system spec (pocket-tts/Candle). Currently being replaced by sherpa-onnx.
+spec/com_spec/daisyui.md — UI component library reference. DaisyUI 5 + Tailwind CSS 4 patterns. Under migration evaluation.
+spec/com_spec/huggingface-model-hash.md — Workflow for finding model variant hashes from HuggingFace.
+spec/com_spec/nifty-core-go.md — Go 后端 core 规范。包含数据模型、API 设计、工具函数，参考 Rust nifty-core 实现。
+
+## Source — Root Crate (GUI + CLI)
+
+src/main.rs — Dioxus app entry point.
+src/reader_ui/app.rs — Root app component, routing, reading history state.
+src/reader_ui/browse.rs — Story search and browse page.
+src/reader_ui/reader.rs — Story reading page, TTS read-aloud controls.
+src/reader_ui/header.rs — Top navigation bar.
+src/reader_ui/history.rs — Reading history page.
+src/reader_ui/settings.rs — Settings page.
+src/cli/download_models.rs — Binary: downloads TTS model files to src/assets/models/.
+src/cli/voice_cli.rs — Binary: voice training, generation, listing, and download.
+Cargo.toml — Workspace definition, root crate dependencies, [[bin]] entries.
+
+## Source — nifty-core crate (Rust)
+
+crates/nifty-core/src/network/api.rs — HTTP requests to search.niftyarchives.org, story fetching and search.
+crates/nifty-core/src/storage/state.rs — App state persistence: reading history, settings.
+crates/nifty-core/Cargo.toml — nifty-core dependencies (reqwest, scraper, serde, etc.).
+
+## Source — nifty-core-go (Go - 重构中)
+
+spec/com_spec/nifty-core-go.md — Go core 详细规范，包含数据模型、API 设计、工具函数。
+nifty-core-go/internal/models/ — 数据模型 (Story, StorySummary, HistoryItem, AppState, Settings)。
+nifty-core-go/internal/scraper/ — HTML 解析逻辑 (goquery)。
+nifty-core-go/internal/storage/ — JSON 状态持久化。
+nifty-core-go/internal/utils/ — URL 编码、标题猜测、文本解析工具。
+nifty-core-go/pkg/api/ — 公开 API (HTTP client, story fetch, search)。
+
+## Source — tts-engine crate
+
+crates/tts-engine/src/lib.rs — TtsEngine struct, TtsCommand/TtsEvent channel types, public API.
+crates/tts-engine/src/model.rs — TTS model loading singleton (OnceLock).
+crates/tts-engine/src/playback.rs — Audio playback via rodio, StopFlag.
+crates/tts-engine/src/voice.rs — Voice file resolution, download from HuggingFace, training from WAV.
+crates/tts-engine/src/audio_io.rs — WAV file validation utilities.
+crates/tts-engine/Cargo.toml — tts-engine dependencies (pocket-tts being replaced by sherpa-onnx).
+
+## Assets
+
+src/assets/models/ — TTS model files (safetensors, yaml, tokenizer). Do not delete.
+src/assets/voices/ — Voice WAV files and safetensors embeddings. Do not delete .wav files (training data).
+
+## Site Reference
+
+docs/site-parsing-reference/ — HTML snapshots of search.niftyarchives.org. Ground truth for scraping logic.

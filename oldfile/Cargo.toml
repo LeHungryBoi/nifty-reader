@@ -1,0 +1,59 @@
+[workspace]
+members = [
+    "crates/tts-engine",
+    "crates/nifty-core",
+    "."
+]
+resolver = "2"
+
+[workspace.dependencies]
+# Shared Core Dependencies
+nifty-core = { path = "crates/nifty-core" }
+tts-engine = { path = "crates/tts-engine" }
+
+# Common Libraries (Unified Versions & Features)
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+tracing = "0.1"
+regex = "1.10"
+chrono = { version = "0.4", features = ["serde"] }
+ureq = { version = "2.9", features = ["json", "socks-proxy"] }
+
+[package]
+name = "nifty-reader"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "nifty-reader"
+path = "src/main.rs"
+
+[[bin]]
+name = "download-models"
+path = "src/cli/download_models.rs"
+
+[[bin]]
+name = "voice-cli"
+path = "src/cli/voice_cli.rs"
+
+[dependencies]
+nifty-core = { workspace = true }
+tts-engine = { workspace = true }
+slint = "1.8"
+regex = { workspace = true }
+chrono = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+ureq = { workspace = true }
+
+[build-dependencies]
+
+[profile.dev]
+incremental = false
+opt-level = 1
+
+[profile.release]
+incremental = false
+lto = "fat"
+codegen-units = 6
