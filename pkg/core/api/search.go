@@ -7,8 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/lehungryboi/nifty-reader/pkg/nifty-core/internal/models"
-	"github.com/lehungryboi/nifty-reader/pkg/nifty-core/internal/utils"
+	"github.com/lehungryboi/nifty-reader/pkg/core/models"
 )
 
 // SearchOptions 搜索选项
@@ -32,7 +31,7 @@ func (c *Client) SearchStories(opts SearchOptions) ([]models.StorySummary, error
 		params.Add("subcategories[]", opts.Subcategory)
 	}
 	if opts.SearchQuery != "" {
-		params.Set("keywords", utils.URLEncode(opts.SearchQuery))
+		params.Set("keywords", urlEncode(opts.SearchQuery))
 	}
 	baseURL := "https://search.niftyarchives.org/"
 	if len(params) > 0 {
@@ -80,7 +79,7 @@ func parseSearchResults(html string) []models.StorySummary {
 					})
 				}
 			})
-				// 检查是否真的有链接（有章节链接才是章节行，否则是摘要行）
+			// 检查是否真的有链接（有章节链接才是章节行，否则是摘要行）
 			hasLinks := td.Find("a").Length() > 0
 			if !hasLinks {
 				html, _ := td.Html()

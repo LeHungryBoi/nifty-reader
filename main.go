@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/theme"
-	niftyui "github.com/lehungryboi/nifty-reader/pkg/nifty-ui"
+	niftyui "github.com/lehungryboi/nifty-reader/pkg/ui"
 	"golang.org/x/image/font/opentype"
 )
 

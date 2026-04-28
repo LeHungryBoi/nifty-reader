@@ -1,4 +1,4 @@
-package utils
+package snippet
 
 import (
 	"regexp"
@@ -107,4 +107,3 @@ func cleanHTML(text string) string {
 
 	return text
 }
-

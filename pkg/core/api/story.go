@@ -7,8 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/lehungryboi/nifty-reader/pkg/nifty-core/internal/models"
-	"github.com/lehungryboi/nifty-reader/pkg/nifty-core/internal/utils"
+	"github.com/lehungryboi/nifty-reader/pkg/core/models"
 )
 
 // FetchStory 从指定 URL 获取故事内容
@@ -33,11 +32,11 @@ func (c *Client) FetchStory(storyURL string) (*models.Story, error) {
 	isPlainText := strings.Contains(strings.ToLower(contentType), "text/plain")
 	var paragraphs []string
 	if isPlainText {
-		paragraphs = utils.ParsePlainTextStory(string(body))
+		paragraphs = parsePlainTextStory(string(body))
 	} else {
 		paragraphs = parseHTMLStory(string(body))
 	}
-	title := utils.GuessTitleFromURL(storyURL)
+	title := guessTitleFromURL(storyURL)
 	return &models.Story{
 		Title:       title,
 		Paragraphs:  paragraphs,
@@ -53,7 +52,7 @@ func parseHTMLStory(html string) []string {
 	// 尝试从 <pre> 标签获取内容
 	if pre := doc.Find("pre").First(); pre.Length() > 0 {
 		text := pre.Text()
-		return utils.ParsePlainTextStory(text)
+		return parsePlainTextStory(text)
 	}
 	// 回退：获取 body 全部文本
 	text := doc.Find("body").Text()
@@ -62,5 +61,5 @@ func parseHTMLStory(html string) []string {
 	if idx := strings.Index(lowerText, "please support"); idx != -1 {
 		text = text[:idx]
 	}
-	return utils.ParsePlainTextStory(text)
+	return parsePlainTextStory(text)
 }
