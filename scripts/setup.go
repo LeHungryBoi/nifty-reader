@@ -5,10 +5,11 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 // This script downloads the necessary DLLs for sherpa-onnx on Windows.
-// It mimics the behavior of the Rust build.rs.
+// DLLs are saved to the lib/ directory.
 
 const (
 	baseURL = "https://github.com/k2-fsa/sherpa-onnx-go-windows/raw/master/lib/x86_64-pc-windows-gnu/"
@@ -17,23 +18,32 @@ const (
 var dlls = []string{
 	"onnxruntime.dll",
 	"sherpa-onnx-c-api.dll",
+	"sherpa-onnx-cxx-api.dll",
 }
 
 func main() {
+	// Create lib directory if it doesn't exist
+	libDir := "lib"
+	if err := os.MkdirAll(libDir, 0755); err != nil {
+		fmt.Printf("Error creating lib directory: %v\n", err)
+		os.Exit(1)
+	}
+
 	fmt.Println("Downloading sherpa-onnx DLLs for Windows...")
 
 	for _, dll := range dlls {
 		url := baseURL + dll
+		destPath := filepath.Join(libDir, dll)
 		fmt.Printf("Downloading %s...\n", dll)
-		if err := downloadFile(dll, url); err != nil {
+		if err := downloadFile(destPath, url); err != nil {
 			fmt.Printf("Error downloading %s: %v\n", dll, err)
 			continue
 		}
-		fmt.Printf("Successfully downloaded %s\n", dll)
+		fmt.Printf("Successfully downloaded %s to %s\n", dll, destPath)
 	}
 
-	fmt.Println("\nSetup complete! You can now run the app with 'go run main.go'.")
-	fmt.Println("Make sure CGO_ENABLED=1 is set in your environment.")
+	fmt.Println("\nSetup complete! DLLs are in the lib/ directory.")
+	fmt.Println("Run 'build.bat' to compile the app (DLLs will be copied to build/win/).")
 }
 
 func downloadFile(filepath string, url string) error {

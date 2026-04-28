@@ -1,4 +1,4 @@
 *.pdf
 *.safetensors
-*.exe
-*.dll
+/build/
+/lib/*.dll
