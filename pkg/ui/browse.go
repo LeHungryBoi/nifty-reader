@@ -9,7 +9,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 
 	"github.com/lehungryboi/nifty-reader/pkg/core/api"
-	"github.com/lehungryboi/nifty-reader/pkg/core/snippet"
 )
 
 func (na *NiftyApp) showBrowse() {
@@ -85,7 +84,7 @@ func (na *NiftyApp) showBrowseWithQuery(query string) {
 
 				snippetLabel := inner.Objects[2].(*widget.Label)
 				if it.snippet != nil && *it.snippet != "" {
-					segments := snippet.ParseSnippetHTML(*it.snippet)
+					segments := api.ParseSnippetHTML(*it.snippet)
 					var displayText strings.Builder
 					for _, seg := range segments {
 						if seg.IsHighlight {

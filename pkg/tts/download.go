@@ -9,19 +9,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/lehungryboi/nifty-reader/pkg/core/storage"
 )
 
-// makeCacheDirectory returns the path to ~/.cache/pocket_tts
+// makeCacheDirectory returns the path to <exe_dir>/cache
 func makeCacheDirectory() (string, error) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "", err
-	}
-	cacheDir := filepath.Join(home, ".cache", "pocket_tts")
-	if err := os.MkdirAll(cacheDir, 0755); err != nil {
-		return "", err
-	}
-	return cacheDir, nil
+	return storage.CachePath()
 }
 
 // DownloadIfNecessary mimics the Python download_if_necessary function.

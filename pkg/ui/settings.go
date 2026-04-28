@@ -7,7 +7,7 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/lehungryboi/nifty-reader/pkg/core"
+	"github.com/lehungryboi/nifty-reader/pkg/core/storage"
 	"github.com/lehungryboi/nifty-reader/pkg/tts"
 )
 
@@ -21,7 +21,7 @@ func (na *NiftyApp) showSettings() {
 	saveBtn := widget.NewButtonWithIcon("💾 保存", theme.ConfirmIcon(), func() {
 		p := proxyEntry.Text
 		na.state.Settings.ProxyURL = &p
-		core.SaveState(na.state)
+		storage.SaveState(na.state)
 		fyne.CurrentApp().SendNotification(&fyne.Notification{
 			Title:   "Nifty Reader",
 			Content: "设置已保存",

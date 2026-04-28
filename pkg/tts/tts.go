@@ -14,6 +14,7 @@ import (
 	"sync/atomic"
 
 	"github.com/ebitengine/oto/v3"
+	"github.com/lehungryboi/nifty-reader/pkg/core/storage"
 	sherpa "github.com/k2-fsa/sherpa-onnx-go/sherpa_onnx"
 )
 
@@ -178,21 +179,11 @@ func NewEngine() *Engine {
 }
 
 func getModelPath(parts ...string) string {
-	exePath, err := os.Executable()
-	if err != nil {
-		exePath = "."
-	}
-	base := filepath.Dir(exePath)
-	p := []string{base, "model"}
-	p = append(p, parts...)
-	return filepath.Join(p...)
+	return storage.ModelPath(parts...)
 }
 
 func getAssetPath(parts ...string) string {
-	base, _ := os.Getwd()
-	p := []string{base, "assets"}
-	p = append(p, parts...)
-	return filepath.Join(p...)
+	return storage.AssetPath(parts...)
 }
 
 // Public API

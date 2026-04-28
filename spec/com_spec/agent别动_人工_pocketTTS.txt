@@ -1,2 +1,2 @@
-pocketTTS 克隆音源预处理需求: 单声道、24k、音量归一、去静音噪声.
-pocketTTS 官方python实现的 export voice, 导出的 safetensors文件叫voice state, 是time-series latents.
+pocketTTS 克隆音源预处理需求: 单声道、24k、音量Normalization、Denoise.
+pocketTTS 官方python实现的 export voice 导出的 safetensors文件叫voice state, 是time-series latents.

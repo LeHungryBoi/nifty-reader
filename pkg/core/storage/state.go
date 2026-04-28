@@ -1,11 +1,9 @@
-package core
+package storage
 
 import (
 	"encoding/json"
 	"os"
-	"path/filepath"
 
-	"github.com/adrg/xdg"
 	"github.com/lehungryboi/nifty-reader/pkg/core/models"
 )
 
@@ -16,15 +14,9 @@ type (
 	HistoryItem = models.HistoryItem
 )
 
-func getStoragePath() string {
-	configDir := filepath.Join(xdg.ConfigHome, "niftyreader")
-	os.MkdirAll(configDir, 0755)
-	return filepath.Join(configDir, "state.json")
-}
-
 // LoadState 加载应用状态，失败时返回默认值
 func LoadState() AppState {
-	data, err := os.ReadFile(getStoragePath())
+	data, err := os.ReadFile(StoragePath())
 	if err != nil {
 		return models.DefaultAppState()
 	}
@@ -41,5 +33,5 @@ func SaveState(state AppState) error {
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(getStoragePath(), data, 0644)
+	return os.WriteFile(StoragePath(), data, 0644)
 }

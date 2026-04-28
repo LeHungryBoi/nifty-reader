@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -124,4 +125,60 @@ func parseSearchResults(html string) []models.StorySummary {
 		summaries = append(summaries, *current)
 	}
 	return summaries
+}
+
+// --- Snippet parsing ---
+
+// SnippetSegment represents a segment of a snippet with styling info
+type SnippetSegment struct {
+	Text        string
+	IsHighlight bool
+}
+
+// ParseSnippetHTML parses HTML snippet with <em class="highlight"> tags and returns styled segments
+func ParseSnippetHTML(html string) []SnippetSegment {
+	if html == "" {
+		return []SnippetSegment{}
+	}
+
+	pattern := regexp.MustCompile(`<em\s+class="highlight">([^<]*)</em>`)
+	var segments []SnippetSegment
+	lastIndex := 0
+	matches := pattern.FindAllStringSubmatchIndex(html, -1)
+
+	for _, match := range matches {
+		if match[0] > lastIndex {
+			plainText := cleanHTML(html[lastIndex:match[0]])
+			if plainText != "" {
+				segments = append(segments, SnippetSegment{Text: plainText})
+			}
+		}
+		highlighted := cleanHTML(html[match[2]:match[3]])
+		if highlighted != "" {
+			segments = append(segments, SnippetSegment{Text: highlighted, IsHighlight: true})
+		}
+		lastIndex = match[1]
+	}
+
+	if lastIndex < len(html) {
+		plainText := cleanHTML(html[lastIndex:])
+		if plainText != "" {
+			segments = append(segments, SnippetSegment{Text: plainText})
+		}
+	}
+	return segments
+}
+
+func cleanHTML(text string) string {
+	text = regexp.MustCompile(`<[^>]*>`).ReplaceAllString(text, "")
+	text = strings.NewReplacer(
+		"&nbsp;", " ",
+		"&lt;", "<",
+		"&gt;", ">",
+		"&amp;", "&",
+		"&quot;", "\"",
+		"&#39;", "'",
+		"&apos;", "'",
+	).Replace(text)
+	return strings.TrimSpace(text)
 }

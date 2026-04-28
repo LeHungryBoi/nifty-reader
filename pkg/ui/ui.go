@@ -11,19 +11,19 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/lehungryboi/nifty-reader/pkg/core"
+	"github.com/lehungryboi/nifty-reader/pkg/core/storage"
 )
 
 type NiftyApp struct {
 	window  fyne.Window
-	state   core.AppState
+	state   storage.AppState
 	content *fyne.Container
 }
 
 func NewNiftyApp(window fyne.Window) *NiftyApp {
 	return &NiftyApp{
 		window: window,
-		state:  core.LoadState(),
+		state:  storage.LoadState(),
 	}
 }
 
@@ -100,7 +100,7 @@ func (na *NiftyApp) addToHistory(title, url string) {
 		}
 	}
 
-	na.state.History = append([]core.HistoryItem{{
+	na.state.History = append([]storage.HistoryItem{{
 		Title:     title,
 		URL:       url,
 		Timestamp: uint64(time.Now().Unix()),
@@ -110,5 +110,5 @@ func (na *NiftyApp) addToHistory(title, url string) {
 		na.state.History = na.state.History[:20]
 	}
 
-	core.SaveState(na.state)
+	storage.SaveState(na.state)
 }

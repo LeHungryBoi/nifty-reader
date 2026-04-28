@@ -1,6 +1,6 @@
 # Nifty Reader (Go Edition)
 
-A desktop application for browsing and reading stories from Nifty Archives, with built-in TTS and search capabilities.
+A desktop application for browsing and reading stories from Nift, with built-in TTS and search capabilities.
 
 ## Tech Stack
 - **GUI**: [Fyne](https://fyne.io/) (Pure Go)
@@ -17,7 +17,7 @@ A desktop application for browsing and reading stories from Nifty Archives, with
 1. Install [Go](https://go.dev/dl/).
 2. Run `go mod tidy` to resolve dependencies.
 3. **Setup DLLs (Windows)**: Run `go run scripts/setup.go` to download required `sherpa-onnx` binaries.
-4. Run `go run main.go` or `go build -o nifty-reader.exe main.go`.
+4. Run build script.
 
 ## Important Note (Windows)
 This app requires **CGO** to be enabled for Fyne and Sherpa-ONNX.
