@@ -1,0 +1,28 @@
+﻿PocketTTS Voice State (.safetensors) 技术说明（目标1）
+
+1) 这个保存出来的叫什么
+- 官方语义：model state / voice state（文档也常称 voice embedding）。
+- 文件形式：.safetensors。
+
+2) 这是什么
+- 它不是完整 TTS 模型权重。
+- 它是“参考音频喂给 FlowLM 后得到的可复用状态”，核心是 KV cache 与位置偏移（offset）。
+- 用途：后续生成时直接加载该状态，实现同音色延续/克隆，避免每次从 wav 重新提取。
+
+3) 是怎么保存的（官方实现逻辑）
+- 输入：model.get_state_for_audio_prompt(wav_or_url_or_tensor) 产生 model_state（嵌套 dict）。
+- 导出：export_model_state(model_state, dest)
+  - 遍历 model_state 的每个 module_name / key / tensor。
+  - 扁平化为键名："{module_name}/{key}" -> tensor。
+  - safetensors.torch.save_file(dict_to_store, dest) 写入 .safetensors。
+
+4) 是怎么加载的（官方实现逻辑）
+- model.get_state_for_audio_prompt(path) 若 path 以 .safetensors 结尾，走 _import_model_state。
+- _import_model_state 使用 safetensors.safe_open 逐键读取。
+- 键名按 "module/key" 反解回嵌套结构。
+- 兼容旧字段：若读取到 current_end，会转换为 offset（long tensor）。
+
+5) 工程结论
+- 该 .safetensors 可视为“声音克隆状态快照（voice state snapshot）”。
+- 复用该文件生成语音，比每次从 wav 提取更快。
+- 做融合时应保持相同键名与 tensor shape，输出仍需遵守 "module/key" 的 safetensors 格式。
