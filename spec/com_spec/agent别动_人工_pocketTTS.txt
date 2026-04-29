@@ -1,2 +1,8 @@
 pocketTTS 克隆音源预处理需求: 单声道、24k、音量Normalization、Denoise.
 pocketTTS 官方python实现的 export voice 导出的 safetensors文件叫voice state, 是time-series latents.
+
+Voice State 是连续的：float32 Tensor，不是离散 token
+
+voice fusion: 混合的是MiMiEncoder产出的embedding. embedding是原始Latent数据.
+
+MiMiEncoder的embedding, 之后经过transformer模型理解后产生的kv cache, 是处理过的数据, 缓存这个是Speed up的来源. 
