@@ -1,0 +1,13 @@
+# Voice Fusion Tool — Dependencies
+
+# 核心依赖 (pocket-tts 会自动安装 torch)
+pocket-tts @ git+https://github.com/kyutai-labs/pocket-tts.git
+
+# 音频播放 (可选, 但推荐)
+sounddevice>=0.5.0
+
+# 音频降噪 (可选, 预处理功能需要)
+noisereduce>=3.0.0
+
+# 音频读写 (预处理保存需要)
+soundfile>=0.12.0

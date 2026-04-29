@@ -1,0 +1,16 @@
+{
+  "language": "english",
+  "device": "cpu",
+  "proxy_enabled": true,
+  "proxy": "http://127.0.0.1:10808",
+  "voice_a_path": "",
+  "voice_b_path": "",
+  "test_text": "The quick brown fox jumps over the lazy dog. This is a test of the fused voice.",
+  "alpha": 0.5,
+  "method": "align",
+  "last_audio_dir": "D:\\Project\\nifty-reader\\assets\\voices",
+  "preprocess_normalize": false,
+  "preprocess_denoise": false,
+  "preprocess_denoise_strength": 0.3,
+  "voice_library": []
+}
