@@ -46,6 +46,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self.root.geometry("1400x850")
         self.root.minsize(1000, 600)
         self.root.configure(bg=THEME["app_bg"])
+        self._set_icon()
 
         # State
         self.model = None
@@ -647,6 +648,24 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self.root.destroy()
 
     # ── Log / Error ──
+
+    def _set_icon(self):
+        """Set window icon (title bar + taskbar) from pre-generated ICO file"""
+        ico_path = Path(__file__).parent / "fusion-icon.ico"
+        png_path = Path(__file__).parent / "fusion-icon.png"
+        try:
+            self.root.iconbitmap(str(ico_path)) if ico_path.exists() else None
+        except Exception:
+            pass
+        if not png_path.exists():
+            return
+        try:
+            from PIL import Image, ImageTk
+            img = Image.open(png_path)
+            self._icon_photo = ImageTk.PhotoImage(img)
+            self.root.iconphoto(True, self._icon_photo)
+        except Exception:
+            pass
 
     def _log(self, msg: str):
         self.log_text.configure(state="normal")

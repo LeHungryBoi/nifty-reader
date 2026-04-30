@@ -321,8 +321,8 @@ class TrackEditor(tk.Canvas):
             return
 
         self._draw_ruler(w)
-        self._draw_playhead(h)
         self._draw_tracks(w, h)
+        self._draw_playhead(h)
 
     def _draw_ruler(self, w: int):
         """绘制顶部时间标尺"""

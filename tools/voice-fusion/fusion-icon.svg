@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#81C784"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFB74D"/>
+      <stop offset="100%" stop-color="#E57373"/>
+    </linearGradient>
+    <linearGradient id="center" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BA68C8"/>
+      <stop offset="100%" stop-color="#F06292"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="clip1">
+      <rect x="28" y="48" width="80" height="160" rx="40"/>
+    </clipPath>
+    <clipPath id="clip2">
+      <rect x="148" y="48" width="80" height="160" rx="40"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+
+  <!-- Left wave form -->
+  <g clip-path="url(#clip1)" opacity="0.9">
+    <path d="M28 128 Q52 68, 68 128 Q84 188, 108 128" fill="none" stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M28 128 Q48 88, 68 128 Q88 168, 108 128" fill="none" stroke="url(#g1)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Right wave form -->
+  <g clip-path="url(#clip2)" opacity="0.9">
+    <path d="M148 128 Q168 78, 188 128 Q208 178, 228 128" fill="none" stroke="url(#g2)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M148 128 Q164 96, 188 128 Q212 160, 228 128" fill="none" stroke="url(#g2)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Fusion center glow -->
+  <circle cx="128" cy="128" r="36" fill="url(#center)" opacity="0.15" filter="url(#glow)"/>
+
+  <!-- Fusion center merged wave -->
+  <g opacity="0.95">
+    <path d="M96 128 Q112 76, 128 128 Q144 180, 160 128" fill="none" stroke="url(#center)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M100 128 Q114 90, 128 128 Q142 166, 156 128" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+  </g>
+
+  <!-- Merge arrows -->
+  <path d="M90 168 Q110 180, 118 170" fill="none" stroke="#4FC3F7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M166 168 Q146 180, 138 170" fill="none" stroke="#FFB74D" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Small dot at fusion point -->
+  <circle cx="128" cy="128" r="3" fill="#fff" opacity="0.8"/>
+</svg>
