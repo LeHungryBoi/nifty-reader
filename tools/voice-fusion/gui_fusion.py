@@ -2,12 +2,11 @@
 
 import hashlib
 import threading
-import time
 import traceback
 from pathlib import Path
 from typing import Optional
 
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox
 
 from theme import THEME
 import tkinter as tk
@@ -17,7 +16,7 @@ from persona import Persona
 from track_editor import Clip
 from level_extractor import LevelExtractor, save_level_features
 from fusion import fuse_voice_states_multi, save_state, load_state, get_state_info, format_info
-from preset import save_preset, load_preset, list_presets, save_fusesona, PresetData, FuseSonaMeta, ClipData
+from preset import save_fusesona, FuseSonaMeta, ClipData
 from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR
 
 
@@ -223,55 +222,6 @@ class FusionMixin:
         except Exception as e:
             self._log(f"[Error] Preprocess {persona.display_name}: {e}")
 
-    def _save_preset_dialog(self, name_hint: str = ""):
-        default = name_hint or f"preset_{int(time.time())}"
-        name = simpledialog.askstring("Save Preset", "Preset name:", parent=self.root,
-                                       initialvalue=default)
-        if not name:
-            name = default
-
-        clips_data = []
-        for track_idx, clip in self._track_editor.get_all_clips():
-            clips_data.append(ClipData(**clip.to_clip_data(track_idx).__dict__))
-
-        preset = PresetData(
-            name=name,
-            clips=clips_data,
-            tracks_config=self._track_editor.to_dict(),
-        )
-        path = save_preset(preset, RUNNING_DIR)
-        self._log(f"[Preset] Saved: {path}")
-
-    def _load_preset_dialog(self):
-        presets = list_presets(RUNNING_DIR)
-        if not presets:
-            messagebox.showinfo("Presets", "No presets found")
-            return
-
-        dialog = tk.Toplevel(self.root)
-        dialog.title("Load Preset")
-        dialog.geometry("400x300")
-        dialog.transient(self.root)
-        dialog.configure(bg=THEME["app_bg"])
-
-        lb = tk.Listbox(dialog, bg=THEME["track_even_bg"], fg=THEME["log_fg"],
-                        selectbackground=THEME["accent"], selectforeground="#fff",
-                        borderwidth=0, highlightthickness=0)
-        lb.pack(fill="both", expand=True, padx=8, pady=8)
-        for p in presets:
-            lb.insert("end", f"{p['name']} ({p.get('clip_count', 0)} clips)")
-
-        def on_load():
-            sel = lb.curselection()
-            if not sel:
-                return
-            preset_path = Path(presets[sel[0]]["path"])
-            preset = load_preset(preset_path)
-            self._track_editor.load_from_dict(preset.tracks_config)
-            self._log(f"[Preset] Loaded: {preset.name}")
-            dialog.destroy()
-
-        ttk.Button(dialog, text="Load", command=on_load).pack(pady=4)
 
     def _export_fusesona(self):
         clips = self._track_editor.get_all_clips()

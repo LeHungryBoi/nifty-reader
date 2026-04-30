@@ -24,7 +24,7 @@ from theme import THEME
 # 常量
 FRAME_RATE = 12.5  # MiMi Latent 帧率
 PIXELS_PER_FRAME_DEFAULT = 3.0
-TRACK_HEIGHT = 48
+TRACK_HEIGHT = 32
 CLIP_MIN_WIDTH = 20
 RULER_HEIGHT = 24
 HANDLE_WIDTH = 6  # clip 边缘拖拽热区宽度
@@ -429,12 +429,15 @@ class TrackEditor(tk.Canvas):
         # ── 名称（左）+ 权重/level 标签（右）──
         mid_y = (y1 + y2) // 2
         name_text = clip.persona_name[:14]
+        text_fg = self._contrast_text(fill)
         self.create_text(x1 + 6, mid_y, text=name_text,
-                         fill=THEME["clip_name_fg"], font=("", 7, "bold"), anchor="w")
+                         fill=text_fg, font=("", 9, "bold"), anchor="w")
         level_tag = LEVEL_SHORT_NAMES.get(clip.fusion_level, f"L{clip.fusion_level}")
         info_text = f"W:{clip.weight:.1f} {level_tag}"
+        # Info text slightly dimmer than name
+        info_fg = self._contrast_text(self._darken(fill, 0.15) if not is_selected else fill)
         self.create_text(x2 - 4, mid_y, text=info_text,
-                         fill=THEME["clip_info_fg"], font=("Consolas", 6), anchor="e")
+                         fill=info_fg, font=("Consolas", 8, "bold"), anchor="e")
 
         # ── Effect 指示（仅在有自定义 effect 时显示，作为小标记）──
         if has_effects:
@@ -460,7 +463,7 @@ class TrackEditor(tk.Canvas):
             for label, sym, color in indicators:
                 text = f"{label} {sym}" if sym else label
                 self.create_text(ex, ey, text=text,
-                                 fill=color, font=("Consolas", 6), anchor="w")
+                                 fill=color, font=("Consolas", 7), anchor="w")
                 ex += len(text) * 4 + 3
 
         # 左右拖拽手柄（仅选中时显示）
@@ -732,3 +735,12 @@ class TrackEditor(tk.Canvas):
         g = max(0, int(g * (1 - factor)))
         b = max(0, int(b * (1 - factor)))
         return f"#{r:02x}{g:02x}{b:02x}"
+
+    @staticmethod
+    def _contrast_text(hex_color: str) -> str:
+        """Return black or white text color depending on bg luminance."""
+        hex_color = hex_color.lstrip("#")
+        r, g, b = [int(hex_color[i:i+2], 16) for i in (0, 2, 4)]
+        # Perceived luminance (relative)
+        lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+        return "#111111" if lum > 0.55 else "#ffffff"

@@ -36,6 +36,9 @@ class Settings:
     tts_compare_text: str = ""
     # Theme name
     theme: str = "Zesty"
+    # Preset tabs state (serialized from GUI)
+    preset_tabs: list = field(default_factory=list)  # list of {name, clips, tracks_config}
+    active_preset_idx: int = 0
 
 
 def load_settings(running_dir: Path) -> Settings:

@@ -100,6 +100,15 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._build_ui()
         self.root.protocol("WM_DELETE_WINDOW", self._on_close)
 
+        # Load restored active tab's data into TrackEditor
+        if self._preset_tabs and self._active_preset_idx < len(self._preset_tabs):
+            tab = self._preset_tabs[self._active_preset_idx]
+            if tab.get("data") is not None and tab["data"].tracks_config:
+                self._track_editor.load_from_dict(tab["data"].tracks_config)
+            elif getattr(saved, "tracks", None):
+                # Fallback: legacy single-track restoration
+                self._track_editor.load_from_dict(saved.tracks)
+
         # Global keybindings
         self.root.bind("<space>", self._on_key_space)
         self.root.bind("<Shift-space>", self._on_key_shift_space)
@@ -151,7 +160,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         pw.add(right, weight=1)
 
         # Preset tabs bar (above track editor)
-        self._build_preset_tabs(right)
+        self._build_preset_tabs(right, getattr(saved, "preset_tabs", None))
 
         # Track editor toolbar
         te_tb = ttk.Frame(right)
@@ -208,7 +217,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     # ── Preset Tabs ──
 
-    def _build_preset_tabs(self, parent):
+    def _build_preset_tabs(self, parent, saved_tabs=None):
         """构建预设选项卡栏，显示在轨道编辑器上方"""
         tab_bar = ttk.Frame(parent)
         tab_bar.pack(fill="x", pady=(0, 4))
@@ -224,13 +233,26 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         self._tab_button_container = tab_container
 
-        # Save/Load buttons on right side
-        ttk.Button(tab_bar, text="Save Preset", command=self._save_current_preset).pack(side="right", padx=2)
-        ttk.Button(tab_bar, text="Load Preset", command=self._load_preset_dialog).pack(side="right", padx=2)
+        # Export button on right side
         ttk.Button(tab_bar, text="Export FuseSona", command=self._export_fusesona).pack(side="right", padx=2)
 
-        # Create initial default tab
-        self._preset_tabs = [{"name": "Preset 1", "data": None}]
+        # Restore saved tabs or create default
+        if saved_tabs and len(saved_tabs) > 0:
+            from preset import PresetData
+            self._preset_tabs = []
+            for st in saved_tabs:
+                pd = None
+                if st.get("clips") or st.get("tracks_config"):
+                    clips = [ClipData(**c) for c in st.get("clips", []) if isinstance(c, dict)]
+                    pd = PresetData(
+                        name=st.get("name", "Preset"),
+                        clips=clips,
+                        tracks_config=st.get("tracks_config", []),
+                    )
+                self._preset_tabs.append({"name": st.get("name", f"Preset {len(self._preset_tabs)+1}"), "data": pd})
+            self._active_preset_idx = min(getattr(saved, "active_preset_idx", 0), len(self._preset_tabs) - 1)
+        else:
+            self._preset_tabs = [{"name": "Preset 1", "data": None}]
         self._refresh_preset_tab_buttons()
 
     def _refresh_preset_tab_buttons(self):
@@ -268,6 +290,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         if self._active_preset_idx >= len(self._preset_tabs):
             self._active_preset_idx = len(self._preset_tabs) - 1
         self._refresh_preset_tab_buttons()
+        self._auto_save()
         tab = self._preset_tabs[self._active_preset_idx]
         if tab["data"] is not None:
             self._track_editor.load_from_dict(tab["data"].tracks_config)
@@ -292,6 +315,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         if new_name and new_name.strip():
             tab["name"] = new_name.strip()
             self._refresh_preset_tab_buttons()
+            self._auto_save()
 
     def _switch_preset_tab(self, idx: int):
         """切换到指定预设选项卡，保存当前状态到旧选项卡"""
@@ -304,6 +328,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         self._active_preset_idx = idx
         self._refresh_preset_tab_buttons()
+        self._auto_save()
 
         # Load new tab's data
         tab = self._preset_tabs[idx]
@@ -331,11 +356,6 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             tracks_config=self._track_editor.to_dict(),
         )
 
-    def _save_current_preset(self):
-        """保存当前选项卡为预设文件"""
-        self._save_current_state_to_tab(self._active_preset_idx)
-        tab = self._preset_tabs[self._active_preset_idx]
-        self._save_preset_dialog(name_hint=tab["name"])
 
     # ── Theme ──
 
@@ -500,6 +520,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     def _add_track(self):
         self._track_editor.add_track()
+        self._auto_save()
 
     def _remove_track(self):
         sel = self._track_editor.get_selected_clip()
@@ -507,6 +528,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             self._track_editor.remove_track(sel[0])
         else:
             self._track_editor.remove_track(len(self._track_editor.tracks) - 1)
+        self._auto_save()
 
     def _add_persona_to_track(self, persona: Persona, new_track: bool = True):
         if new_track:
@@ -544,6 +566,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._track_editor.add_clip(track_idx, clip)
         self._last_active_track_idx = track_idx
         self._log(f"[Track] Added '{persona.display_name}' to T{track_idx + 1}")
+        self._auto_save()
 
     def _split_at_playhead(self):
         sel = self._track_editor.get_selected_clip()
@@ -554,6 +577,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         frame = int(self._track_editor.playhead_frame)
         self._track_editor.split_clip_at(track_idx, clip, frame)
         self._log(f"[Track] Split clip '{clip.persona_name}' at frame {frame}")
+        self._auto_save()
 
     def _on_clip_double_click(self, track_idx, clip):
         self._clip_info_label.configure(
@@ -586,18 +610,21 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
     def _delete_clip(self, track_idx, clip):
         self._track_editor.remove_clip(track_idx, clip)
         self._hide_effect_panel()
+        self._auto_save()
 
     def _on_clip_weight_change(self, val):
         sel = self._track_editor.get_selected_clip()
         if sel:
             sel[1].weight = float(val)
             self._track_editor._redraw()
+            self._auto_save()
 
     def _on_clip_level_change(self, event=None):
         sel = self._track_editor.get_selected_clip()
         if sel:
             sel[1].fusion_level = parse_level_from_str(self._clip_level_var.get())
             self._track_editor._redraw()
+            self._auto_save()
 
     # ── Preview ──
 
@@ -654,9 +681,35 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     # ── Settings ──
 
+    def _auto_save(self):
+        """Auto-save current state to settings file (debounced)."""
+        if hasattr(self, "_auto_save_pending"):
+            return
+        self._auto_save_pending = True
+        self.root.after(500, self._do_auto_save)
+
+    def _do_auto_save(self):
+        self._auto_save_pending = False
+        try:
+            settings = self._collect_settings()
+            self._save_settings_fn(settings, RUNNING_DIR)
+        except Exception:
+            pass
+
     def _collect_settings(self):
         # Save current state to active tab before collecting
         self._save_current_state_to_tab(self._active_preset_idx)
+        # Serialize preset tabs for persistence
+        saved_tabs = []
+        for tab in self._preset_tabs:
+            tab_dict = {"name": tab["name"]}
+            if tab["data"] is not None:
+                tab_dict["clips"] = [c.__dict__ if hasattr(c, "__dict__") else c for c in tab["data"].clips]
+                tab_dict["tracks_config"] = tab["data"].tracks_config
+            else:
+                tab_dict["clips"] = []
+                tab_dict["tracks_config"] = []
+            saved_tabs.append(tab_dict)
         return Settings(
             language=self.language.get(),
             device=self.device.get(),
@@ -672,6 +725,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             voice_library=[p.to_dict() for p in self.personas],
             tracks=self._track_editor.to_dict(),
             theme=self._current_theme_name,
+            preset_tabs=saved_tabs,
+            active_preset_idx=self._active_preset_idx,
         )
 
     def _on_close(self):
