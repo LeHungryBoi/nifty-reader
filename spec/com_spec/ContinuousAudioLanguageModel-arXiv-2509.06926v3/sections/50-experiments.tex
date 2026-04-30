@@ -1,0 +1,230 @@
+\section{Experiments and results}
+\label{sec:results}
+\looseness=-1
+
+%We present experimental results for speech and music continuation  as well as for text-to-speech (TTS) and text-to-music. For continuation, we generate 27s given a 3s prompt. See Sec.~\ref{sec:appendix_hyperarameters} for detailed hyperparameters. %All metrics reported with confidence intervals use 95\% confidence. Metrics without confidence intervals are metrics computed over the entire test dataset.
+
+
+
+\subsection{Speech Continuation}
+
+\noindent\textbf{VAE:}
+\looseness=-1
+Our VAE is based on Mimi \citep{moshi} but enforces gaussian inner latents instead of a categorical distribution. Like in Mimi, to enforce semanticity of the representations, we distill WavLM into the inner latent representation with a cosine similarity loss. Unlike Mimi, which applies this loss only to the first codebook, we extend it to the entire latent representation.
+\begin{table}[h]
+\caption{\textbf{Speech compression models.} Our VAE is on par with the VQ-VAE on acoustic quality (MOSNeT) and outperforms it on semantic discriminability (ABX),  PESQ \cite{pesq} and STOI \cite{stoi} and a MUSHRA for acoustic quality.}
+
+\centering
+
+\begin{tiny}\begin{sc}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lllllllll}
+\toprule
+\textbf{Model Type} & \textbf{Dims / RVQ} & \textbf{Frame Rate (Hz)} & \textbf{Bitrate (kbit/s)} & \textbf{MOSNet} ($\uparrow$) & \textbf{ABX} ($\downarrow$) & {\textbf{PESQ} ($\uparrow$)} & {\textbf{STOI} ($\uparrow$)} & {\textbf{Acoustic Qual.}} ($\uparrow$)\\
+\midrule
+VQ-VAE (Mimi) & 8 RVQ    & 12.5 & 1.1kbps & 3.11 & 9.4\% & {2.13} & {0.87} & {57.7 $\pm$ 1.3} \\
+VAE & 32 dims    & 12.5 & - & \textbf{3.15} & \textbf{8.1\%} & {\textbf{2.42}} & {\textbf{0.90}} & {\textbf{66.0 $\pm$ 1.4}} \\
+\bottomrule
+\end{tabular}
+}
+\label{tab:codec_speech}
+%}
+\end{sc}
+\end{tiny}
+\end{table}
+
+
+\looseness=-1
+\noindent\textbf{Model and dataset:} Starting from Helium-1 \citep{kyutai2025helium}, a pretrained 2B parameters multilingual text LM as backbone, we train on French and English speech data following \citet{moshi} to learn continuation. To enhance the stability and coherence of speech continuation, we adopt the concept of \textit{inner monologue} \citep{moshi}—a latent textual representation of the model’s own speech, aligned such that each word is positioned at the timestep corresponding to its spoken occurrence. This implies that, at each timestep $s$, the backbone transformer takes both text tokens and speech latents as input, and that its output $\mathbf{z}^s_\text{long}$ is passed through a linear layer which produces text logits alongside conditioning the consistency head. This internal text stream acts as a semantic scaffold, as it represents the next word to be pronounced, guiding the generation of audio tokens by grounding them in a linguistic form. Crucially, like in \citet{moshi}, we introduce a temporal delay of 2 time steps (160ms) between the inner monologue and the corresponding audio tokens. This delay allows the model to access textual content prior to generating acoustic latents, decoupling high-level planning from low-level synthesis.
+For speech generation, we didn't notice any gains from introducing a short context transformer and noising the latents before feeding them to the backbone, resulting in a simpler model architecture.
+\looseness=-1
+\begin{table}[h]
+\caption{\textbf{Comparison of speech continuation models}: 8-RVQ RQ-transformer vs 1-step Consistency model head, with 2 temperature options.}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+\textbf{Model Type} & \textbf{Sampling} & \textbf{Overall} & \textbf{Sampler} & \textbf{\% Time in} & \textbf{PPX} ($\downarrow$) & \textbf{VERT} ($\downarrow$) & \textbf{Acoustic} & \multicolumn{2}{c}{\textbf{Meaningfulness}} \\
+ & \textbf{temperature} & \textbf{Speedup} ($\uparrow$) & \textbf{Speedup} ($\uparrow$) & \textbf{Sampler} ($\downarrow$) & & & \textbf{Quality}($\uparrow$) & \textbf{Elo} ($\uparrow$) & \textbf{Rank} ($\downarrow$) \\
+\midrule
+Reference & -- & -- & -- & -- & $20.2$ & $25.2$ & $4.02 \pm 0.11$ & $2180 \pm 30$ & -- \\
+\midrule
+RQ-transformer 8 RVQ & 1.0 & $\times 1.0$ & $\times 1.0$ & 26.7\% & $52.4$ & $36.3$ & $2.42 \pm 0.12$ & $1841 \pm 25$ & 4 \\
+RQ-transformer 8 RVQ & 0.8 & $\times 1.0$ & $\times 1.0$ & 26.7\% & $26.8$ & $33.1$ & $2.75 \pm 0.14$ & $1870 \pm 30$ & 3 \\
+CALM - Consistency - 1 step & 1.0 & $\times 1.3$ & $\times 12.3$ & 2.9\% & $42.9$ & $34.3$ & $2.82 \pm 0.13$ & $1947 \pm 28$ & 2 \\
+CALM - Consistency - 1 step & 0.8 & $\times 1.3$ & $\times 12.3$ & 2.9\% 
+& $\bm{23.8}$ & $\bm{31.2}$ & $\bm{3.45} \pm \bm{0.14}$ 
+& $\bm{2023} \pm \bm{27}$ & $\bm{1}$ \\
+\bottomrule
+\end{tabular}}
+\label{tab:speech_evals}
+\end{table}
+
+\looseness=-1
+\noindent\textbf{Results:} Tab.~\ref{tab:codec_speech} shows that our 32-dimensional VAE matches an 8-RVQ Mimi codec on MOSNet \citep{mosnet}, which measures audio quality, and exceeds it on the ABX metric \citep{abx}. ABX evaluates phonetic discriminability by testing whether a word like “bat” is represented closer to another “bat” utterance than to a similar-sounding word like “bit”, based on latent distances.
+\looseness=-1
+Tab.~\ref{tab:speech_evals} shows that the 1-step Consistency model outperforms the RQ-Transformer with 8 RVQ on all our automatic and human based metrics as well as on speed. For automatic metrics, we compute PPX and VERT as introduced by \citet{ppx_vert}. The PPX metric measures the semantic meaningfulness of the generated speech. To do so we generate 1000 excerpts of speech of 30 second, we use Whisper \citep{whisper} to compute textual transcriptions and finally compute the negative log-likelihood of the text tokens with a Mistral 7B LLM \cite{mistral7b} and convert it to Perplexity. Because a model that generates poorly diverse but good quality sentences would perform well on the PPX metric, the authors of \citep{ppx_vert} introduce the VERT metric (for diVERsiTy) which is a geometric mean of self- and auto-BLEU metrics. We use the official implementation from the fairseq \cite{fairseq} repository. 
+
+To assess perceptual quality, we conduct two human evaluation studies involving 50 participants and 50 randomly selected examples from the English test set. Each participant rates 10 examples across the following evaluation protocols: For Acoustic Quality, participants are presented with all model continuations for the same prompt, including the ground truth reference, and rate the acoustic quality of each continuation on a 1 to 5 scale. For Meaningfulness, participants are shown two continuations of the same prompt and select the one that is the most meaningful. These pairwise preferences are used to compute an Elo score (see Sec.~\ref{sec:human_evals}). 
+
+\looseness=-1
+Notably, we note a clear quality and meaningfulness improvement with our temperature method. Given that there is a text stream to guide the audio generation, we expected the CALM to match the baseline on meaningfulness rather than outperforming it. This phenomenon could be due to less model capacity in the backbone being allocated to audio manipulation, allowing more for text prediction.
+On the inference speed side, the consistency head is $\times12.3$ faster than the RQ-Transformer. The overall gain to perform a full inference of 30 seconds is $\times1.3$.
+
+\looseness=-1
+\noindent\textbf{Temperature Sampling and speaker similarity:} In Sec.~\ref{sec:effect_temp}, we show that our gaussian temperature sampling heuristic has similar effects on speaker similarity than the temperature sampling of the discrete model.
+
+
+\subsection{Text-to-Speech (TTS)}
+\noindent\textbf{VAE, model and dataset:} We use the same VAE as for speech continuation. Our TTS CALM builds on a 300M backbone transformer and uses the same architecture for the 10M parameters consistency sampling head. The text is fed to the backbone as a prefix with SentencePiece model \citep{sentencepiece} with a vocabulary size of 4k. The training data is a mix of public datasets totalizing to 88k hours of speech that is detailed in Sec.~\ref{sec:tts_data}.
+
+\noindent\textbf{Results:} We evaluate on the Librispeech test-clean set using the same protocol as F5-TTS \citep{f5tts}. We compare against four baselines: F5-TTS \citep{f5tts}, DSM \citep{delayed_stream_modeling}, DiTAR \citep{ditar}, and SALAD \citep{salad}. For DiTAR and SALAD, we report the paper results since the models are closed-source. We report Word Error Rate (WER) and Character Error Rate (CER) using Whisper-large-v3 \citep{whisper}, Speaker Similarity using WavLM-large \citep{wavlm} as well as the results of a MUSHRA test for acoustic quality and a pairwise audio test for speaker similarity.
+\begin{table}[h]
+\caption{\textbf{Text-to-Speech models.} Our CALM model with 1-step LSD outperforms baselines on WER, CER and Acoustic Quality. Results for Pocket TTS are in Sec.~\ref{sec:pocket_tts}.}
+\centering
+\scriptsize % smaller font
+\setlength{\tabcolsep}{4pt} % tighter column spacing
+\renewcommand{\arraystretch}{0.95} % tighter row spacing
+\begin{tiny}
+{
+\begin{sc}
+
+\begin{tabular}{lcrrrrr}
+\toprule
+\textbf{Model} & \textbf{Num. parameters} & \textbf{WER} & \textbf{CER}& \textbf{SIM} & \textbf{Acoustic}  & \textbf{Speaker SIM} \\
+ &  & ($\downarrow$) & ($\downarrow$) & ($\uparrow$) & Quality ($\uparrow$) & \textbf{Human ELO} ($\uparrow$) \\
+\midrule
+Reference & -- & 2.23 & -- & 0.69 & 61.8 $\pm$ 2.4 & 1953 $\pm$ 24 \\
+Reference (with VAE) & -- & -- & -- & 0.57 & -- & --\\
+\midrule
+F5 TTS (NFE=32) \citep{f5tts} & 336M & 2.42 & -- & 0.66 & 54.7 $\pm$ 2.8 & 2032 $\pm$ 18 \\
+DSM (16 RVQ CFG=3 & 750M & 1.95 & -- & \textbf{0.67} & 60.2 $\pm$ 2.4 & \textbf{2112 $\pm$ 20}\\
+w.r.t text and audio prompt) \citep{delayed_stream_modeling} &  \\
+DiTAR (NFE=10) \citep{ditar} & 600M & 2.39 & -- & \textbf{0.67} & -- & -- \\
+SALAD (NFE=20) \citep{salad} & 350M & -- & 0.74 & 0.54 & -- & -- \\
+%TTS 16RVQ retrained & 444M & 2.17 & 0.76 & 0.42 \\
+\midrule
+% CALM w/ Consistency (NFE=1, CFG=1.5 w.r.t text) & 313M & 1.93 & 0.62 & 0.40 \\
+CALM w/ LSD (NFE=1, CFG=1.5 w.r.t text) & \textbf{313M} & \textbf{1.81} & \textbf{0.57} & 0.52 & \textbf{61.1 $\pm$ 2.3} & 1966 $\pm$ 23 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+}
+\end{tiny}
+\label{tab:visqol}
+\end{table}
+
+Our CALM model with 1-step LSD \citep{lsd} outperforms baselines on WER, CER and Acoustic Quality but obtains a low speaker similarity score. This can be partially explained by the fact that when computing the speaker similarity between the reference prompt and the reference utterance that goes through the VAE (the second line of the tab) we obtain a similarity of 0.57. Yet, we demonstrate in Tab.~\ref{tab:codec_speech} that our VAE faithfully reconstructs speech. Due to this surprising behavior, we decide to measure speaker similarity with a human study. We observe that all measured methods beat the ground truth, which means that they preserve well the voice of the audio prompt.
+
+\subsection{Music Continuation}
+\label{sec:music_continuation_exp}
+
+\looseness=-1
+\noindent\textbf{Dataset:}
+We use a randomly selected subset of 400K songs (approximately 20K hours with 32kHz mono format) from the LAION-Disco-12M dataset, ensuring broad coverage across musical genres. 
+
+\noindent\textbf{VAE:}
+Our variational autoencoder (VAE) and codec architecture is adapted from the Mimi codec \citep{moshi}, originally designed for 24kHz speech at 12.5Hz. We trained it to compress 32kHz mono music with a 25Hz frame rate. Details and metrics are described in Sec.~\ref{sec:music_vae}.
+
+\begin{table}[h]
+\caption{\textbf{Comparison of music generation models across speed and quality metrics for 30 seconds generation.} Consistency-based models provide up to a $2.2\times$ overall speedup and a $19.3\times$ sampler head speedup compared to the RQ-Transformer 32 RVQ baseline, while achieving improved FAD scores and equivalent human ratings. TrigFlow achieves the best qualitative results but has significantly higher inference time. Since MusicGen only uses a linear layer to sample its token we consider its inference cost as negligible.}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sc}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Model}  & \textbf{Overall}& \textbf{Sampler}&  \textbf{\% time in} & \textbf{FAD} ($\downarrow$) & \textbf{Acoustic} & \multicolumn{2}{c}{\textbf{Enjoyment}} \\
+  & \textbf{Speedup} ($\uparrow$) & \textbf{Speedup} ($\uparrow$) &  \textbf{Sampler} ($\downarrow$) &   & \textbf{Quality} ($\uparrow$) & \textbf{Elo} ($\uparrow$) & \textbf{Rank} ($\downarrow$) \\
+\midrule
+Reference & -- & -- & -- & -- & 3.84 $\pm$ 0.08 & 2166 $\pm$ 33 & - \\
+\midrule
+RQ-transformer 32 RVQ (baseline)  & $\times$ 1.0 & $\times$ 1.0 & 57.7\% & 1.06 $\pm$ 0.06 & 2.85 $\pm$ 0.07 & 1824 $\pm$ 29 & 4 \\
+RQ-transformer 16 RVQ  & $\times$ 1.5 & $\times$ 2.2 & 38.0\% & 1.43 $\pm$ 0.07 & 2.76 $\pm$ 0.07 & 1781 $\pm$ 29 & 5 \\
+CALM - Consistency - 1 Step  & $\times$ \textbf{2.2} & $\times$ \textbf{19.3} & \textbf{6.6}\% & 0.83 $\pm$ 0.04 & 2.90 $\pm$ 0.07 & 1857 $\pm$ 28 & 2 \\
+CALM - Consistency - 4 Steps  & $\times$ 1.9 & $\times$ 5.4 & 20.1\% & \textbf{0.71 $\pm$ 0.05} & \textbf{3.07 $\pm$ 0.07} & 1847 $\pm$ 24 & 3 \\
+CALM - TrigFlow - 100 Steps  & $\times$ 0.3 & $\times$ 0.2 & 86.6\% & \textbf{0.64 $\pm$ 0.04} & \textbf{3.12 $\pm$ 0.07} & \textbf{1921 $\pm$ 29} & \textbf{1} \\
+MusicGen Medium  &  $\times$ 1.3 & -- & 0.0\% & 1.72 $\pm$ 0.12 & 2.62 $\pm$ 0.07 & 1761 $\pm$ 33 & 6 \\
+\bottomrule
+\end{tabular}
+\end{sc}
+}
+\label{tab:music_results}
+\end{table}
+
+\begin{SCtable}[][h]
+\caption{\textbf{Ablation study on music CALM Consistency 4-steps model components, after 250K training steps.} Removing noise augmentation or the short-context transformer leads to significant performance drops. Final row approximates the MAR configuration from \citet{autoreg_image_quant}.}
+
+\centering
+\small
+% \setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{sc}
+  \resizebox{0.5\textwidth}{!}{
+
+\begin{tabular}{lc}
+\toprule
+\textbf{Model Variant} & \textbf{FAD} ($\downarrow$)\\
+\midrule
+Base (CALM - Consistency - 4 steps)            & \textbf{0.93} $\pm$ \textbf{0.06} \\
+\quad w/o Head Batch Multiplier   &  1.32 $\pm$ 0.09 \\
+\quad w/o Noise Augmentation       & 1.63 $\pm$ 0.11 \\
+\quad w/o Short Context Transformer  & 4.03 $\pm$ 0.16\\
+\quad w/o Any of the above         & 8.38 $\pm$ 0.17 \\
+\bottomrule
+\end{tabular}
+}
+\end{sc}
+\label{tab:ablation_fad}
+\end{SCtable}
+
+
+\looseness=-1
+\noindent\textbf{Model:} Our music CALM builds on the MusicGen Medium backbone, a 1.35B parameter Transformer (see Sec.~\ref{sec:appendix_hyperarameters} for all the hyperparameters).  
+We compare our method against: (1) Two discrete models using 32 and 16 RVQ codecs, each employing the same 1.35B backbone and a RQ-transformer for parallel codes prediction; (2) a MusicGen Medium variant trained with EnCodec without textual conditioning, using the same backbone and a delay pattern for codebook interleaving. Both MusicGen Medium and EnCodec models were trained on our dataset.
+
+\looseness=-1
+\noindent\textbf{Results and Ablation:} In Tab.~\ref{tab:music_results}, we report both objective metrics and the results of a human evaluation study for the task of music continuation, conditioned on a 3-second prompt. 
+We compute the speed-up compared to the RQ-Transformer 32 RVQ, the Fréchet Audio Distance (FAD) which is the distance between Gaussian distributions fitted on VGG-obtained embeddings of the real and generated samples. We compute it on 4,000 model-generated continuations from the test set. The Acoustic Quality is a MOS score between 1 and 5. The Enjoyment metric is an Elo score (see Sec.~\ref{sec:human_evals}), computed by making human rater choose their favorite music out of generated pairs with the same 3s prompt. We observe that CALM with consistency outperforms the 32 RVQ RQ-Transformer baseline on computed and human metrics while being $\times1.9$ to $\times2.2$ times faster for the overall speedup. While the RQ-Transformer takes $57.7\%$ of the inference time for the baseline, the consistency head only takes $6.6\%$ to $20.1\%$. As well, we train a CALM model with a TrigFlow head instead of consistency and it outperforms all the models but to the price of a slow inference.
+
+
+\looseness=-1
+An ablation study (Tab.~\ref{tab:ablation_fad}) on music CALM Consistency 4 steps shows the importance of each component. The experiments are run for 250K steps, which explains that the base model's FAD is worse than the one reported in Tab.~\ref{tab:music_results}. The final row that is the closest to the MAR framework (consistency replacing diffusion) fails to produce high-quality music. In Fig.~\ref{fig:head_batch_multiplier}, we show that the FAD decreases much faster over time when we train consistency CALM models with a bigger head batch multiplier. All evaluations are done with 4 steps of consistency. We keep the value of 8 for all of our experiments as a higher value would lead to out of memory issues at training time. 
+
+\looseness=-1
+\textbf{Necessity of Consistency for a fast inference:} We show in Sec.~\ref{sec:num_steps} that the consistency framework largely outperforms the TrigFlow framework for 10 inference steps and less (the regime where the Real time factor is smaller than 1). 
+
+\looseness=-1
+\textbf{Scalability:} We show in Sec.~\ref{sec:scalability} that CALM does improve with a bigger 3B parameters backbone. However, we leave a complete scalability study for future work.
+
+
+\subsection{Text-to-music generation}
+We compare CALM on the task of text-to-music generation. Since our dataset do not have any text labeling, we use CLAP \citep{clap} as a prefix conditioning and train MusicGen, our RQ-Transformer 32 RVQ baseline as well as CALM. During training, we drop the conditioning $20\%$ of the time in order to perform Classifier Free Guidance \citep{cfg} at inference. We use CLAP in audio mode when training. We use the same training data, VAE/codecs and hyperparameters as the models reported in Tab.~\ref{tab:music_results}. In Tab.~\ref{tab:clap_music_results}, we show the results of our CLAP conditioned model evaluated on our internal test set with the CLAP conditioning being used in audio mode. 
+As well, we report the results of our model and several baselines on the text-to-music benchmark on the MusicCaps dataset \cite{musiclm} in Sec.\ref{sec:text-to-music}.
+
+  
+
+\begin{table}[h]
+\caption{{\textbf{Text-to-music generation models} on our test set where CLAP is used in audio mode.}}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{sc}
+{
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Model}  & \textbf{Overall}& \textbf{Sampler}&  \textbf{\% time in} & \textbf{FAD} ($\downarrow$) & \textbf{Acoustic} & \multicolumn{2}{c}{\textbf{Enjoyment}} \\
+  & \textbf{Speedup} ($\uparrow$) & \textbf{Speedup} ($\uparrow$) &  \textbf{Sampler} ($\downarrow$) &   & \textbf{Quality} ($\uparrow$) & \textbf{Elo} ($\uparrow$) & \textbf{Rank} ($\downarrow$) \\
+\midrule
+Reference & -- & -- & --  & -- & 3.75 $\pm$ 0.15 & 2104 $\pm$ 24 & -- \\
+\midrule
+RQ-transformer 32 RVQ (CFG=3)  & $\times$ 1.0 & $\times$ 1.0 & 57.7\% & \textbf{0.93 $\pm$ 0.07} & \textbf{3.16 $\pm$ 0.15} &  \textbf{1998 $\pm$ 24} & 1 \\
+CALM - Consistency - 4 Steps (CFG=2)  & \textbf{$\times$ 1.9} & $\times$ 5.4 & 20.1\% & \textbf{0.91 $\pm$ 0.08}  & \textbf{3.11 $\pm$ 0.14} & \textbf{1998 $\pm$ 24} & 1  \\
+MusicGen Medium  &  $\times$ 1.3 & -- & 0.0\% & 1.93 $\pm$ 0.14 & 2.54 $\pm$ 0.14 &  1946 $\pm$ 25 & 3 \\
+\bottomrule
+\end{tabular}
+}
+\end{sc}
+}
+\label{tab:clap_music_results}
+\end{table}
+
+

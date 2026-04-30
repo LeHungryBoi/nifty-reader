@@ -35,4 +35,4 @@ nifty-reader/
 |---|---|---|
 | PocketTTS (官方 Python) | `spec/com_spec/pocket-tts/` | `kyutai-labs/pocket-tts` 官方仓库浅克隆，供 TTS 开发参考 |
 | sherpa-onnx (TTS 推理引擎) | `spec/com_spec/sherpa-onnx/` | `k2-fsa/sherpa-onnx` 官方仓库浅克隆，供 TTS 推理引擎开发参考 |
-| CALM / Pocket TTS 论文 | `spec/com_spec/CALM-PocketTTS-论文参考.md` | arXiv:2509.06926v3 — Continuous Audio Language Models 论文笔记 |
+| CALM / Pocket TTS 论文 | `spec/com_spec/ContinuousAudioLanguageModel-arXiv-2509.06926v3/` | arXiv:2509.06926v3 — Continuous Audio Language Models 论文参考 |

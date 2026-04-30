@@ -13,10 +13,15 @@ import os
 import sys
 import threading
 import traceback
+import warnings
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from dataclasses import dataclass
 from pathlib import Path
+
+# 静默 sounddevice 在 Python 3.14 上的 cffi callback 警告
+warnings.filterwarnings("ignore", message=".*cffi callback.*")
+warnings.filterwarnings("ignore", message=".*finished_callback_wrapper.*")
 
 import numpy as np
 import torch
@@ -47,6 +52,7 @@ except ImportError:
 RUNNING_DIR = Path(os.getcwd())
 CACHE_DIR = RUNNING_DIR / ".cache" / "pocket_tts"
 PREPROCESS_CACHE_DIR = RUNNING_DIR / ".cache" / "preprocessed"
+STATE_CACHE_DIR = RUNNING_DIR / ".cache" / "voice_states"  # voice state 缓存
 AUTO_IMPORT_DIR = RUNNING_DIR / "assets" / "voices"  # 默认自动导入路径
 
 
@@ -119,8 +125,8 @@ class VoiceFusionApp:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("PocketTTS Voice Fusion Tool")
-        self.root.geometry("1150x900")
-        self.root.minsize(960, 720)
+        self.root.geometry("900x700")
+        self.root.minsize(640, 500)
 
         # State
         self.model = None
@@ -129,6 +135,12 @@ class VoiceFusionApp:
         self.last_audio: torch.Tensor | None = None
         self._generating = False
         self._viz_timer = None
+        self._play_stream = None
+        self._play_audio_data = None
+        self._play_sr = 0
+        self._play_pos = 0
+        self._play_paused = False
+        self._play_source_key = None
 
         # Settings
         from settings import load_settings, save_settings, Settings
@@ -176,22 +188,19 @@ class VoiceFusionApp:
         f_pp.grid(row=1, column=0, sticky="ew", padx=10, pady=4)
         self._build_preprocess_panel(f_pp)
 
-        # Row 2 — Library + Visualization (expanding)
-        f_mid = ttk.Frame(self.root)
-        f_mid.grid(row=2, column=0, sticky="nsew", padx=10, pady=4)
-        f_mid.columnconfigure(0, weight=2, minsize=320)
-        f_mid.columnconfigure(1, weight=3, minsize=420)
-        f_mid.rowconfigure(0, weight=1)
+        # Row 2 — Notebook: Library + Visualization (tabbed, saves space)
+        nb = ttk.Notebook(self.root)
+        nb.grid(row=2, column=0, sticky="nsew", padx=10, pady=4)
 
-        f_lib = ttk.LabelFrame(f_mid, text="Voice Library", padding=6)
-        f_lib.grid(row=0, column=0, sticky="nsew", padx=(0, 4))
-        self._build_library_panel(f_lib)
+        tab_lib = ttk.Frame(nb)
+        nb.add(tab_lib, text="Voice Library")
+        self._build_library_panel(tab_lib)
 
-        f_viz = ttk.LabelFrame(f_mid, text="Visualization", padding=6)
-        f_viz.grid(row=0, column=1, sticky="nsew", padx=(4, 0))
-        self._build_viz_panel(f_viz)
+        tab_viz = ttk.Frame(nb)
+        nb.add(tab_viz, text="Visualization")
+        self._build_viz_panel(tab_viz)
 
-        # Row 3 — Fusion + Test
+        # Row 3 — Fusion + Test (stacked vertically)
         f_ctrl = ttk.Frame(self.root)
         f_ctrl.grid(row=3, column=0, sticky="ew", padx=10, pady=4)
         self._build_fusion_panel(f_ctrl)
@@ -268,7 +277,10 @@ class VoiceFusionApp:
         self.lib_count_label = ttk.Label(btn_row, text="(empty)", style="Status.TLabel")
         self.lib_count_label.pack(side="right", padx=4)
 
-        # Scrollable voice list
+        # Scrollable voice list — fill the tab
+        parent.columnconfigure(0, weight=1)
+        parent.rowconfigure(0, weight=1)
+
         container = ttk.Frame(parent)
         container.pack(fill="both", expand=True)
 
@@ -388,11 +400,15 @@ class VoiceFusionApp:
 
     def _build_viz_panel(self, parent):
         if _matplotlib_available:
-            self._fig = Figure(figsize=(6, 4), dpi=100, facecolor="#fafafa")
-            self._ax_wave = self._fig.add_subplot(211)
-            self._ax_align = self._fig.add_subplot(212)
-            self._fig.subplots_adjust(hspace=0.45, left=0.10, right=0.95,
-                                       top=0.95, bottom=0.08)
+            self._fig = Figure(figsize=(7, 6), dpi=100, facecolor="#fafafa")
+            gs = self._fig.add_gridspec(
+                3, 2, height_ratios=[0.8, 1.5, 0.8],
+                hspace=0.50, wspace=0.30,
+                left=0.08, right=0.95, top=0.95, bottom=0.06)
+            self._ax_wave = self._fig.add_subplot(gs[0, :])
+            self._ax_latent = self._fig.add_subplot(gs[1, 0])
+            self._ax_weight = self._fig.add_subplot(gs[1, 1])
+            self._ax_align = self._fig.add_subplot(gs[2, :])
             self._canvas_mpl = FigureCanvasTkAgg(self._fig, master=parent)
             self._canvas_mpl.get_tk_widget().pack(fill="both", expand=True)
             self._update_viz()
@@ -407,39 +423,39 @@ class VoiceFusionApp:
     # ── Fusion + Test ──
 
     def _build_fusion_panel(self, parent):
-        left = ttk.LabelFrame(parent, text="Fusion", padding=8)
-        left.pack(side="left", fill="both", expand=True, padx=(0, 4))
-
-        method_row = ttk.Frame(left)
-        method_row.pack(fill="x")
-        ttk.Radiobutton(method_row, text="Align (recommended)",
+        # Fusion method (compact, single row)
+        fuse_row = ttk.Frame(parent)
+        fuse_row.pack(fill="x")
+        ttk.Label(fuse_row, text="Fusion:", style="Header.TLabel").pack(side="left", padx=(0, 4))
+        ttk.Radiobutton(fuse_row, text="Align (recommended)",
                          variable=self.method, value="align",
                          command=self._schedule_viz
                          ).pack(side="left", padx=4)
-        ttk.Radiobutton(method_row, text="Average",
+        ttk.Radiobutton(fuse_row, text="Average",
                          variable=self.method, value="average",
                          command=self._schedule_viz
                          ).pack(side="left", padx=4)
+        self.fuse_info = ttk.Label(fuse_row, text="", style="Status.TLabel")
+        self.fuse_info.pack(side="left", padx=8)
 
-        self.fuse_info = ttk.Label(left, text="", style="Status.TLabel")
-        self.fuse_info.pack(anchor="w", pady=(4, 0))
+        # Test synthesis (compact, two rows)
+        f_test = ttk.LabelFrame(parent, text="Test Synthesis", padding=6)
+        f_test.pack(fill="x", pady=(4, 0))
 
-        right = ttk.LabelFrame(parent, text="Test Synthesis", padding=8)
-        right.pack(side="left", fill="both", expand=True, padx=(4, 0))
-
-        text_row = ttk.Frame(right)
+        text_row = ttk.Frame(f_test)
         text_row.pack(fill="x")
         ttk.Label(text_row, text="Text:").pack(side="left")
         ttk.Entry(text_row, textvariable=self.test_text).pack(
             side="left", fill="x", expand=True, padx=(4, 0))
 
-        btn_row = ttk.Frame(right)
-        btn_row.pack(fill="x", pady=(6, 0))
+        btn_row = ttk.Frame(f_test)
+        btn_row.pack(fill="x", pady=(4, 0))
         ttk.Button(btn_row, text="Generate Fused",
                     command=self._generate,
                     style="Accent.TButton").pack(side="left", padx=2)
-        ttk.Button(btn_row, text="Play",
-                    command=self._play_audio).pack(side="left", padx=2)
+        self.play_btn = ttk.Button(btn_row, text="Play",
+                                   command=self._play_audio)
+        self.play_btn.pack(side="left", padx=2)
         ttk.Button(btn_row, text="Save WAV...",
                     command=self._save_audio).pack(side="left", padx=2)
         ttk.Button(btn_row, text="Export State...",
@@ -485,6 +501,7 @@ class VoiceFusionApp:
         )
 
     def _on_close(self):
+        self._stop_playback(reset_position=False, update_button=False)
         self._save_settings_fn(self._collect_settings(), RUNNING_DIR)
         self.root.destroy()
 
@@ -550,7 +567,12 @@ class VoiceFusionApp:
         self.load_btn.configure(text="Loaded", state="disabled")
         self._log(f"Model loaded on {self.device.get()}, sample_rate={sr}Hz")
 
-        # Auto-import voices from assets/voices on startup
+        # Re-extract states for entries that were loaded before model was ready
+        pending = [v for v in self.voices if v.state is None and not v.extracting]
+        for entry in pending:
+            self._extract_for_entry(entry)
+
+        # Auto-import new voices from assets/voices
         self._auto_import()
 
     # ── Library operations ──
@@ -785,6 +807,43 @@ class VoiceFusionApp:
 
     # ── Extract voice state ──
 
+    def _state_cache_path(self, audio_path: str) -> Path:
+        """计算 voice state 缓存文件路径（基于音频文件 hash）。"""
+        from preprocess import _file_hash
+        h = _file_hash(Path(audio_path))
+        STATE_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        return STATE_CACHE_DIR / f"{h}.safetensors"
+
+    def _try_load_state_cache(self, entry: VoiceEntry) -> dict | None:
+        """尝试从缓存加载 voice state，失败返回 None。"""
+        cache_path = self._state_cache_path(entry.audio_path)
+        if not cache_path.exists():
+            return None
+        try:
+            from fusion import load_state, get_state_info
+            state = load_state(cache_path)
+            info = get_state_info(state)
+            # 验证缓存完整性
+            if not info["details"]:
+                cache_path.unlink()
+                return None
+            self._log(f"[{entry.name}] State cache hit")
+            return state
+        except Exception:
+            cache_path.unlink(missing_ok=True)
+            return None
+
+    def _save_state_cache(self, entry: VoiceEntry):
+        """将 voice state 保存到缓存。"""
+        if entry.state is None:
+            return
+        try:
+            from fusion import save_state
+            cache_path = self._state_cache_path(entry.audio_path)
+            save_state(entry.state, cache_path)
+        except Exception:
+            pass
+
     def _extract_for_entry(self, entry: VoiceEntry):
         if self.model is None:
             messagebox.showwarning("Warning", "Please load model first")
@@ -796,6 +855,14 @@ class VoiceFusionApp:
             try:
                 actual_path = self._preprocess_for_extract(entry.audio_path, entry.name)
                 ap = Path(actual_path)
+
+                # 尝试从缓存加载
+                cached_state = self._try_load_state_cache(entry)
+                if cached_state is not None:
+                    self.root.after(0, lambda: self._on_extracted(entry, cached_state))
+                    return
+
+                # 缓存未命中，执行提取
                 if ap.stat().st_size == 0:
                     raise FileNotFoundError(f"Preprocessed file is empty: {ap}")
                 try:
@@ -812,6 +879,9 @@ class VoiceFusionApp:
 
                 state = self.model.get_state_for_audio_prompt(
                     str(ap), truncate=True)
+                # 保存到缓存
+                entry.state = state
+                self._save_state_cache(entry)
                 self.root.after(0, lambda: self._on_extracted(entry, state))
             except Exception as e:
                 err = traceback.format_exc()
@@ -877,20 +947,27 @@ class VoiceFusionApp:
         selected = [v for v in self.voices if v.selected and v.state is not None]
 
         self._ax_wave.clear()
+        self._ax_latent.clear()
+        self._ax_weight.clear()
         self._ax_align.clear()
 
         if len(selected) < 2:
-            self._ax_wave.set_title(
+            for ax, title in [
+                (self._ax_wave, ""),
+                (self._ax_latent, "Latent Space"),
+                (self._ax_weight, ""),
+                (self._ax_align, ""),
+            ]:
+                ax.set_xticks([])
+                ax.set_yticks([])
+            self._ax_latent.set_title(
                 "Select 2+ voices with extracted states",
                 fontsize=10, color="gray")
-            self._ax_wave.set_xticks([])
-            self._ax_wave.set_yticks([])
-            self._ax_align.set_xticks([])
-            self._ax_align.set_yticks([])
             self._canvas_mpl.draw_idle()
             return
 
         total_w = sum(v.weight for v in selected)
+        norm_weights = [v.weight / total_w for v in selected]
 
         # ── Top: Waveforms ──
         self._ax_wave.set_title("Waveforms", fontsize=10, fontweight="bold")
@@ -910,6 +987,87 @@ class VoiceFusionApp:
                     fontsize=8, color="gray")
         if any(v.wave_data is not None for v in selected):
             self._ax_wave.legend(fontsize=7, loc="upper right")
+
+        # ── Middle-left: Latent Space Heatmap ──
+        self._ax_latent.set_title("Latent Space (1st layer, mean K/V)",
+                                   fontsize=10, fontweight="bold")
+        # Extract latent summaries for each voice
+        latents = []
+        for v in selected:
+            lat = self._extract_latent_summary(v.state, target_len=0)
+            latents.append(lat)
+        target_lat_len = max(
+            lat.shape[0] for lat in latents if lat is not None) if any(latents) else 0
+
+        # Resample all to target_lat_len and compute fused
+        resampled = []
+        for lat in latents:
+            if lat is None:
+                resampled.append(None)
+                continue
+            if lat.shape[0] != target_lat_len:
+                x_old = np.linspace(0, 1, lat.shape[0])
+                x_new = np.linspace(0, 1, target_lat_len)
+                lat = np.interp(x_new, x_old, lat)
+            resampled.append(lat)
+
+        # Build heatmap data: rows = voices + fused result
+        names_lat = [v.name for v in selected]
+        colors_lat = [self.COLORS[self.voices.index(v) % len(self.COLORS)]
+                      for v in selected]
+
+        # Compute fused weighted result
+        fused_lat = np.zeros(target_lat_len)
+        for lat, nw in zip(resampled, norm_weights):
+            if lat is not None:
+                fused_lat += nw * lat
+
+        all_rows = []
+        all_labels = []
+        all_colors = []
+        for i, (lat, nm, cl, v) in enumerate(
+                zip(resampled, names_lat, colors_lat, selected)):
+            if lat is not None:
+                all_rows.append(lat)
+                all_labels.append(f"{nm} (w={v.weight:.1f})")
+                all_colors.append(cl)
+        all_rows.append(fused_lat)
+        all_labels.append("FUSED")
+        all_colors.append("#FF6B6B")
+
+        if all_rows:
+            heatmap_data = np.array(all_rows)
+            im = self._ax_latent.imshow(
+                heatmap_data, aspect="auto", cmap="RdBu_r",
+                interpolation="nearest")
+            self._ax_latent.set_yticks(range(len(all_labels)))
+            self._ax_latent.set_yticklabels(all_labels, fontsize=7)
+            self._ax_latent.set_xlabel("time step (resampled)", fontsize=8)
+
+            # Add color indicators on the left
+            for i, c in enumerate(all_colors):
+                self._ax_latent.axhline(y=i, color=c, linewidth=3, alpha=0.7)
+
+        # ── Middle-right: Weight Distribution ──
+        self._ax_weight.set_title("Weight Distribution", fontsize=10,
+                                   fontweight="bold")
+        y_pos_w = list(range(len(selected) - 1, -1, -1))
+        bars = self._ax_weight.barh(
+            y_pos_w, [v.weight for v in selected],
+            color=colors_lat, alpha=0.8, height=0.5)
+        # Show normalized percentage
+        for yp, nw, w in zip(y_pos_w, norm_weights, [v.weight for v in selected]):
+            self._ax_weight.text(
+                w + 0.05, yp, f" {nw:.0%}",
+                va="center", fontsize=8)
+        self._ax_weight.set_yticks(y_pos_w)
+        self._ax_weight.set_yticklabels(names_lat, fontsize=7)
+        self._ax_weight.set_xlabel("weight", fontsize=8)
+        self._ax_weight.axvline(x=total_w / len(selected), color="gray",
+                                 linestyle="--", linewidth=0.8, alpha=0.5)
+        self._ax_weight.text(
+            total_w / len(selected), len(selected) - 0.3,
+            "avg", ha="center", fontsize=7, color="gray")
 
         # ── Bottom: Alignment bars ──
         self._ax_align.set_title("Seq Length Alignment", fontsize=10,
@@ -960,6 +1118,31 @@ class VoiceFusionApp:
             entry.wave_sr = sr
         except Exception:
             pass
+
+    def _extract_latent_summary(self, state: dict, target_len: int = 0) -> np.ndarray | None:
+        """从 voice state 的第一个 module 提取 latent 摘要。
+
+        对 cache 取 mean(heads, dim) → [2, seq_len]（K/V 均值），
+        再取 mean(K, V) → [seq_len]。
+        可选 resample 到 target_len。
+        """
+        if not state:
+            return None
+        try:
+            first_key = next(iter(state))
+            cache = state[first_key]["cache"]  # [2, 1, seq_len, heads, dim]
+            # mean across batch(1), heads(3), dim(4) → [2, seq_len]
+            summary = cache.float().mean(dim=(1, 3, 4)).cpu().numpy()
+            # average K and V → [seq_len]
+            summary = summary.mean(axis=0)
+
+            if target_len > 0 and summary.shape[0] != target_len:
+                x_old = np.linspace(0, 1, summary.shape[0])
+                x_new = np.linspace(0, 1, target_len)
+                summary = np.interp(x_new, x_old, summary)
+            return summary
+        except Exception:
+            return None
 
     # ── Fusion info ──
 
@@ -1063,16 +1246,108 @@ class VoiceFusionApp:
                 "sounddevice not installed. Install with: pip install sounddevice\n"
                 "Or use 'Save WAV' to save and play externally.")
             return
-        audio = self.last_audio.squeeze().cpu().numpy()
+        audio = self.last_audio.squeeze().cpu().numpy().astype(np.float32)
         sr = (self.model.sample_rate
               if hasattr(self.model, "sample_rate")
               else self.model.config.mimi.sample_rate)
         try:
-            sd.play(audio.astype("float32"), samplerate=sr)
+            self._toggle_playback(
+                audio=audio,
+                sr=sr,
+                source_key=("generated",),
+                pause_log="Playback paused",
+            )
         except Exception as e:
             print(f"[VoiceFusion ERROR] Playback failed:\n"
                   f"{traceback.format_exc()}", file=sys.stderr)
             messagebox.showerror("Playback Error", str(e))
+
+    def _toggle_playback(self, audio: np.ndarray, sr: int, source_key, pause_log: str):
+        # If currently playing the same source, pause.
+        if (
+            self._play_stream is not None
+            and self._play_stream.active
+            and self._play_source_key == source_key
+        ):
+            self._play_paused = True
+            self._stop_playback(reset_position=False, update_button=True)
+            self._log(pause_log)
+            return
+
+        # If source changed, load new buffer from start.
+        if self._play_source_key != source_key:
+            self._play_audio_data = audio
+            self._play_sr = sr
+            self._play_pos = 0
+            self._play_source_key = source_key
+        else:
+            # Same source but maybe resumed after stop; refresh on shape/sr mismatch.
+            if (
+                self._play_audio_data is None
+                or self._play_sr != sr
+                or len(self._play_audio_data) != len(audio)
+            ):
+                self._play_audio_data = audio
+                self._play_sr = sr
+                self._play_pos = 0
+
+        self._start_or_resume_playback()
+
+    def _start_or_resume_playback(self):
+        if self._play_audio_data is None or self._play_sr <= 0:
+            return
+        if self._play_pos >= len(self._play_audio_data):
+            self._play_pos = 0
+
+        def callback(outdata, frames, _time, _status):
+            if self._play_audio_data is None:
+                outdata.fill(0)
+                raise sd.CallbackStop
+            end = min(self._play_pos + frames, len(self._play_audio_data))
+            chunk = self._play_audio_data[self._play_pos:end]
+            outdata[: len(chunk), 0] = chunk
+            if len(chunk) < frames:
+                outdata[len(chunk):, 0] = 0
+            self._play_pos = end
+            if self._play_pos >= len(self._play_audio_data):
+                raise sd.CallbackStop
+
+        self._stop_playback(reset_position=False, update_button=False)
+        self._play_stream = sd.OutputStream(
+            samplerate=self._play_sr,
+            channels=1,
+            dtype="float32",
+            callback=callback,
+            finished_callback=lambda: self.root.after(0, self._on_playback_finished),
+        )
+        self._play_stream.start()
+        self._play_paused = False
+        self.play_btn.configure(text="Pause")
+
+    def _on_playback_finished(self):
+        was_paused = self._play_paused
+        self._stop_playback(reset_position=not was_paused, update_button=True)
+        if not was_paused:
+            self._play_pos = 0
+
+    def _stop_playback(self, reset_position: bool, update_button: bool):
+        stream = self._play_stream
+        self._play_stream = None
+        if stream is not None:
+            try:
+                stream.stop()
+            except Exception:
+                pass
+            try:
+                stream.close()
+            except Exception:
+                pass
+        if reset_position:
+            self._play_pos = 0
+            self._play_paused = False
+            self._play_source_key = None
+        if update_button and hasattr(self, "play_btn"):
+            self.play_btn.configure(text="Play")
 
     def _preview_voice(self, entry: VoiceEntry):
         """Preview the original audio file of a voice entry."""
@@ -1091,10 +1366,14 @@ class VoiceFusionApp:
             if data.ndim > 1:
                 data = data[:, 0]
             audio = data.astype(np.float32)
-            # Stop any current playback
-            sd.stop()
-            sd.play(audio, samplerate=sr)
-            self._log(f"[Preview] {entry.name}")
+            self._toggle_playback(
+                audio=audio,
+                sr=sr,
+                source_key=("preview", entry.voice_id),
+                pause_log=f"[Preview] paused: {entry.name}",
+            )
+            if not self._play_paused:
+                self._log(f"[Preview] {entry.name}")
         except Exception as e:
             self._on_error(f"Failed to preview '{entry.name}':\n{traceback.format_exc()}", exc=e)
 

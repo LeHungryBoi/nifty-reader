@@ -1,0 +1,115 @@
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Our VAE-GAN}
+\looseness=-1
+Most autoregressive audio models are built upon RVQ-GAN architectures \citep{soundstream, encodec, dac, speech_codec_comparaison}. Following the approach of \citet{stable_audio}, we instead adopt a VAE-GAN framework, replacing the RVQ bottleneck with a VAE bottleneck to regularize the latent space and enforce a Gaussian prior. Our VAE is fully causal and draws from the architecture of Mimi \citep{moshi}, using Transformers in addition to convolutions in the encoder and decoder, which have been shown to improve performance. 
+
+\looseness=-1
+While training the model with adversarial losses and VAE regularization without any reconstruction losses improves the quality of the model for speech, it degrades the reconstruction quality for music. Semantic distillation is performed for the speech VAE similarly as in Mimi, with WavLM \citep{wavlm} as teacher. There is no semantic distillation for the music model and we let this for future work as semantic content is harder to define for music. The loss is: 
+\begin{equation}
+    \mathcal{L}_{\text{VAE}} = \lambda_{\text{t}} \mathcal{L}_{\text{t}}(x, \hat{x}) + \lambda_{\text{f}} \mathcal{L}_{\text{f}}(x, \hat{x}) + \lambda_{\text{adv}} \mathcal{L}_{\text{adv}}(\hat{x}) + \lambda_{\text{feat}} \mathcal{L}_{\text{feat}}(x, \hat{x}) + \lambda_{\text{KL}} \mathcal{L}_{\text{KL}} +
+    \lambda_{\text{distill}} \mathcal{L}_{\text{distill}}
+\end{equation}
+where $\mathcal{L}_{\text{t}}$ and $\mathcal{L}_{\text{f}}$ are the temporal and frequential reconstruction losses, $\mathcal{L}_{\text{adv}}$ is the adversarial loss, $\mathcal{L}_{\text{feat}}$ is the feature matching loss, $\mathcal{L}_{\text{KL}}$ is the KL regularization applied to the VAE bottleneck, and $\mathcal{L}_{\text{distill}}$ is the WavLM distillation loss applied for the speech VAE.
+
+\subsection{Continuous Audio Language Model (CALM) architecture}
+
+\looseness=-1
+Let $\bigl(\mathbf{x}^1, \ldots, \mathbf{x}^S\bigr)$ denote the sequence of continuous latent vectors produced by a VAE encoder.  As illustrated in Fig.~\ref{fig:fig1}, our model comprises three main components. The motivations behind these design choices are described in Sec.~\ref{sec:noise} and the ablation study in Tab.~\ref{tab:ablation_fad} justifies these choices.
+
+\looseness=-1
+\paragraph{1. Causal Backbone Transformer with Noise Injection}
+We build on the MAR framework \citep{autoreg_image_quant} by employing a causal Transformer $T_{\text{long}, \theta^1}$ to capture long‑term dependencies. However, during preliminary experiments, we realized that music generation models with the MAR framework were generating poor quality audio and diverging quickly at inference because they were not robust to error accumulation. 
+\citet{sony_trick} introduced a noise augmentation trick at training time in order to tackle this problem. Given a sequence $(\mathbf{x}^1, \mathbf{x}^2, \ldots, \mathbf{x}^S)$, they sample $k_s \sim \mathcal{U}(0, 1)$ and $\bm{\epsilon}_s \sim \mathcal{N}(0, \mathbf{I})$ for every $s \in \{1, \ldots, S\}$ and use a noised input to the backbone $\tilde{\mathbf{x}}^s = k_s  \bm{\epsilon}_s + (1 - k_s) \mathbf{x}^s$ for every $s$. Early experiments showed that preserving the variance of $\tilde{\mathbf{x}}^s$ improved quality, so that we use instead
+$\tilde{\mathbf{x}}^s = \sqrt{k_s}  \bm{\epsilon}_s + \sqrt{1 - k_s} \mathbf{x}^s$. We don't perform any noise augmentation at inference time. Thus, $\mathbf{z}_{\text{long}}^s \;=\; T_{\text{long}, \theta^1}\bigl(\tilde{\mathbf{x}}^1,\,\ldots,\,\tilde{\mathbf{x}}^{s-1}\bigr)$.
+Noise injection prevents error accumulation during inference, but as shown in Tab.~\ref{tab:ablation_fad} is insufficient alone for high‑quality music generation.
+% \paragraph{1. Causal Backbone Transformer with Noise Injection}
+% We build on the MAR framework \citep{autoreg_image_quant} by employing a causal Transformer $T_{\text{long}, \theta^1}$ to capture long‑term dependencies.  During training, each input latent $\mathbf{x}^s$ is replaced with a noised version $\tilde{\mathbf{x}}^s$ (see Sec.~\ref{sec:noise} and Ablation \ref{tab:ablation_fad}). We don't perform any noise augmentation at inference time. Concretely, $\mathbf{z}_{\text{long}}^s \;=\; T_{\text{long}, \theta^1}\bigl(\tilde{\mathbf{x}}^1,\,\ldots,\,\tilde{\mathbf{x}}^{s-1}\bigr)$.
+% Noise injection prevents error accumulation during inference, but as shown in Tab.~\ref{tab:ablation_fad} is insufficient alone for high‑quality music generation.
+
+
+\looseness=-1
+\paragraph{2. Short‑Context Transformer}
+To supply local, high‑resolution context to the denoising head, we introduce a lightweight causal Transformer that attends the $K$ previous clean latents (we use $K=10$, $\sim$ 0.4s of music): $\mathbf{z}_{\text{short}}^s \;=\; T_{\text{short}, \theta^2}\bigl(\mathbf{x}^{s-K},\,\ldots,\,\mathbf{x}^{s-1}\bigr)$.
+This short‑context embedding $\mathbf{z}_{\text{short}}^s$ supplies fine‑grained information potentially lost through noise injection in the backbone. We show in Sec.~\ref{sec:K_hyperparameter} that the value of K is not a decisive hyperparameter but Tab.~\ref{tab:ablation_fad} indicates that the short-context transformer is crucial to good quality generation.
+
+
+\looseness=-1
+\paragraph{3. Consistency‑Model Head}
+Finally, a small MLP-based consistency model $f_\phi$ is conditioned on the sum of the long‑term and short‑term features, $\mathbf{Z}^s = \mathbf{z}_{\text{long}}^s + \mathbf{z}_{\text{short}}^s$. At inference time, for 1-step generation, the next latent $\hat{\mathbf{x}}^s$ is sampled through: $\bm{\epsilon} \sim \mathcal{N}(0, I), t=1$, $\hat{\mathbf{x}}^s \;=\; f_\phi\bigl(\mathbf{x}^{s}_1 = \bm{\epsilon}, t=1, \mathbf{Z}^s\bigr)$.
+
+\looseness=-1
+In addition to consistency, we experiment with the TrigFlow \citep{continuous_consistency} formulation of flow‑matching for the MLP. Although TrigFlow yields marginally higher fidelity, its inference cost makes it impractical for real‑time use. While Tab.~\ref{tab:music_results} shows it, this tradeoff is studied in Sec.~\ref{sec:num_steps}.
+
+\looseness=-1
+Together, these three components form a continuous autoregressive model that (i) leverages noise‑robust long‑term modeling, (ii) preserves local detail via short‑context conditioning, and (iii) achieves rapid, high‑fidelity latent sampling through consistency modeling.  
+
+\looseness=-1
+The training objective for one sequence $\bigl(\mathbf{x}^1, \ldots, \mathbf{x}^S\bigr)$ is defined by:
+
+\begin{equation}
+\label{eq:objective_calm}
+\small
+    \mathcal{L}_{\text{CALM}}(\theta,\phi, \psi) = \sum_{s=1}^S\mathbb{E}_{t, \bm{\epsilon}}\left[\!
+    \frac{e^{w_\psi(t)}}{D}\left\|
+        F_\phi\left(\mathbf{x}^s_t,t, \mathbf{Z}^s\right) - F_{\bar{\phi}}\left(\mathbf{x}^s_t,t, \mathbf{Z}^s\right)
+        - \cos(t)\frac{df_{\bar{\phi}}(\mathbf{x}^s_t,t, \mathbf{Z}^s)}{d t}
+    \right\|_2^2 - w_\psi(t)
+    \right],
+\end{equation}
+
+\looseness=-1
+where $\mathbf{Z}^s = \mathbf{z}_{\text{long}}^s + \mathbf{z}_{\text{short}}^s = T_{\text{long}, \theta^1}\bigl(\tilde{\mathbf{x}}^1,\,\ldots,\,\tilde{\mathbf{x}}^{s-1}\bigr) + T_{\text{short}, \theta^2}\bigl(\mathbf{x}^{s-K},\,\ldots,\,\mathbf{x}^{s-1}\bigr)$, \\
+$t\sim[0, 1], \bm{\epsilon} \sim \mathcal{N}(0, I) $ and $\mathbf{x}_t^s = \cos(t)\mathbf{x}^s + \sin(t) \bm{\epsilon}$. All the parameters $(\theta,\phi, \psi)$ of the transformer backbone $T_{\text{long}, \theta^1}$, the short-context transformer $T_{\text{short}, \theta^2}$, the consistency MLP $f_\phi$ and the adaptive weighting function $w_\psi$ are jointly trained together with this consistency loss similarly as the backbone and the RQ-Transformer are trained through cross-entropy loss in the discrete case.
+
+
+%\looseness=-1
+%At inference time, we omit noise augmentation and achieve our best results with this setup. Providing historical context to the diffusion head was used in the TTS model DiTAR \citep{ditar}, which reported a significant reduction in word error rate when using it. 
+
+\subsection{Combining noisy long-term context and clean short-term context}
+
+\label{sec:noise}
+\looseness=-1
+In preliminary experiments, music generation models trained with the MAR framework were diverging quickly during inference because they were not robust to error accumulations. Applying noise injection during training slightly improves model stability but often reduces detail and instrument diversity, typically preserving only rhythmic elements, with audio fading into silence after 10–15 seconds. Since \citet{sony_trick} targets short, single-instrument clips, it's unsurprising the method performs best in that constrained setting. We hypothesize that the added noise inhibits the backbone transformer from encoding fine-grained information into $\mathbf{z}^s_{\text{long}}$, limiting the MLP’s ability to reconstruct detailed audio. However, combining this with a short-context transformer computing $\mathbf{z}^s_{\text{short}}$ yields the best results (Tab.~\ref{tab:ablation_fad}), likely because the clean short-term context restores local detail needed to model the distribution of the next $\mathbf{x}^s$. 
+
+%\citet{sony_trick} introduce a noise augmentation trick at training time in order to tackle this problem. Given a sequence $(\mathbf{x}^1, \mathbf{x}^2, \ldots, \mathbf{x}^S)$, they sample $k_s \sim \mathcal{U}(0, 1)$ and $\bm{\epsilon}_s \sim \mathcal{N}(0, \mathbf{I})$ for every $s \in \{1, \ldots, S\}$ and compute $\tilde{\mathbf{x}}^s = k_s  \bm{\epsilon}_s + (1 - k_s) \mathbf{x}^s$ for every $s$. After comparison and to preserve the variance of the $\mathbf{x}^s$ that are gaussians, we modify the noising formula as follows: $\tilde{\mathbf{x}}^s = \sqrt{k_s}  \bm{\epsilon}_s + \sqrt{1 - k_s} \mathbf{x}^s$
+
+\subsection{Head Batch Multiplier}
+
+\looseness=-1
+Training is bottlenecked by the cost of generating the conditioning variable $\mathbf{z}^s_{\text{long}}$ via the large causal transformer. To address this, we introduce the \textit{Head Batch Multiplier}, which amortizes this cost by reusing $\mathbf{z}^s_{\text{long}}$ multiple times per training step. Specifically, for each input sequence, we compute $\mathbf{z}^s_{\text{long}}$ once and use it across $N$ loss computations, each with independently sampled noise levels $t$ and $\epsilon$. This not only improves efficiency but also stabilizes training by averaging the loss over multiple samples. As shown in Tab.~\ref{tab:ablation_fad} and Fig.~\ref{fig:head_batch_multiplier}, this leads to faster convergence and better final performance at comparable training cost.
+
+
+
+
+\subsection{Gaussian temperature sampling}
+\looseness=-1
+Sampling strategies, such as temperature sampling, have a significant impact on generation quality in the discrete setup, particularly for speech. To replicate this behavior in the continuous domain, we introduce a sampling heuristic that results in comparable gains. Similarly to the GAN noise truncation trick presented in ~\cite{gan_truncation_trick}, we sample more from the high probability zone of the Gaussian to trade diversity for fidelity.
+
+While the GAN truncation trick truncates the Gaussian noise such that values outside of a certain range are redrawn, we chose to reduce the variance of the Gaussian noise instead. This is mathematically equivalent to applying a temperature $\tau$ to the Gaussian if we change the standard deviation to $\sqrt{\tau}$. This makes temperature values between the discrete and continuous setups somewhat comparable, and we found that using a temperature of .8 for speech continuation was bringing good results in both setups. The effects of gaussian temperature are further discussed in Section \ref{sec:effect_temp}.
+
+
+\subsection{Latent Classifier Free Guidance}
+
+\looseness=-1
+Classifier Free Guidance (CFG) \citep{cfg} is known to improve the generation quality of conditioned generative models. It can be applied for diffusion and flow matching models on the sampling trajectory as well as on the logits of autoregressive language models \citep{audiogen}. Since CFG cannot be applied on the trajectory of 1-step consistency models we decide to apply the CFG on the outputs of the Backbone and Short-Context transformers. Formally, given $\mathbf{C}$ a conditioning and $\alpha$ the CFG coefficient, we compute for every $s$ of the sequence $\mathbf{Z}^s_{\text{CFG}} =\mathbf{Z}^s_{\emptyset} + \alpha(\mathbf{Z}^s_{C} - \mathbf{Z}^s_{\emptyset})$ and then we generate $\hat{\mathbf{x}}^s$ with the consistency head conditioned on $\mathbf{Z}^s_{\text{CFG}}$. We call this method Latent CFG, as it operates on the latent variable $\mathbf{Z}^s$ instead of the model output. It has been introduced in the video-to-audio model SoundReactor \citep{soundreactor}.
+
+
+\subsection{Latent Distillation}
+Once a teacher model has been trained and the desired classifier free guidance (CFG) coefficient has been selected for inference, we distill the CFG-guided teacher into a student model to avoid the need to double the batch size during inference when using CFG. To this end, we distill only the backbone transformer and directly copy the teacher’s MLP head into the student. 
+
+The distillation objective for the student backbone is an $\ell_2$ loss between the latent representation $\mathbf{Z}^s_{\text{distill}}$ produced by the student backbone and the CFG-guided latent representation $\mathbf{Z}^s_{\text{CFG}}$ produced by the teacher. Additionally, the student backbone transformer may contain fewer layers than the teacher. 
+In practice for Pocket TTS, we distill a text-to-speech model with 24 transformer layers into a student model with only 6 layers, using a latent CFG coefficient of $\alpha = 1.5$. See Sec.~\ref{sec:pocket_tts} for more details. 
+% \textbf{2. Consistency CFG} is when we apply the CFG during the consistency generation (with at least 2 steps). Formally, after computing $\mathbf{Z}^s_{\emptyset}$ and $\mathbf{Z}^s_{C}$, we apply few steps consistency generation on $f_\phi\bigl(\mathbf{x}^{s}_t, t, \mathbf{Z}^s_{\emptyset}\bigr) + \alpha[f_\phi\bigl(\mathbf{x}^{s}_t, t, \mathbf{Z}^s_{C}\bigr)-f_\phi\bigl(\mathbf{x}^{s}_t, t, \mathbf{Z}^s_{\emptyset}\bigr) ]$.
+
+
+% Let $ \bm{\epsilon} \sim \mathcal{N}(0, I) $ be a standard multivariate Gaussian random variable and let \( \mathbf{x} = f(\bm{\epsilon}) \), where \( f: \mathbb{R}^d \to \mathbb{R}^d \) is a differentiable function. By the change of variables formula, the probability density of \( \mathbf{x} \) is given by:
+% \(
+% p(\mathbf{x}) = p(\bm{\epsilon}) \cdot \left| \det \left( \frac{\partial f(\bm{\epsilon})}{\partial \bm{\epsilon}} \right) \right|^{-1} 
+% \),
+% where \( \frac{\partial f(\bm{\epsilon})}{\partial \bm{\epsilon}} \) is the Jacobian matrix of \( f \) at \( \bm{\epsilon} \).
+% In theory, to apply temperature sampling with temperature $\tau$ we should raise both terms to the power $1/\tau$, but the Jacobian term is untractable.
+% In practice, we noticed that we can apply the temperature only to Gaussian noise sampling (which is equivalent to sampling from a Gaussian with standard deviation $sqrt{\tau}$) and get significant improvements in metrics.
+

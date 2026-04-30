@@ -1,0 +1,64 @@
+
+\section{Background}
+\looseness=-1
+\textbf{Notations:} Let $W \in \mathbb{R}^{f_s \cdot d}$ be a monophonic waveform of $d$ seconds sampled at frame rate $f_s$. Our goal is to model $W$ either in the discrete latent space of a RVQ-based codec or in the latent space of a VAE. Let $f_r$ be the frame rate of the codec or VAE. 
+
+\looseness=-1
+In the case of the \textbf{discrete modeling}, $W$ is represented by the sequence of discrete tokens $\left(q^{s, k} \right)$, where \( s \in \{1, \ldots, S\} \) indexes time and \( k \in \{1, \ldots, K\} \) indexes codebook depth and $S=f_r \cdot d$. Each token \( q^{s,k} \in \{1, \ldots, N_k\} \) is drawn from a finite vocabulary.
+
+\looseness=-1
+In the case of \textbf{continuous modeling}, $W$ is represented by a sequence $\left( \mathbf{x}^1, \ldots, \mathbf{x}^S\right)$ with $S=f_r \cdot d$ and $\mathbf{x}^s \in \mathbb{R}^C$ where $C$ is the latent dimension of the VAE. 
+
+\looseness=-1
+\subsection{Autoregressive Modeling with Residual Vector Quantization based codecs.}
+
+\looseness=-1
+Autoregressive modeling of discrete tokens from RVQ-based codecs \citep{soundstream, encodec} is a prevalent method for high-fidelity audio generation \citep{musicgen, musiclm, audiolm, audiogen}. Given a sequence of discrete tokens $\left(q^{s, k} \right)_{i \in \{1, \ldots, N\}, k \in \{1, \ldots, K\}}$, early models like \citet{audiolm, musiclm} flattened the multi-level sequence, increasing its length by a factor of $K$ and resulting in high computational costs due to the quadratic complexity of Transformer self-attention. MusicGen \citep{musicgen} mitigates this by using a delay pattern to independently sample each of the $K$ RVQ levels, adding only $K-1$ tokens to the sequence but introducing a fixed latency of $K-1$ frames, which is problematic for real-time applications. RQ-Transformer \citep{rq_transformer} addresses this by using a sampler transformer head that models the RVQ at a given time step, enabling low-latency generation.
+
+\looseness=-1
+Denoting $\mathbf{q}^s = (q^{s,1}, \ldots, q^{s,K})$, the \textit{Backbone Transformer} $T_\theta$ encodes the history of previous timesteps to produce a context vector $\mathbf{z}^s$, and a \textit{RQ-Transformer} $g_{\phi}$ autoregressively decodes the residual-wise components of the token stack at each time step. The context vector is then given by $\mathbf{z}^s = T_\theta(\mathbf{q}^1, \ldots, \mathbf{q}^{s-1})$,
+and the logits $\ell^{s,k}$ for predicting the \( k \)-th codebook token are computed as $\ell^{s,1} = \text{Lin}(\mathbf{z}^s)$ and $\ell^{s,k} = g_{\phi}\left(\mathbf{z}^s, q^{s,1}, \ldots, q^{s,k-1}\right)$ for $k > 1$.
+
+\looseness=-1
+These logits are trained using a cross-entropy loss over discrete tokens $\mathcal{L}_{\text{CE}} = -\sum_{s=1}^S\sum_{k=1}^K \log p \left(q^{s,k} \mid \mathbf{q}^{<s}, \mathbf{q}^{s, <k} \right).$
+
+\looseness=-1
+This approach enables efficient parallel modeling of RVQ sequences, allowing all codebooks corresponding to a single timestep to be generated simultaneously without introducing any delay. However, a key limitation lies in the use of the \textit{RQ-Transformer}, which is computationally intensive;  as its resource requirements scale with the number of RVQ, or even with the square of the number of RVQ, if the attention dominates the computation cost.
+
+\subsection{Consistency Models}
+\looseness=-1
+\paragraph{Flow Matching and Probability Flow ODE.} 
+Let $p_{\text{data}}$ be a data distribution over  $\mathbb{R}^d$. Given $\mathbf{x}_0 \sim p_{\text{data}}$, diffusion \citep{diffusion_ddpm, diffusion_sde} and flow matching \citep{flowmatching} models define a forward noising process that gradually perturbs samples from $p_{\text{data}}$ through the noising process $\mathbf{x}_t = \alpha_t \mathbf{x}_0 + \sigma_t \bm{\epsilon}$, where $\bm{\epsilon} \sim \mathcal{N}(0, \mathbf{I})$ and $t \in [0, T]$. $\alpha_t, \sigma_t$ are predefined functions such that $\alpha$ is decreasing with $\alpha_0=1, \alpha_T=0$ and $\sigma$ is increasing with $\sigma_0=0, \sigma_T=1$.
+In Flow Matching, a neural network $F_\phi$ is trained to minimize the loss $\mathcal{L}_{\text{FM}}(\phi) = \mathbb{E}_{\mathbf{x}_0 \sim p_{\text{data}},\, \bm{\epsilon} \sim \mathcal{N}(0, \mathbf{I}),\, t \sim \mathcal{U}(0, 1)} 
+\left[ w(t) \left\| F_\phi(\mathbf{x}_t, t) - \left( \alpha'_t \mathbf{x}_0 + \sigma'_t \bm{\epsilon} \right) \right\|_2^2 \right].
+$
+
+\looseness=-1
+Once trained, sample generation is performed by solving a deterministic ordinary differential equation known as the probability flow ODE (PF-ODE), which defines a continuous path from noise to data. In the context of Flow Matching, the PF-ODE is $\frac{d\mathbf{x}_t}{dt} = F_\phi(\mathbf{x}_t, t)$ with $\mathbf{x}_T \sim \mathcal{N}(0, \mathbf{I})$. 
+
+\looseness=-1
+A \textbf{Continuous-Time Consistency Models.} \citep{consistency} is a neural network $f_\phi(\mathbf{x}_t, t)$ trained to map a noisy input $\mathbf{x}_t$ directly to the corresponding clean data $\mathbf{x}_0$ in a single step, by approximating the sampling trajectory of the probability flow ODE (PF-ODE) starting from $\mathbf{x}_t$. To ensure correct behavior, $f_\phi$ must satisfy the boundary condition $f_\phi(\mathbf{x}, 0) = \mathbf{x}$, thus leading to the common parameterization $f_\phi(\mathbf{x}_t, t) = c_{\text{skip}}(t) \mathbf{x}_t + c_{\text{out}}(t) F_\phi(\mathbf{x}_t, t)$, where $F_\phi$ is a neural network and the coefficients satisfy $c_{\text{skip}}(0) = 1$ and $c_{\text{out}}(0) = 0$ to fulfill the boundary condition.
+
+
+\looseness=-1
+By using $T=\frac{\pi}{2}$ and $\alpha_t=\cos(t), \sigma_t=\sin(t)$, \citet{continuous_consistency} derive the following continuous-time consistency loss where $w_\psi(t)$ is an adaptive weighting function:
+\begin{equation}
+\label{eq:objective_ctcm}
+    \mathcal{L}_{\text{CM}}(\phi,\psi) = \mathbb{E}_{\mathbf{x}_t,t}\left[\!
+    \frac{e^{w_\psi(t)}}{D}\left\|
+        F_\phi\left(\mathbf{x}_t,t\right) - F_{\phi^-}\left(\mathbf{x}_t,t\right)
+        - \cos(t)\frac{df_{\phi^-}(\mathbf{x}_t,t)}{d t}
+    \right\|_2^2 - w_\psi(t)
+    \right].
+\end{equation}
+
+\textbf{Lagrangian Self-Distillation.} We also explore a new 1-step flow-matching method named Latent Self-Distillation (LSD) that has been introduced in \citet{lsd}. In this paper, the authors unify most 1-step methods into 2 categories and develops a third one (LSD) which appears to be more stable at training. See Sec.~\ref{sec:LSD} for the equations. 
+
+\subsection{Autoregressive Modeling of Continuous Latents via Diffusion.}
+\looseness=-1
+\citet{autoreg_image_quant} propose MAR, a method for autoregressive modeling over a sequence $\left( \mathbf{x}^1, \ldots, \mathbf{x}^S\right)$ of continuous latent vectors extracted from a pretrained VAE, thereby eliminating the need for discrete quantization. As in the discrete case, a \textit{Backbone Transformer} \( T_\theta \) maps the context to an embedding: $\mathbf{z}^s = T_\theta(\mathbf{x}^1, \ldots, \mathbf{x}^{s-1})$.
+
+Then, a diffusion process parameterized by a neural network \( \bm{\epsilon}_\phi \) is trained on each \( \mathbf{x}^s \) with the loss $\mathcal{L}_{\text{diff}}(\theta, \phi) = \sum_{s=1}^S\mathbb{E}_{\bm{\epsilon} \sim \mathcal{N}(0, I), t \sim [0, 1]} \left[ \left\| \bm{\epsilon} - \bm{\epsilon}_\phi(\mathbf{x}_t^s, \mathbf{z}^s, t ) \right\|^2 \right]$
+where \( \mathbf{x}^s_t \) is a noisy version of \( \mathbf{x}^s \) at diffusion timestep \( t \): $\mathbf{x}_t^s = \alpha_t\mathbf{x}^s + \sigma_t \bm{\epsilon}$ with $\bm{\epsilon} \sim \mathcal{N}(0, I)$ and $\alpha_t$ and $\sigma_t$ are predefined schedules for all $t \in [0, 1]$. In practice, an MLP significantly smaller than the backbone transformer estimates $\bm{\epsilon}_\phi$. 
+This replaces the categorical prediction used in discrete models (done by the RQ-Transformer) with a denoising task in the continuous domain (done by the MLP). This method enables flexible and differentiable modeling of continuous signals without requiring to perform quantization on the latent space which can lead to several issues such as codebook collapse, balancing quantization losses and training instabilities. 
+A key limitation of this approach is that sample quality depends on the number of diffusion steps at inference, raising the question of whether it can surpass the RQ-Transformer under similar computational constraints.

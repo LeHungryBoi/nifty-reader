@@ -1,0 +1,13 @@
+
+\section{Conclusion}
+
+\looseness=-1
+We present \textit{Continuous Audio Language Models} (CALM), a novel framework for autoregressive audio generation that operates directly in the continuous latent space of a VAE, bypassing the limitations of discrete quantization. 
+Replacing RVQ or diffusion heads with consistency models significantly reduces inference cost while improving sample quality as shown by our experiments. 
+Our architecture combines noise-injected long-term context and clean short-term context, implemented via a dual-transformer design. 
+We introduce practical innovations such as temperature sampling and a head batch multiplier to further improve sampling quality and training efficiency. We demonstrate the effectiveness of our approach across both speech and music generation tasks. Our results suggest that continuous modeling offers a compelling alternative to discrete tokenization for high-quality, efficient, and scalable autoregressive audio generation. %While we illustrated our method on a diverse and challenging set of unconditioned tasks, our future work is to apply CALM on conditioned tasks. 
+
+
+\section{Reproducibility statement}
+We will release the training code in order to retrain CALM. As well, we provide all the model hyperparameters in Sec.~\ref{sec:appendix_hyperarameters}.
+

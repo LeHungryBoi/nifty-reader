@@ -5,12 +5,104 @@
   "proxy": "http://127.0.0.1:10808",
   "voice_a_path": "",
   "voice_b_path": "",
-  "test_text": "The quick brown fox jumps over the lazy dog. This is a test of the fused voice.",
+  "test_text": " shut the fuck up! What's wrong with pedophile? huh? I like older guys anyway!",
   "alpha": 0.5,
   "method": "align",
   "last_audio_dir": "D:\\Project\\nifty-reader\\assets\\voices",
   "preprocess_normalize": false,
   "preprocess_denoise": false,
   "preprocess_denoise_strength": 0.3,
-  "voice_library": []
+  "voice_library": [
+    {
+      "name": "alba",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\alba.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\alba.wav",
+      "selected": false,
+      "weight": 1.0
+    },
+    {
+      "name": "bad",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
+      "selected": false,
+      "weight": 1.0
+    },
+    {
+      "name": "hq",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
+      "selected": false,
+      "weight": 1.0
+    },
+    {
+      "name": "omni",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\omni.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\omni.wav",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "bad_coolhat",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_coolhat.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_coolhat.wav",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "bad_unlike_breathy",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_unlike_breathy.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_unlike_breathy.wav",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "bad_x9_good",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "Chucky",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "hq_bouncy_pocket-tts",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_bouncy_pocket-tts.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_bouncy_pocket-tts.wav",
+      "selected": true,
+      "weight": 0.4107142857142857
+    },
+    {
+      "name": "hq_unlike",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_unlike.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_unlike.wav",
+      "selected": false,
+      "weight": 1.0
+    },
+    {
+      "name": "hq_xc9",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_xc9.wav",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_xc9.wav",
+      "selected": true,
+      "weight": 1.0
+    },
+    {
+      "name": "voice_preview_cam",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\voice_preview_cam.mp3",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\voice_preview_cam.mp3",
+      "selected": false,
+      "weight": 1.0
+    },
+    {
+      "name": "voice_preview_chuk2",
+      "audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\voice_preview_chuk2.mp3",
+      "original_audio_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\voice_preview_chuk2.mp3",
+      "selected": false,
+      "weight": 1.0
+    }
+  ]
 }
