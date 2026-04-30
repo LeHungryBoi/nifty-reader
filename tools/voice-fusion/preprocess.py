@@ -208,3 +208,110 @@ def clear_cache(cache_dir: Path) -> int:
             f.unlink()
             count += 1
     return count
+
+
+def effect_cache_key(effect: dict) -> str:
+    """
+    从 effect dict 生成唯一的缓存 key。
+    effect dict: {normalize, denoise, denoise_strength, pitch_shift}
+    """
+    parts = []
+    for k in ("normalize", "denoise", "denoise_strength", "pitch_shift"):
+        v = effect.get(k)
+        if v is None:
+            parts.append(f"{k}=g")
+        else:
+            parts.append(f"{k}={v}")
+    raw = "|".join(parts)
+    return hashlib.md5(raw.encode()).hexdigest()[:12]
+
+
+def apply_clip_effects(
+    processed_path: str | Path,
+    effect: dict,
+    cache_dir: Path,
+) -> tuple[Path, list[str]]:
+    """
+    对预处理后的 WAV 音频应用 clip 级效果（pitch shift, denoise, normalize）。
+
+    Args:
+        processed_path: 全局预处理后的 WAV 文件
+        effect: effect dict {normalize, denoise, denoise_strength, pitch_shift}
+        cache_dir: 效果缓存目录
+
+    Returns:
+        (effect_audio_path, actions_list)
+    """
+    processed_path = Path(processed_path)
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    pitch = float(effect.get("pitch_shift", 0.0))
+    normalize = effect.get("normalize")
+    denoise = effect.get("denoise")
+    dns_str = float(effect.get("denoise_strength", 0.3)) if effect.get("denoise_strength") is not None else 0.3
+
+    # 如果没有任何 effect，返回原始 processed 路径
+    if pitch == 0.0 and normalize is None and denoise is None:
+        return processed_path, []
+
+    # 构建缓存 key
+    key = effect_cache_key(effect)
+    cache_path = cache_dir / f"{processed_path.stem}.effect_{key}.wav"
+
+    if cache_path.exists():
+        return cache_path, ["from effect cache"]
+
+    ffmpeg = _which_or_raise("ffmpeg")
+    filters = []
+    actions = []
+
+    # 输入已经是 24kHz mono PCM16，直接应用效果
+
+    # Denoise
+    if denoise is True:
+        nf = -20.0 - (dns_str * 25.0)
+        amount = 0.2 + (dns_str * 0.8)
+        filters.append(f"afftdn=nf={nf:.1f}:om=o:ad={amount:.2f}")
+        actions.append(f"denoise({dns_str:.1f})")
+    elif denoise is False:
+        actions.append("denoise(off)")
+
+    # Normalize
+    if normalize is True:
+        filters.append("loudnorm=I=-19:LRA=7:TP=-3")
+        actions.append("norm(-3dB)")
+    elif normalize is False:
+        actions.append("norm(off)")
+
+    # Pitch Shift
+    if pitch != 0.0:
+        # rubberband pitch shifting
+        ratio = 2 ** (pitch / 12.0)
+        filters.append(f"rubberband=pitch={ratio:.6f}")
+        arrow = "+" if pitch > 0 else ""
+        actions.append(f"pitch({arrow}{pitch:.1f}st)")
+
+    if not filters:
+        return processed_path, []
+
+    afilters = ",".join(filters)
+    tmp_path = cache_path.with_suffix(".tmp.wav")
+    cmd = [
+        ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
+        "-i", str(processed_path),
+        "-af", afilters,
+        "-f", "wav", "-c:a", "pcm_s16le",
+        str(tmp_path),
+    ]
+    cp = _run(cmd)
+    if cp.returncode != 0:
+        tmp_path.unlink(missing_ok=True)
+        raise RuntimeError(f"ffmpeg effect failed: {cp.stderr.strip()}")
+
+    if not tmp_path.exists() or tmp_path.stat().st_size <= 44:
+        tmp_path.unlink(missing_ok=True)
+        raise RuntimeError(f"ffmpeg effect produced invalid wav: {tmp_path}")
+
+    os.replace(tmp_path, cache_path)
+    return cache_path, actions

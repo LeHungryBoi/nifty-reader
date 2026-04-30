@@ -6,7 +6,7 @@
 
 **所有 spec 文件必须用中文书写。** 包括 `spec/` 目录下的所有 `.md` 文件。这是为了确保所有 AI 代理都能理解项目规范。
 新增或删除文件时要检查architecture.md是否需要更新
-不允许使用ascii art
+ascii art is heavily discouraged, unless there's no other way.
 
 ## 核心原则
 1. **纯 Go**：使用 Fyne 构建 UI，不使用 Node/npm/Rust。

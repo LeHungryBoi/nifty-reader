@@ -4,7 +4,7 @@
 
 ## 项目结构
 
-```
+````
 nifty-reader/
 ├── main.go              # Fyne 应用入口
 ├── pkg/
@@ -16,8 +16,24 @@ nifty-reader/
 │   └── tts/             # 语音合成 (sherpa-onnx)
 ├── lib/                 # 第三方 DLL (onnxruntime, sherpa-onnx-c-api)
 ├── scripts/             # 构建脚本
-└── assets/              # 静态资源
-```
+├── assets/              # 静态资源
+└── tools/voice-fusion/  # Python 声音融合工具
+    ├── gui.py           # 主界面入口 (mixin 组合)
+    ├── gui_base.py      # 共享常量、路径、代理、lazy imports
+    ├── gui_toolbar.py   # 工具栏构建 mixin
+    ├── gui_pool.py      # Persona Pool 面板 mixin
+    ├── gui_effect_panel.py # Clip Effect 面板 mixin
+    ├── gui_tts_compare.py  # TTS 对比播放 mixin
+    ├── gui_fusion.py    # 融合/生成/预设逻辑 mixin
+    ├── fusion.py        # 融合算法 (align/average)
+    ├── settings.py      # 设置持久化 (JSON)
+    ├── persona.py       # Voice Library / Persona 管理
+    ├── track_editor.py  # 视频编辑风格轨道编辑器 (Canvas)
+    ├── preset.py        # Preset / FuseSona 保存加载
+    ├── level_extractor.py # 多层级特征提取 (level 1-7)
+    ├── preprocess.py    # 音频预处理 (ffmpeg)
+    └── assets/voices/   # 用户音频源文件
+````
 
 ## 核心依赖库
 
