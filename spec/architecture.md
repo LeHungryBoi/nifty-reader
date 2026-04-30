@@ -25,6 +25,7 @@ nifty-reader/
     ├── gui_effect_panel.py # Clip Effect 面板 mixin
     ├── gui_tts_compare.py  # TTS 对比播放 mixin
     ├── gui_fusion.py    # 融合/生成/预设逻辑 mixin
+    ├── theme.py         # 颜色主题定义、注册表、加载与切换
     ├── fusion.py        # 融合算法 (align/average)
     ├── settings.py      # 设置持久化 (JSON)
     ├── persona.py       # Voice Library / Persona 管理

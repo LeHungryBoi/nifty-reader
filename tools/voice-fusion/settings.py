@@ -34,6 +34,8 @@ class Settings:
     fusion_level: int = 4
     # TTS compare last text
     tts_compare_text: str = ""
+    # Theme name
+    theme: str = "Zesty"
 
 
 def load_settings(running_dir: Path) -> Settings:

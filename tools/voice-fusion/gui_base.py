@@ -70,7 +70,7 @@ _patch_cache_dir()
 
 from settings import load_settings, save_settings, Settings, PRESETS_DIR, FUSESONAS_DIR
 from persona import Persona, scan_voices_dir, get_stale_personas, LEVEL_SUFFIXES
-from track_editor import TrackEditor, Track, Clip, ClipEffect, level_display_str, parse_level_from_str
+from track_editor import TrackEditor, Track, Clip, ClipEffect, level_display_str, parse_level_from_str, LEVEL_SHORT_NAMES
 from preset import (
     save_preset, load_preset, list_presets,
     save_fusesona, list_fusesonas, FuseSonaMeta, PresetData, ClipData,
@@ -78,8 +78,5 @@ from preset import (
 from level_extractor import LevelExtractor, save_level_features, get_level_info
 from fusion import fuse_voice_states_multi, get_state_info, format_info
 
-COLORS = [
-    "#4FC3F7", "#81C784", "#FFB74D", "#E57373",
-    "#BA68C8", "#4DD0E1", "#FFD54F", "#A1887F",
-    "#90A4AE", "#F06292",
-]
+# 颜色通过 theme.py 管理，COLORS 保留为兼容别名
+from theme import THEME, COLORS, THEMES, get_theme_name

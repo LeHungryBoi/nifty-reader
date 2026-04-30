@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from track_editor import Clip, ClipEffect
+from theme import THEME
 
 
 class EffectPanelMixin:
@@ -38,7 +39,7 @@ class EffectPanelMixin:
         row2.pack(fill="x", pady=(4, 0))
 
         ttk.Label(row2, text="Pitch Shift:").pack(side="left")
-        self._pitch_label = ttk.Label(row2, text="0.0 st", width=6, foreground="#888")
+        self._pitch_label = ttk.Label(row2, text="0.0 st", width=6)
         self._pitch_label.pack(side="left", padx=4)
         ttk.Scale(row2, from_=-12.0, to=12.0, variable=self._effect_pitch_shift,
                   orient="horizontal", length=200,
@@ -60,13 +61,13 @@ class EffectPanelMixin:
         val = self._effect_pitch_shift.get()
         if val > 0.01:
             arrow = "\u25B2"
-            color = "#0000cc"
+            color = THEME["clip_effect_pitch_up"]
         elif val < -0.01:
             arrow = "\u25BC"
-            color = "#cc0000"
+            color = THEME["clip_effect_pitch_down"]
         else:
             arrow = ""
-            color = "#888"
+            color = THEME["pool_status_fg"]
         text = f"{arrow}{val:+.1f} st" if arrow else "0.0 st"
         try:
             self._pitch_label.configure(text=text, foreground=color)
@@ -111,7 +112,7 @@ class EffectPanelMixin:
 
     def _hide_effect_panel(self):
         self._effect_frame.grid_remove()
-        self._effect_name_label.configure(text="(no clip selected)", foreground="gray")
+        self._effect_name_label.configure(text="(no clip selected)", foreground=THEME["pool_status_fg"])
         try:
             self._effect_normalize.trace_remove("write", self._sync_effect_to_clip)
             self._effect_denoise.trace_remove("write", self._sync_effect_to_clip)

@@ -7,6 +7,10 @@
 **所有 spec 文件必须用中文书写。** 包括 `spec/` 目录下的所有 `.md` 文件。这是为了确保所有 AI 代理都能理解项目规范。
 新增或删除文件时要检查architecture.md是否需要更新
 ascii art is heavily discouraged, unless there's no other way.
+Be concise. When prompt end with question, it's a question. 
+
+## 代码风格
+- **按功能模块化**：每个文件/模块只负责一个明确的功能领域。拆分大文件，确保 AI 只需阅读与当前任务相关的少量文件，避免因文件过大导致上下文浪费。以功能来模块化代码
 
 ## 核心原则
 1. **纯 Go**：使用 Fyne 构建 UI，不使用 Node/npm/Rust。

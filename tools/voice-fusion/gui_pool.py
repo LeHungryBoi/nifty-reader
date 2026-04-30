@@ -6,6 +6,7 @@ from typing import Optional
 
 from gui_base import COLORS
 from persona import Persona, get_stale_personas
+from theme import THEME
 
 
 class PoolMixin:
@@ -26,7 +27,7 @@ class PoolMixin:
         search_entry.insert(0, "Search...")
         search_entry.config(foreground="gray")
         search_entry.bind("<FocusIn>", lambda e: (
-            search_entry.delete(0, "end"), search_entry.config(foreground="black")
+            search_entry.delete(0, "end"), search_entry.config(foreground=THEME["log_fg"])
         ) if search_entry.get() == "Search..." else None)
         search_entry.bind("<FocusOut>", lambda e: (
             search_entry.insert(0, "Search..."), search_entry.config(foreground="gray")
@@ -36,7 +37,7 @@ class PoolMixin:
         container = ttk.Frame(left)
         container.pack(fill="both", expand=True)
 
-        self._pool_canvas = tk.Canvas(container, highlightthickness=0)
+        self._pool_canvas = tk.Canvas(container, bg=THEME["app_bg"], highlightthickness=0)
         sb = ttk.Scrollbar(container, orient="vertical", command=self._pool_canvas.yview)
         self._pool_inner = ttk.Frame(self._pool_canvas)
 
@@ -97,9 +98,9 @@ class PoolMixin:
         color = COLORS[idx % len(COLORS)]
         is_stale = not persona.is_derived_valid()
 
-        card_outer = tk.Frame(parent, bg="#E0E0E0", padx=1, pady=1)
+        card_outer = tk.Frame(parent, bg=THEME["pool_card_border"], padx=1, pady=1)
         card_outer.pack(fill="x", pady=3, padx=2)
-        card = tk.Frame(card_outer, bg="#F5F5F5")
+        card = tk.Frame(card_outer, bg=THEME["pool_card_bg"])
         card.pack(fill="x")
 
         # Color bar
@@ -107,7 +108,7 @@ class PoolMixin:
         bar.pack(side="left", fill="y")
 
         # Buttons (left of name)
-        btn_frame = tk.Frame(card, bg="#F5F5F5")
+        btn_frame = tk.Frame(card, bg=THEME["pool_card_bg"])
         btn_frame.pack(side="left", padx=2, pady=2)
 
         # Preview raw
@@ -121,16 +122,16 @@ class PoolMixin:
                    command=lambda p=persona: self._add_persona_to_track(p)).pack(side="left", padx=1)
 
         # Info
-        info = tk.Frame(card, bg="#F5F5F5")
+        info = tk.Frame(card, bg=THEME["pool_card_bg"])
         info.pack(side="left", fill="x", expand=True, padx=4)
 
         display_name = persona.display_name
         if is_stale:
             name_lbl = tk.Label(info, text=f"{display_name}  (stale)", font=("", 9, "bold"),
-                                bg="#F5F5F5", fg="#E57373", anchor="w")
+                                bg=THEME["pool_card_bg"], fg=THEME["pool_name_stale_fg"], anchor="w")
         else:
             name_lbl = tk.Label(info, text=f"{display_name}  ✓", font=("", 9, "bold"),
-                                bg="#F5F5F5", fg="#333333", anchor="w")
+                                bg=THEME["pool_card_bg"], fg=THEME["pool_name_fg"], anchor="w")
         name_lbl.pack(fill="x")
 
     def _filter_personas(self):

@@ -18,6 +18,7 @@ from typing import Optional, Callable
 from copy import deepcopy
 
 from preset import ClipData
+from theme import THEME
 
 
 # 常量
@@ -184,7 +185,7 @@ class TrackEditor(tk.Canvas):
         self.on_clip_double_click: Optional[Callable] = None
         self.on_clip_right_click: Optional[Callable] = None
 
-        super().__init__(parent, bg="#1e1e2e", highlightthickness=0, **kwargs)
+        super().__init__(parent, bg=THEME["track_editor_bg"], highlightthickness=0, **kwargs)
         self.bind("<Button-1>", self._on_click)
         self.bind("<B1-Motion>", self._on_drag)
         self.bind("<ButtonRelease-1>", self._on_release)
@@ -325,10 +326,8 @@ class TrackEditor(tk.Canvas):
 
     def _draw_ruler(self, w: int):
         """绘制顶部时间标尺"""
-        # 背景
-        self.create_rectangle(0, 0, w, RULER_HEIGHT, fill="#2d2d3d", outline="")
+        self.create_rectangle(0, 0, w, RULER_HEIGHT, fill=THEME["ruler_bg"], outline="")
 
-        # 刻度
         total_frames = self._max_frame
         step = self._calc_ruler_step()
 
@@ -340,46 +339,40 @@ class TrackEditor(tk.Canvas):
             is_major = (frame % (step * 5) == 0)
             tick_h = RULER_HEIGHT - 4 if is_major else RULER_HEIGHT - 8
             self.create_line(x, RULER_HEIGHT - tick_h, x, RULER_HEIGHT,
-                             fill="#888" if is_major else "#555", width=1)
+                             fill=THEME["ruler_major_fg"] if is_major else THEME["ruler_minor_fg"], width=1)
             if is_major:
                 self.create_text(x, 4, text=str(int(frame)),
-                                 fill="#aaa", font=("Consolas", 7), anchor="nw")
+                                 fill=THEME["ruler_text_fg"], font=("Consolas", 7), anchor="nw")
             frame += step
 
     def _draw_playhead(self, h: int):
         """绘制播放指针"""
         x = self._frame_to_x_safe(self.playhead_frame)
-        # 三角形
         self.create_polygon(
             x - 5, 0, x + 5, 0, x, 8,
-            fill="#ff4444", outline="")
-        # 竖线
-        self.create_line(x, 0, x, h, fill="#ff4444", width=1, dash=(3, 3))
+            fill=THEME["playhead_fg"], outline="")
+        self.create_line(x, 0, x, h, fill=THEME["playhead_fg"], width=1, dash=(3, 3))
 
     def _draw_tracks(self, w: int, h: int):
         """绘制所有轨道和 clip"""
         y = RULER_HEIGHT
         for track in self.tracks:
-            # 轨道背景
-            track_bg = "#252535" if track.index % 2 == 0 else "#282840"
+            track_bg = THEME["track_even_bg"] if track.index % 2 == 0 else THEME["track_odd_bg"]
             self.create_rectangle(0, y, w, y + TRACK_HEIGHT,
-                                  fill=track_bg, outline="#333")
+                                  fill=track_bg, outline=THEME["track_border"])
 
-            # 轨道标签
             self.create_text(4, y + TRACK_HEIGHT // 2,
-                             text=track.name, fill="#888",
+                             text=track.name, fill=THEME["track_label_fg"],
                              font=("", 8), anchor="w")
 
-            # 绘制 clips
             for clip in track.clips:
                 self._draw_clip(clip, track.index, y)
 
             y += TRACK_HEIGHT
 
-        # + 按钮添加轨道
         if y + 20 < h:
             self.create_text(w // 2, y + 10, text="+ Add Track",
-                             fill="#666", font=("", 8), tags="add_track")
+                             fill=THEME["add_track_fg"], font=("", 8), tags="add_track")
 
     def _draw_clip(self, clip: Clip, track_idx: int, track_y: int):
         """绘制单个 clip（名称 + level 标签 + effect 指示）"""
@@ -396,7 +389,7 @@ class TrackEditor(tk.Canvas):
 
         # clip 背景
         fill = clip.color if not is_selected else self._lighten(clip.color)
-        outline = "#fff" if is_selected else "#000"
+        outline = THEME["clip_selected_outline"] if is_selected else THEME["clip_default_outline"]
         outline_w = 2 if is_selected else 1
 
         self.create_rectangle(x1, y1, x2, y2,
@@ -409,11 +402,11 @@ class TrackEditor(tk.Canvas):
         row1_y = y1 + 11
         name_text = clip.persona_name[:14]
         self.create_text(x1 + 8, row1_y, text=name_text,
-                         fill="#000", font=("", 8, "bold"), anchor="w")
+                         fill=THEME["clip_name_fg"], font=("", 8, "bold"), anchor="w")
         level_tag = LEVEL_SHORT_NAMES.get(clip.fusion_level, f"L{clip.fusion_level}")
         info_text = f"W:{clip.weight:.1f}  {level_tag}"
         self.create_text(x2 - 6, row1_y, text=info_text,
-                         fill="#333", font=("Consolas", 7), anchor="e")
+                         fill=THEME["clip_info_fg"], font=("Consolas", 7), anchor="e")
 
         # ── 第二行: weight 条形指示器 ──
         bar_y = y1 + 24
@@ -421,8 +414,8 @@ class TrackEditor(tk.Canvas):
         bar_x1 = x1 + 8
         bar_x2 = x2 - 8
         if bar_x2 > bar_x1 + 4 and bar_h > 0:
-            bar_fill = self._darken(clip.color, 0.3)
-            # weight 影响填充宽度比例 (weight 范围 0.1~3.0, 映射到 30%~100%)
+            darken = THEME["clip_weight_bar_darken_sel"] if is_selected else THEME["clip_weight_bar_darken"]
+            bar_fill = self._darken(clip.color, darken)
             fill_ratio = min(1.0, max(0.3, clip.weight / 3.0))
             bar_w = (bar_x2 - bar_x1) * fill_ratio
             self.create_rectangle(bar_x1, bar_y, bar_x1 + bar_w, bar_y + bar_h,
@@ -432,26 +425,24 @@ class TrackEditor(tk.Canvas):
         if has_effects:
             row3_y = y2 - 11
             indicators = []
-            # Normalize
             norm = clip.effect.normalize
             if norm is not None:
-                indicators.append(("N", "\u2713" if norm else "\u25CB", "#000" if norm else "#666"))
-            # Denoise
+                indicators.append(("N", "\u2713" if norm else "\u25CB",
+                                   THEME["clip_effect_normal_on"] if norm else THEME["clip_effect_normal_off"]))
             dns = clip.effect.denoise
             if dns is not None:
                 sym = "\u2713" if dns else "\u25CB"
-                indicators.append(("D", sym, "#000" if dns else "#666"))
-            # Denoise strength
+                indicators.append(("D", sym,
+                                   THEME["clip_effect_normal_on"] if dns else THEME["clip_effect_normal_off"]))
             dns_str = clip.effect.denoise_strength
             if dns_str is not None and dns is not False:
-                indicators.append((f"D:{dns_str:.1f}", None, "#333"))
+                indicators.append((f"D:{dns_str:.1f}", None, THEME["clip_info_fg"]))
 
-            # Pitch shift
             pitch = clip.effect.pitch_shift
             if pitch != 0.0:
                 arrow = "\u25B2" if pitch > 0 else "\u25BC"
                 indicators.append((f"{arrow}{pitch:+.1f}", None,
-                                   "#0000cc" if pitch > 0 else "#cc0000"))
+                                   THEME["clip_effect_pitch_up"] if pitch > 0 else THEME["clip_effect_pitch_down"]))
 
             ex = x1 + 8
             for label, sym, color in indicators:
@@ -466,10 +457,10 @@ class TrackEditor(tk.Canvas):
         # 左右拖拽手柄（仅选中时显示）
         if is_selected:
             self.create_rectangle(x1, y1, x1 + HANDLE_WIDTH, y2,
-                                  fill="#cccccc", outline="",
+                                  fill=THEME["clip_handle_fill"], outline="",
                                   tags="handle_left")
             self.create_rectangle(x2 - HANDLE_WIDTH, y1, x2, y2,
-                                  fill="#cccccc", outline="",
+                                  fill=THEME["clip_handle_fill"], outline="",
                                   tags="handle_right")
 
     # ── 事件处理 ──

@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Optional
 
 from tkinter import messagebox, simpledialog
+
+from theme import THEME
 import tkinter as tk
 from tkinter import ttk
 
@@ -221,10 +223,12 @@ class FusionMixin:
         except Exception as e:
             self._log(f"[Error] Preprocess {persona.display_name}: {e}")
 
-    def _save_preset_dialog(self):
-        name = simpledialog.askstring("Save Preset", "Preset name:", parent=self.root)
+    def _save_preset_dialog(self, name_hint: str = ""):
+        default = name_hint or f"preset_{int(time.time())}"
+        name = simpledialog.askstring("Save Preset", "Preset name:", parent=self.root,
+                                       initialvalue=default)
         if not name:
-            name = f"preset_{int(time.time())}"
+            name = default
 
         clips_data = []
         for track_idx, clip in self._track_editor.get_all_clips():
@@ -248,8 +252,11 @@ class FusionMixin:
         dialog.title("Load Preset")
         dialog.geometry("400x300")
         dialog.transient(self.root)
+        dialog.configure(bg=THEME["app_bg"])
 
-        lb = tk.Listbox(dialog)
+        lb = tk.Listbox(dialog, bg=THEME["track_even_bg"], fg=THEME["log_fg"],
+                        selectbackground=THEME["accent"], selectforeground="#fff",
+                        borderwidth=0, highlightthickness=0)
         lb.pack(fill="both", expand=True, padx=8, pady=8)
         for p in presets:
             lb.insert("end", f"{p['name']} ({p.get('clip_count', 0)} clips)")

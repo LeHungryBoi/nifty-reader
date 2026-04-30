@@ -107,67 +107,10 @@
     {
       "index": 0,
       "name": "Track 1",
-      "clips": [
-        {
-          "persona_name": "alba",
-          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\alba.wav",
-          "track_index": 0,
-          "start_frame": 45,
-          "length_frames": 100,
-          "weight": 1.0,
-          "fusion_level": 7,
-          "effect": {
-            "normalize": null,
-            "denoise": null,
-            "denoise_strength": null,
-            "pitch_shift": 0.0
-          }
-        }
-      ]
-    },
-    {
-      "index": 1,
-      "name": "Track 2",
-      "clips": [
-        {
-          "persona_name": "bad",
-          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
-          "track_index": 1,
-          "start_frame": 70,
-          "length_frames": 100,
-          "weight": 1.0,
-          "fusion_level": 7,
-          "effect": {
-            "normalize": null,
-            "denoise": null,
-            "denoise_strength": null,
-            "pitch_shift": 0.0
-          }
-        }
-      ]
-    },
-    {
-      "index": 2,
-      "name": "Track 3",
-      "clips": [
-        {
-          "persona_name": "hq",
-          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
-          "track_index": 2,
-          "start_frame": 91,
-          "length_frames": 100,
-          "weight": 1.0,
-          "fusion_level": 7,
-          "effect": {
-            "normalize": null,
-            "denoise": null,
-            "denoise_strength": null,
-            "pitch_shift": 0.0
-          }
-        }
-      ]
+      "clips": []
     }
   ],
-  "fusion_level": 7,
-  "tts_compare_text": ""
+  "fusion_level": 4,
+  "tts_compare_text": "",
+  "theme": "Zesty"
 }

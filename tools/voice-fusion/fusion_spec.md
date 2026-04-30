@@ -1,5 +1,7 @@
 # Voice Fusion Spec
 
+改动代码后用py_compile检查错误
+
 ## 1. 融合层级
 
 用户可选择在 Mimi encoder 内部的不同层级进行融合：
@@ -156,18 +158,20 @@ voices/
 
 ```
 ┌─────────────────────────────────────┐
-│ ● PersonaA         W:1.0  L:4     │
-│ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ │  ← 波形缩略图
-│ N ✓  D ═══●═══ 0.3    ▲ +3.0     │  ← Effect 指示行
+│ PersonaA          W:1.0  4-MiMi    │  ← 名称 + 权重 + 融合层级名
+│ ▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░░ │  ← 权重条形图（长度 ∝ weight）
+│ N ✓  D ═══●═══ 0.3    ▲ +3.0     │  ← Effect 指示行（仅自定义时显示）
 └─────────────────────────────────────┘
 ```
 
 **第一行（标题行）**：
-- Persona 名称（带颜色标识圆点）
+- Persona 名称
 - `W:` 权重值
-- `L:` 融合层级编号
+- 融合层级名称（如 `4-MiMi`、`7-KVCache`），对应 §1 中的 7 个层级
 
-**第二行（波形）**：填充的波形缩略图。
+**第二行（权重条形图）**：
+- 填充条长度与 weight 成正比（weight 0.1~3.0 映射到 30%~100% 宽度）
+- 颜色为 clip 背景色的加深版本
 
 **第三行（Effect 指示行）**：
 - `N ✓` — Normalize 开启时显示 ✓（关闭时灰色 ○）
@@ -212,18 +216,40 @@ voices/
 - 文本输入框，输入要合成的测试文本。
 - 可加载保存的 preset（见 §7）。
 
-## 7. Preset / FuseSona 保存
+## 7. Preset 选项卡 / FuseSona
 
-### 7.1 Preset
+### 7.1 选项卡设计
 
-- 保存/加载当前轨道编辑器的完整状态（所有 clip 位置、权重、level、**effect 设置**、Persona 配置）。
-- 文件格式：JSON。
-- 存储路径：`assets/fused/presets/`。
+轨道编辑器上方提供**多选项卡**界面，每个选项卡对应一组独立的轨道状态：
 
-### 7.2 FuseSona
+```
+[+][-] [F1: Preset 1] [F2: Preset 2] [F3: Preset 3]    [Save] [Load] [Export FuseSona]
+```
 
-- 将当前融合结果导出为一个独立的 "FuseSona" 配置。
-- FuseSona 包含：融合后的 voice state（指定 level 的特征数据）、元信息（创建时间、源 Persona 列表、权重比例、**effect 设置**）。
+- `+` / `-` 按钮：添加/移除选项卡（至少保留 1 个）。
+- 切换选项卡时自动保存当前轨道状态到旧选项卡、加载新选项卡状态。
+- 选项卡按钮上显示对应的 Fn 快捷键（F1-F12，最多 12 个选项卡）。
+
+### 7.2 Fn 快捷键
+
+| 快捷键 | 功能 |
+|---|---|
+| **F1** ~ **F12** | 切换到对应编号的选项卡 |
+| **Space** | 播放 int8 音频 |
+| **Shift + Space** | 播放 f32 音频 |
+
+Space 和 Shift+Space 为全局快捷键，无需焦点在特定控件上即可触发。
+
+### 7.3 Preset 保存/加载
+
+- **Save**: 将当前选项卡的轨道状态保存为 JSON 文件（`assets/fused/presets/`）。
+- **Load**: 从文件加载预设到当前选项卡。
+- 保存内容：所有 clip 位置、权重、level、effect 设置、Persona 配置。
+
+### 7.4 FuseSona 导出
+
+- 将当前融合结果导出为独立的 "FuseSona" 配置。
+- FuseSona 包含：融合后的 voice state（指定 level 的特征数据）、元信息（创建时间、源 Persona 列表、权重比例、effect 设置）。
 - 可作为 Persona 在未来会话中直接使用。
 - 存储路径：`assets/fused/fusesonas/`。
 
@@ -231,13 +257,13 @@ voices/
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│                        工具栏                             │
-│  [语言][设备][模型]  │ [✓Norm] [✓Denoise] [Str] [Rescan] │
-│                     │ [SavePreset] [Load] [ExportFuseSona]│
+│ 工具栏                                    [Theme: Dark v] │
+│ [语言][设备][模型] │ [✓Norm] [✓Denoise] [Str] [Rescan]   │
+│                   │ [Settings]                            │
 ├──────────────┬───────────────────────────────────────────┤
-│              │                                           │
-│  Persona     │          Track 编辑器                      │
-│  Pool        │                                           │
+│              │ [+][-] [F1:Preset1] [F2:Preset2] [Save].. │
+│  Persona     ├───────────────────────────────────────────┤
+│  Pool        │          Track 编辑器                      │
 │  (左侧)      │   ┌───────────────────────────┐           │
 │              │   │  时间轴 / playhead          │           │
 │  [搜索/筛选]  │   ├───────────────────────────┤           │
@@ -259,3 +285,90 @@ voices/
 │                        状态栏                             │
 └──────────────────────────────────────────────────────────┘
 ```
+
+## 9. 设置对话框
+
+通过工具栏 **Settings** 按钮打开，以 Notebook 选项卡形式组织：
+
+### 9.1 Proxy 设置
+
+| 选项 | 说明 |
+|---|---|
+| Enable Proxy | 是否启用 HTTP/SOCKS 代理 |
+| Proxy Address | 代理地址，格式 `http://host:port` 或 `socks5://host:port` |
+
+代理设置在模型加载时生效，影响 PocketTTS 模型下载。
+
+## 10. 主题系统
+
+### 10.1 设计
+
+所有 UI 颜色集中在 `theme.py` 中管理，使用语义化键名（如 `track_editor_bg`、`clip_name_fg`）。
+各模块通过 `from theme import THEME` 引用颜色值，不直接硬编码色值。
+
+换主题 = 替换一个 dict，零耦合。
+
+### 10.2 主题切换 UI
+
+- 工具栏**右上角**提供 Theme 下拉框，列出所有已注册主题。
+- 切换主题时实时刷新所有 UI 元素（Canvas、Log、Pool 卡片等）。
+- 主题选择自动保存到 settings，下次启动时恢复。
+
+### 10.3 主题注册
+
+```python
+from theme import register_theme, THEMES
+
+# 注册新主题
+register_theme("Light", LIGHT_THEME_DICT)
+
+# THEMES 字典自动更新，UI 下拉框下次打开时可见
+```
+
+### 10.4 文件结构
+
+```
+tools/voice-fusion/
+├── theme.py          # 所有颜色定义、主题注册表、加载、ttk.Style 配置
+├── gui_base.py       # re-export THEME 和 COLORS
+├── gui_pool.py       # 引用 THEME
+├── gui.py            # 引用 THEME，调用 apply_theme()，主题切换逻辑
+├── track_editor.py   # 引用 THEME
+├── gui_effect_panel.py  # 引用 THEME
+└── gui_tts_compare.py   # 无硬编码颜色（纯 ttk）
+```
+
+### 10.5 使用方式
+
+```python
+from theme import THEME, load_theme, apply_theme, get_theme_name, register_theme
+
+# 加载主题
+load_theme("Dark")
+apply_theme(style)
+
+# 获取当前主题名
+name = get_theme_name()  # "Dark"
+
+# 引用颜色
+bg = THEME["track_editor_bg"]
+```
+
+### 10.6 主题键名参考
+
+| 键名 | 用途 |
+|------|------|
+| `app_bg` | 整体应用背景 |
+| `track_editor_bg` | Track Editor canvas 背景 |
+| `track_even_bg` / `track_odd_bg` | 轨道交替背景色 |
+| `track_border` / `track_label_fg` | 轨道边框和标签 |
+| `ruler_bg` / `ruler_major_fg` / `ruler_minor_fg` / `ruler_text_fg` | 时间标尺 |
+| `playhead_fg` | 播放指针颜色 |
+| `clip_name_fg` / `clip_info_fg` | clip 内文字颜色 |
+| `clip_selected_outline` / `clip_default_outline` | clip 边框 |
+| `clip_handle_fill` | clip 拖拽手柄 |
+| `clip_effect_pitch_up` / `clip_effect_pitch_down` | pitch 指示颜色 |
+| `pool_card_bg` / `pool_card_border` | Persona 卡片 |
+| `pool_name_fg` / `pool_name_stale_fg` | Persona 名称颜色 |
+| `log_bg` / `log_fg` / `log_cursor` | 日志面板 |
+| `clip_palette` | clip 调色板（固定 10 色，不随主题变） |

@@ -28,6 +28,7 @@ from gui_base import (
     TrackEditor, Track, Clip, ClipEffect,
     level_display_str, parse_level_from_str,
 )
+from theme import THEME, apply_theme, load_theme, get_theme_name, THEMES
 
 # Mixin imports
 from gui_toolbar import ToolbarMixin
@@ -44,6 +45,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self.root.title("Voice Fusion Tool")
         self.root.geometry("1400x850")
         self.root.minsize(1000, 600)
+        self.root.configure(bg=THEME["app_bg"])
 
         # State
         self.model = None
@@ -62,6 +64,11 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._last_f32_audio = None
         self._last_int8_audio = None
         self._rescan_running = False
+
+        # Preset tabs state
+        self._preset_tabs: list[dict] = []  # [{"name": ..., "data": PresetData}, ...]
+        self._active_preset_idx: int = 0
+        self._preset_tab_buttons: list[ttk.Button] = []
 
         # Effect panel state
         self._effect_normalize = tk.BooleanVar()
@@ -82,8 +89,30 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self.preprocess_denoise = tk.BooleanVar(value=saved.preprocess_denoise)
         self.preprocess_denoise_strength = tk.DoubleVar(value=saved.preprocess_denoise_strength)
 
+        # Restore saved theme (before _build_ui so it applies correctly)
+        saved_theme = getattr(saved, "theme", "Zesty")
+        if saved_theme and saved_theme in THEMES:
+            load_theme(saved_theme)
+            self._current_theme_name = saved_theme
+
         self._build_ui()
         self.root.protocol("WM_DELETE_WINDOW", self._on_close)
+
+        # Global keybindings
+        self.root.bind("<space>", self._on_key_space)
+        self.root.bind("<Shift-space>", self._on_key_shift_space)
+        self.root.bind("<F1>", lambda e: self._switch_preset_tab(0))
+        self.root.bind("<F2>", lambda e: self._switch_preset_tab(1))
+        self.root.bind("<F3>", lambda e: self._switch_preset_tab(2))
+        self.root.bind("<F4>", lambda e: self._switch_preset_tab(3))
+        self.root.bind("<F5>", lambda e: self._switch_preset_tab(4))
+        self.root.bind("<F6>", lambda e: self._switch_preset_tab(5))
+        self.root.bind("<F7>", lambda e: self._switch_preset_tab(6))
+        self.root.bind("<F8>", lambda e: self._switch_preset_tab(7))
+        self.root.bind("<F9>", lambda e: self._switch_preset_tab(8))
+        self.root.bind("<F10>", lambda e: self._switch_preset_tab(9))
+        self.root.bind("<F11>", lambda e: self._switch_preset_tab(10))
+        self.root.bind("<F12>", lambda e: self._switch_preset_tab(11))
 
         # Load model async
         self.root.after(100, self._load_model)
@@ -92,13 +121,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     def _build_ui(self):
         style = ttk.Style()
-        style.configure("Header.TLabel", font=("", 10, "bold"))
-        style.configure("Status.TLabel", foreground="gray")
-        style.configure("Accent.TButton", font=("", 9, "bold"))
-        style.configure("Dark.TFrame", background="#1e1e2e")
-        style.configure("Dark.TLabel", background="#1e1e2e", foreground="#ccc")
-        style.configure("Dark.TLabelframe", background="#1e1e2e", foreground="#ccc")
-        style.configure("Dark.TLabelframe.Label", background="#1e1e2e", foreground="#aaa")
+        apply_theme(style)
 
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(1, weight=1)
@@ -124,6 +147,9 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         # Right: Track Editor
         right = ttk.LabelFrame(pw, text="Track Editor", padding=4)
         pw.add(right, weight=1)
+
+        # Preset tabs bar (above track editor)
+        self._build_preset_tabs(right)
 
         # Track editor toolbar
         te_tb = ttk.Frame(right)
@@ -172,12 +198,195 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         f = ttk.LabelFrame(self.root, text="Log", padding=4)
         f.grid(row=4, column=0, sticky="ew", padx=8, pady=(4, 8))
         self.log_text = tk.Text(f, height=5, wrap="word", state="disabled",
-                                 font=("Consolas", 9), bg="#1e1e1e", fg="#d4d4d4",
-                                 insertbackground="white")
+                                 font=("Consolas", 9),
+                                 bg=THEME["log_bg"], fg=THEME["log_fg"],
+                                 insertbackground=THEME["log_cursor"])
         sb = ttk.Scrollbar(f, orient="vertical", command=self.log_text.yview)
         self.log_text.configure(yscrollcommand=sb.set)
         sb.pack(side="right", fill="y")
         self.log_text.pack(fill="both", expand=True)
+
+    # ── Preset Tabs ──
+
+    def _build_preset_tabs(self, parent):
+        """构建预设选项卡栏，显示在轨道编辑器上方"""
+        tab_bar = ttk.Frame(parent)
+        tab_bar.pack(fill="x", pady=(0, 4))
+        self._preset_tab_bar = tab_bar
+
+        # "+" button to add new preset tab
+        ttk.Button(tab_bar, text="+", width=2,
+                   command=self._add_preset_tab).pack(side="left", padx=(0, 2))
+
+        # "- Tab" button to remove current tab
+        ttk.Button(tab_bar, text="-", width=2,
+                   command=self._remove_preset_tab).pack(side="left", padx=(0, 8))
+
+        # Tab buttons container (scrollable)
+        tab_container = ttk.Frame(tab_bar)
+        tab_container.pack(side="left", fill="x", expand=True)
+
+        self._tab_button_container = tab_container
+
+        # Save/Load buttons on right side
+        ttk.Button(tab_bar, text="Save Preset", command=self._save_current_preset).pack(side="right", padx=2)
+        ttk.Button(tab_bar, text="Load Preset", command=self._load_preset_dialog).pack(side="right", padx=2)
+        ttk.Button(tab_bar, text="Export FuseSona", command=self._export_fusesona).pack(side="right", padx=2)
+
+        # Create initial default tab
+        self._preset_tabs = [{"name": "Preset 1", "data": None}]
+        self._refresh_preset_tab_buttons()
+
+    def _refresh_preset_tab_buttons(self):
+        """重建预设选项卡按钮"""
+        for w in self._tab_button_container.winfo_children():
+            w.destroy()
+        self._preset_tab_buttons = []
+
+        for i, tab in enumerate(self._preset_tabs):
+            btn = ttk.Button(
+                self._tab_button_container,
+                text=f"F{i+1}: {tab['name']}",
+                width=12,
+                command=lambda idx=i: self._switch_preset_tab(idx),
+            )
+            btn.pack(side="left", padx=1)
+            if i == self._active_preset_idx:
+                btn.configure(style="Accent.TButton")
+            self._preset_tab_buttons.append(btn)
+
+    def _add_preset_tab(self):
+        """添加新的预设选项卡"""
+        idx = len(self._preset_tabs) + 1
+        self._preset_tabs.append({"name": f"Preset {idx}", "data": None})
+        self._switch_preset_tab(len(self._preset_tabs) - 1)
+
+    def _remove_preset_tab(self):
+        """移除当前预设选项卡（至少保留一个）"""
+        if len(self._preset_tabs) <= 1:
+            return
+        self._preset_tabs.pop(self._active_preset_idx)
+        self._active_preset_idx = min(self._active_preset_idx, len(self._preset_tabs) - 1)
+        self._refresh_preset_tab_buttons()
+        # Load the new active tab's data
+        tab = self._preset_tabs[self._active_preset_idx]
+        if tab["data"] is not None:
+            self._track_editor.load_from_dict(tab["data"].tracks_config)
+
+    def _switch_preset_tab(self, idx: int):
+        """切换到指定预设选项卡，保存当前状态到旧选项卡"""
+        if idx < 0 or idx >= len(self._preset_tabs):
+            return
+
+        # Save current state to current tab
+        if self._active_preset_idx < len(self._preset_tabs):
+            self._save_current_state_to_tab(self._active_preset_idx)
+
+        self._active_preset_idx = idx
+        self._refresh_preset_tab_buttons()
+
+        # Load new tab's data
+        tab = self._preset_tabs[idx]
+        if tab["data"] is not None:
+            self._track_editor.load_from_dict(tab["data"].tracks_config)
+            self._log(f"[Preset] Switched to: {tab['name']}")
+        else:
+            # Fresh tab — clear tracks
+            self._track_editor.tracks = [Track(index=0, name="Track 1")]
+            self._track_editor._selected_clip = None
+            self._track_editor._redraw()
+
+    def _save_current_state_to_tab(self, idx: int):
+        """将当前轨道编辑器状态保存到指定选项卡"""
+        if idx < 0 or idx >= len(self._preset_tabs):
+            return
+        clips_data = []
+        for track_idx, clip in self._track_editor.get_all_clips():
+            clips_data.append(clip.to_clip_data(track_idx))
+        from preset import PresetData
+        tab = self._preset_tabs[idx]
+        tab["data"] = PresetData(
+            name=tab["name"],
+            clips=clips_data,
+            tracks_config=self._track_editor.to_dict(),
+        )
+
+    def _save_current_preset(self):
+        """保存当前选项卡为预设文件"""
+        self._save_current_state_to_tab(self._active_preset_idx)
+        tab = self._preset_tabs[self._active_preset_idx]
+        self._save_preset_dialog(name_hint=tab["name"])
+
+    # ── Theme ──
+
+    def _on_theme_change(self, event=None):
+        """切换主题并刷新所有 UI"""
+        name = self._theme_var.get()
+        if name == self._current_theme_name:
+            return
+        load_theme(name)
+        self._current_theme_name = name
+        # Re-apply ttk styles
+        style = ttk.Style()
+        apply_theme(style)
+        # Refresh root bg
+        self.root.configure(bg=THEME["app_bg"])
+        # Refresh themed widgets
+        self.log_text.configure(
+            bg=THEME["log_bg"], fg=THEME["log_fg"],
+            insertbackground=THEME["log_cursor"])
+        self._track_editor.configure(bg=THEME["track_editor_bg"])
+        self._track_editor._redraw()
+        # Refresh pool canvas
+        if hasattr(self, "_pool_canvas"):
+            self._pool_canvas.configure(bg=THEME["app_bg"])
+        if self.personas:
+            self._rebuild_pool()
+        self._log(f"[Theme] Switched to: {name}")
+
+    # ── Key Bindings ──
+
+    def _on_key_space(self, event):
+        """Space = play int8"""
+        self.root.focus_set()
+        if self._last_int8_audio is not None or self._last_f32_audio is not None:
+            self._play_int8()
+
+    def _on_key_shift_space(self, event):
+        """Shift+Space = play f32"""
+        self.root.focus_set()
+        if self._last_f32_audio is not None:
+            self._play_f32()
+
+    # ── Settings Dialog ──
+
+    def _show_settings_dialog(self):
+        """打开设置对话框（包含代理设置）"""
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Settings")
+        dialog.geometry("400x300")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        dialog.configure(bg=THEME["app_bg"])
+
+        nb = ttk.Notebook(dialog)
+        nb.pack(fill="both", expand=True, padx=8, pady=8)
+
+        # Proxy tab
+        proxy_frame = ttk.Frame(nb, padding=12)
+        nb.add(proxy_frame, text="Proxy")
+
+        ttk.Checkbutton(proxy_frame, text="Enable Proxy",
+                        variable=self.proxy_enabled).pack(anchor="w", pady=(0, 8))
+        ttk.Label(proxy_frame, text="Proxy Address:").pack(anchor="w")
+        ttk.Entry(proxy_frame, textvariable=self.proxy, width=40).pack(fill="x", pady=(0, 8))
+        ttk.Label(proxy_frame, text="Format: http://host:port or socks5://host:port",
+                  style="Status.TLabel").pack(anchor="w")
+
+        # Apply/Close
+        btn_frame = ttk.Frame(dialog)
+        btn_frame.pack(fill="x", padx=8, pady=(0, 8))
+        ttk.Button(btn_frame, text="Close", command=dialog.destroy).pack(side="right", padx=2)
 
     # ── Voice Scanning ──
 
@@ -409,6 +618,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
     # ── Settings ──
 
     def _collect_settings(self):
+        # Save current state to active tab before collecting
+        self._save_current_state_to_tab(self._active_preset_idx)
         return Settings(
             language=self.language.get(),
             device=self.device.get(),
@@ -423,6 +634,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             preprocess_denoise_strength=self.preprocess_denoise_strength.get(),
             voice_library=[p.to_dict() for p in self.personas],
             tracks=self._track_editor.to_dict(),
+            theme=self._current_theme_name,
         )
 
     def _on_close(self):
