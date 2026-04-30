@@ -11,12 +11,13 @@ MiMiEncoder的embedding, 之后经过transformer模型理解后产生的kv cache
 Keep word count under 15 at a time is best, 可以用一个句子, 太长的话用半个句子(截断到中文/英文逗号)
 
 
-语音特征编码 All 7 Layer:
-
-  1. Raw Audio — 原始波形 24kHz
-  2. SEANet Features — 卷积提取的声学特征 512 维 200Hz
-  3. Encoder Attn — self-attention 上下文增强 512 维 200Hz
-  4. MiMi Latent — codec 压缩的声音指纹 32 维 12.5Hz
-  5. (transpose，纯格式转换，不命名)
-  6. Speaker Proj — 线性投射到 LM 空间 1024 维
-  7. FlowLM KV Cache — 语言模型处理后的记忆
+语音特征编码 All 7 Level:
+  mimi encoder 内部:
+    1. Raw Audio — 原始波形 24kHz
+    2. SEANet Features — 卷积提取的声学特征 512 维 200Hz
+    3. Encoder Attn — self-attention 上下文增强 512 维 200Hz
+    4. MiMi Latent — codec 压缩的声音指纹 32 维 12.5Hz
+    5. (transpose，纯格式转换，不命名)
+  mimi 外部:
+    6. Speaker Proj — 线性投射到 LM 空间 1024 维
+    7. FlowLM KV Cache — 语言模型处理后的记忆
