@@ -24,7 +24,7 @@ from theme import THEME
 # 常量
 FRAME_RATE = 12.5  # MiMi Latent 帧率
 PIXELS_PER_FRAME_DEFAULT = 3.0
-TRACK_HEIGHT = 72
+TRACK_HEIGHT = 48
 CLIP_MIN_WIDTH = 20
 RULER_HEIGHT = 24
 HANDLE_WIDTH = 6  # clip 边缘拖拽热区宽度
@@ -116,6 +116,7 @@ class Clip:
     persona_original_path: str = ""
     start_frame: int = 0
     length_frames: int = 100
+    original_length_frames: int = 100
     weight: float = 1.0
     fusion_level: int = 4
     color: str = "#4FC3F7"
@@ -138,6 +139,7 @@ class Clip:
             track_index=track_index,
             start_frame=self.start_frame,
             length_frames=self.length_frames,
+            original_length_frames=self.original_length_frames,
             weight=self.weight,
             fusion_level=self.fusion_level,
             effect=self.effect.to_dict(),
@@ -151,6 +153,7 @@ class Clip:
             persona_original_path=cd.persona_original_path,
             start_frame=cd.start_frame,
             length_frames=cd.length_frames,
+            original_length_frames=cd.original_length_frames or cd.length_frames,
             weight=cd.weight,
             fusion_level=cd.fusion_level,
             color=color,
@@ -163,27 +166,30 @@ class Track:
     """一条轨道"""
     index: int = 0
     clips: list[Clip] = field(default_factory=list)
-    name: str = "Track"
+    name: str = "T1"
 
 
 class TrackEditor(tk.Canvas):
     """视频编辑风格的多轨道编辑器"""
 
     def __init__(self, parent, **kwargs):
-        self.tracks: list[Track] = [Track(index=0, name="Track 1")]
+        self.tracks: list[Track] = [Track(index=0, name="T1")]
         self.pixels_per_frame = PIXELS_PER_FRAME_DEFAULT
         self.playhead_frame: float = 0
         self._max_frame = 500
         self._color_index = 0
         self._resize_redraw_after_id: str | None = None
+        self._scroll_y: int = 0  # vertical scroll offset for tracks
 
         # 拖拽状态
         self._dragging: Optional[dict] = None  # {type: "move"|"resize_l"|"resize_r", clip, track_idx, offset_x, orig_start, orig_length}
         self._selected_clip: Optional[tuple[int, Clip]] = None  # (track_idx, clip)
+        self.selected_track_idx: int = 0
 
         # 回调
         self.on_clip_double_click: Optional[Callable] = None
         self.on_clip_right_click: Optional[Callable] = None
+        self.on_track_selected: Optional[Callable] = None  # (track_idx,)
 
         super().__init__(parent, bg=THEME["track_editor_bg"], highlightthickness=0, **kwargs)
         self.bind("<Button-1>", self._on_click)
@@ -203,7 +209,7 @@ class TrackEditor(tk.Canvas):
 
     def add_track(self) -> Track:
         idx = len(self.tracks)
-        track = Track(index=idx, name=f"Track {idx + 1}")
+        track = Track(index=idx, name=f"T{idx + 1}")
         self.tracks.append(track)
         self._redraw()
         return track
@@ -213,7 +219,7 @@ class TrackEditor(tk.Canvas):
             self.tracks.pop(index)
             for i, t in enumerate(self.tracks):
                 t.index = i
-                t.name = f"Track {i + 1}"
+                t.name = f"T{i + 1}"
             self._selected_clip = None
             self._redraw()
 
@@ -232,6 +238,18 @@ class TrackEditor(tk.Canvas):
             self._update_max_frame()
             self._redraw()
 
+    def reset_clip_length(self, clip: Clip):
+        """Reset clip length to its original value."""
+        clip.length_frames = clip.original_length_frames
+        self._update_max_frame()
+        self._redraw()
+
+    def _select_track(self, idx: int):
+        """Select a track and notify callback."""
+        self.selected_track_idx = idx
+        if self.on_track_selected:
+            self.on_track_selected(idx)
+
     def split_clip_at(self, track_index: int, clip: Clip, frame: int):
         if not clip.contains_frame(frame):
             return
@@ -244,6 +262,7 @@ class TrackEditor(tk.Canvas):
                 persona_original_path=clip.persona_original_path,
                 start_frame=frame,
                 length_frames=clip.length_frames - new_length,
+                original_length_frames=clip.original_length_frames,
                 weight=clip.weight,
                 fusion_level=clip.fusion_level,
                 color=self._next_color(),
@@ -300,14 +319,14 @@ class TrackEditor(tk.Canvas):
         """从字典恢复轨道状态"""
         self.tracks.clear()
         for td in data:
-            track = Track(index=td.get("index", 0), name=td.get("name", "Track"))
+            track = Track(index=td.get("index", 0), name=td.get("name", "T1"))
             for cd in td.get("clips", []):
                 clip_data = ClipData(**cd)
                 color = self._next_color()
                 track.clips.append(Clip.from_clip_data(clip_data, color))
             self.tracks.append(track)
         if not self.tracks:
-            self.tracks = [Track(index=0, name="Track 1")]
+            self.tracks = [Track(index=0, name="T1")]
         self._update_max_frame()
         self._redraw()
 
@@ -355,15 +374,24 @@ class TrackEditor(tk.Canvas):
 
     def _draw_tracks(self, w: int, h: int):
         """绘制所有轨道和 clip"""
-        y = RULER_HEIGHT
+        y = RULER_HEIGHT - self._scroll_y
         for track in self.tracks:
+            if y + TRACK_HEIGHT < RULER_HEIGHT:
+                # Track is above visible area, skip drawing but advance y
+                y += TRACK_HEIGHT
+                continue
+            if y > h:
+                break
             track_bg = THEME["track_even_bg"] if track.index % 2 == 0 else THEME["track_odd_bg"]
+            is_sel = (track.index == self.selected_track_idx)
+            border_color = THEME.get("track_selected_border", THEME["playhead_fg"]) if is_sel else THEME["track_border"]
+            border_w = 2 if is_sel else 1
             self.create_rectangle(0, y, w, y + TRACK_HEIGHT,
-                                  fill=track_bg, outline=THEME["track_border"])
+                                  fill=track_bg, outline=border_color, width=border_w)
 
             self.create_text(4, y + TRACK_HEIGHT // 2,
-                             text=track.name, fill=THEME["track_label_fg"],
-                             font=("", 8), anchor="w")
+                             text=f"T{track.index + 1}", fill=THEME["track_label_fg"],
+                             font=("", 8, "bold"), anchor="w")
 
             for clip in track.clips:
                 self._draw_clip(clip, track.index, y)
@@ -398,32 +426,18 @@ class TrackEditor(tk.Canvas):
 
         has_effects = clip.effect.has_custom_effects()
 
-        # ── 第一行: 名称（左）+ 权重/level 标签（右）──
-        row1_y = y1 + 11
+        # ── 名称（左）+ 权重/level 标签（右）──
+        mid_y = (y1 + y2) // 2
         name_text = clip.persona_name[:14]
-        self.create_text(x1 + 8, row1_y, text=name_text,
-                         fill=THEME["clip_name_fg"], font=("", 8, "bold"), anchor="w")
+        self.create_text(x1 + 6, mid_y, text=name_text,
+                         fill=THEME["clip_name_fg"], font=("", 7, "bold"), anchor="w")
         level_tag = LEVEL_SHORT_NAMES.get(clip.fusion_level, f"L{clip.fusion_level}")
-        info_text = f"W:{clip.weight:.1f}  {level_tag}"
-        self.create_text(x2 - 6, row1_y, text=info_text,
-                         fill=THEME["clip_info_fg"], font=("Consolas", 7), anchor="e")
+        info_text = f"W:{clip.weight:.1f} {level_tag}"
+        self.create_text(x2 - 4, mid_y, text=info_text,
+                         fill=THEME["clip_info_fg"], font=("Consolas", 6), anchor="e")
 
-        # ── 第二行: weight 条形指示器 ──
-        bar_y = y1 + 24
-        bar_h = 10
-        bar_x1 = x1 + 8
-        bar_x2 = x2 - 8
-        if bar_x2 > bar_x1 + 4 and bar_h > 0:
-            darken = THEME["clip_weight_bar_darken_sel"] if is_selected else THEME["clip_weight_bar_darken"]
-            bar_fill = self._darken(clip.color, darken)
-            fill_ratio = min(1.0, max(0.3, clip.weight / 3.0))
-            bar_w = (bar_x2 - bar_x1) * fill_ratio
-            self.create_rectangle(bar_x1, bar_y, bar_x1 + bar_w, bar_y + bar_h,
-                                  fill=bar_fill, outline="")
-
-        # ── 第三行: Effect 指示行（仅在有自定义 effect 时显示）──
+        # ── Effect 指示（仅在有自定义 effect 时显示，作为小标记）──
         if has_effects:
-            row3_y = y2 - 11
             indicators = []
             norm = clip.effect.normalize
             if norm is not None:
@@ -434,9 +448,6 @@ class TrackEditor(tk.Canvas):
                 sym = "\u2713" if dns else "\u25CB"
                 indicators.append(("D", sym,
                                    THEME["clip_effect_normal_on"] if dns else THEME["clip_effect_normal_off"]))
-            dns_str = clip.effect.denoise_strength
-            if dns_str is not None and dns is not False:
-                indicators.append((f"D:{dns_str:.1f}", None, THEME["clip_info_fg"]))
 
             pitch = clip.effect.pitch_shift
             if pitch != 0.0:
@@ -444,15 +455,13 @@ class TrackEditor(tk.Canvas):
                 indicators.append((f"{arrow}{pitch:+.1f}", None,
                                    THEME["clip_effect_pitch_up"] if pitch > 0 else THEME["clip_effect_pitch_down"]))
 
-            ex = x1 + 8
+            ex = x1 + 6
+            ey = y2 - 6
             for label, sym, color in indicators:
-                if sym:
-                    text = f"{label} {sym}"
-                else:
-                    text = label
-                self.create_text(ex, row3_y, text=text,
-                                 fill=color, font=("Consolas", 7), anchor="w")
-                ex += len(text) * 5 + 4
+                text = f"{label} {sym}" if sym else label
+                self.create_text(ex, ey, text=text,
+                                 fill=color, font=("Consolas", 6), anchor="w")
+                ex += len(text) * 4 + 3
 
         # 左右拖拽手柄（仅选中时显示）
         if is_selected:
@@ -488,6 +497,7 @@ class TrackEditor(tk.Canvas):
 
         if clip:
             self._selected_clip = (track_idx, clip)
+            self._select_track(track_idx)
 
             if hit_type == "handle_left":
                 self._dragging = {
@@ -515,6 +525,9 @@ class TrackEditor(tk.Canvas):
                 }
         else:
             self._selected_clip = None
+            # Click on empty track area → select that track
+            if 0 <= track_idx < len(self.tracks):
+                self._select_track(track_idx)
 
         self._redraw()
 
@@ -532,7 +545,8 @@ class TrackEditor(tk.Canvas):
 
             # 检测是否拖到了不同轨道
             y = event.y
-            new_track_idx = max(0, (y - RULER_HEIGHT) // TRACK_HEIGHT)
+            adjusted_y = y + self._scroll_y
+            new_track_idx = max(0, (adjusted_y - RULER_HEIGHT) // TRACK_HEIGHT)
             new_track_idx = min(new_track_idx, len(self.tracks) - 1)
             old_track_idx = d["track_idx"]
 
@@ -545,6 +559,7 @@ class TrackEditor(tk.Canvas):
                 new_track.clips.append(clip)
                 d["track_idx"] = new_track_idx
                 self._selected_clip = (new_track_idx, clip)
+                self._select_track(new_track_idx)
 
             clip.start_frame = new_start
 
@@ -565,6 +580,18 @@ class TrackEditor(tk.Canvas):
         self._redraw()
 
     def _on_release(self, event):
+        # Snap to original length if close
+        if self._dragging and self._selected_clip:
+            _, clip = self._selected_clip
+            d = self._dragging
+            if d["type"] in ("resize_l", "resize_r"):
+                orig_pixels = clip.original_length_frames * self.pixels_per_frame
+                cur_pixels = clip.length_frames * self.pixels_per_frame
+                if abs(orig_pixels - cur_pixels) < 8:
+                    clip.length_frames = clip.original_length_frames
+                    if d["type"] == "resize_l":
+                        clip.start_frame = d["orig_start"] + d["orig_length"] - clip.original_length_frames
+                    self._redraw()
         self._dragging = None
 
     def _get_arrow_step(self) -> float:
@@ -597,12 +624,24 @@ class TrackEditor(tk.Canvas):
             self.on_clip_right_click(event, track_idx, clip)
 
     def _on_scroll(self, event):
-        """滚轮缩放"""
-        if event.num == 4 or (hasattr(event, 'delta') and event.delta > 0):
-            self.pixels_per_frame = min(20, self.pixels_per_frame * 1.15)
-        elif event.num == 5 or (hasattr(event, 'delta') and event.delta < 0):
-            self.pixels_per_frame = max(0.5, self.pixels_per_frame / 1.15)
-        self._redraw()
+        """滚轮：ruler区域=缩放，其他=垂直滚动看更多轨道"""
+        if event.y < RULER_HEIGHT:
+            # Hover over ruler → zoom
+            if event.num == 4 or (hasattr(event, 'delta') and event.delta > 0):
+                self.pixels_per_frame = min(20, self.pixels_per_frame * 1.15)
+            elif event.num == 5 or (hasattr(event, 'delta') and event.delta < 0):
+                self.pixels_per_frame = max(0.5, self.pixels_per_frame / 1.15)
+            self._redraw()
+        else:
+            # Vertical scroll
+            total_h = RULER_HEIGHT + len(self.tracks) * TRACK_HEIGHT + 40
+            canvas_h = self.winfo_height()
+            max_scroll = max(0, total_h - canvas_h)
+            if event.num == 4 or (hasattr(event, 'delta') and event.delta > 0):
+                self._scroll_y = max(0, self._scroll_y - 30)
+            elif event.num == 5 or (hasattr(event, 'delta') and event.delta < 0):
+                self._scroll_y = min(max_scroll, self._scroll_y + 30)
+            self._redraw()
 
     def _on_configure(self, _event):
         # Debounce frequent resize events to reduce repaint churn.
@@ -628,7 +667,9 @@ class TrackEditor(tk.Canvas):
         if y < RULER_HEIGHT:
             return -1, None, ""
 
-        track_idx = int((y - RULER_HEIGHT) / TRACK_HEIGHT)
+        # Adjust y by scroll offset
+        adjusted_y = y + self._scroll_y
+        track_idx = int((adjusted_y - RULER_HEIGHT) / TRACK_HEIGHT)
         if track_idx < 0 or track_idx >= len(self.tracks):
             return -1, None, ""
 

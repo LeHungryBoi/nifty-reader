@@ -117,9 +117,11 @@ class PoolMixin:
         # Preview processed
         ttk.Button(btn_frame, text="▶P", width=3,
                    command=lambda p=persona: self._preview_audio(p, "processed")).pack(side="left", padx=1)
-        # Add to track
-        ttk.Button(btn_frame, text="+T", width=3,
-                   command=lambda p=persona: self._add_persona_to_track(p)).pack(side="left", padx=1)
+        # Add to track (left=click: new track, right-click: last active track)
+        add_btn = ttk.Button(btn_frame, text="+T", width=3,
+                             command=lambda p=persona: self._add_persona_to_track(p, new_track=True))
+        add_btn.pack(side="left", padx=1)
+        add_btn.bind("<Button-3>", lambda e, p=persona: self._add_persona_to_track(p, new_track=False))
 
         # Info
         info = tk.Frame(card, bg=THEME["pool_card_bg"])

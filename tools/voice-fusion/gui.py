@@ -65,6 +65,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._last_f32_audio = None
         self._last_int8_audio = None
         self._rescan_running = False
+        self._last_active_track_idx: int = 0
 
         # Preset tabs state
         self._preset_tabs: list[dict] = []  # [{"name": ..., "data": PresetData}, ...]
@@ -80,7 +81,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         # Settings
         saved = load_settings(RUNNING_DIR)
         self.test_text = tk.StringVar(value=saved.test_text)
-        self.method = tk.StringVar(value=saved.method)
+        self.method = tk.StringVar(value="align")
         self.device = tk.StringVar(value=saved.device)
         self.language = tk.StringVar(value=saved.language)
         self.proxy = tk.StringVar(value=saved.proxy)
@@ -184,16 +185,14 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._track_editor.pack(fill="both", expand=True)
         self._track_editor.on_clip_double_click = self._on_clip_double_click
         self._track_editor.on_clip_right_click = self._on_clip_right_click
+        self._track_editor.on_track_selected = self._on_track_selected
 
-        # Fusion method
-        fuse_row = ttk.Frame(right)
-        fuse_row.pack(fill="x", pady=(4, 0))
-        ttk.Label(fuse_row, text="Fusion:").pack(side="left")
-        ttk.Radiobutton(fuse_row, text="Align", variable=self.method, value="align").pack(side="left", padx=4)
-        ttk.Radiobutton(fuse_row, text="Average", variable=self.method, value="average").pack(side="left", padx=4)
-        ttk.Button(fuse_row, text="Generate Fused", command=self._generate_fused,
+        # Action bar
+        action_row = ttk.Frame(right)
+        action_row.pack(fill="x", pady=(4, 0))
+        ttk.Button(action_row, text="Generate Fused", command=self._generate_fused,
                    style="Accent.TButton").pack(side="right", padx=4)
-        ttk.Button(fuse_row, text="Split at Playhead", command=self._split_at_playhead).pack(side="right", padx=4)
+        ttk.Button(action_row, text="Split at Playhead", command=self._split_at_playhead).pack(side="right", padx=4)
 
     def _build_log(self):
         f = ttk.LabelFrame(self.root, text="Log", padding=4)
@@ -217,11 +216,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         # "+" button to add new preset tab
         ttk.Button(tab_bar, text="+", width=2,
-                   command=self._add_preset_tab).pack(side="left", padx=(0, 2))
-
-        # "- Tab" button to remove current tab
-        ttk.Button(tab_bar, text="-", width=2,
-                   command=self._remove_preset_tab).pack(side="left", padx=(0, 8))
+                   command=self._add_preset_tab).pack(side="left", padx=(0, 8))
 
         # Tab buttons container (scrollable)
         tab_container = ttk.Frame(tab_bar)
@@ -254,6 +249,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             btn.pack(side="left", padx=1)
             if i == self._active_preset_idx:
                 btn.configure(style="Accent.TButton")
+            btn.bind("<Button-3>", lambda e, idx=i: self._preset_tab_context_menu(e, idx))
             self._preset_tab_buttons.append(btn)
 
     def _add_preset_tab(self):
@@ -262,17 +258,40 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._preset_tabs.append({"name": f"Preset {idx}", "data": None})
         self._switch_preset_tab(len(self._preset_tabs) - 1)
 
-    def _remove_preset_tab(self):
-        """移除当前预设选项卡（至少保留一个）"""
+    def _remove_preset_tab(self, idx: int = None):
+        """移除指定预设选项卡（至少保留一个）"""
         if len(self._preset_tabs) <= 1:
             return
-        self._preset_tabs.pop(self._active_preset_idx)
-        self._active_preset_idx = min(self._active_preset_idx, len(self._preset_tabs) - 1)
+        if idx is None:
+            idx = self._active_preset_idx
+        self._preset_tabs.pop(idx)
+        if self._active_preset_idx >= len(self._preset_tabs):
+            self._active_preset_idx = len(self._preset_tabs) - 1
         self._refresh_preset_tab_buttons()
-        # Load the new active tab's data
         tab = self._preset_tabs[self._active_preset_idx]
         if tab["data"] is not None:
             self._track_editor.load_from_dict(tab["data"].tracks_config)
+
+    def _preset_tab_context_menu(self, event, idx: int):
+        """右键预设选项卡菜单"""
+        menu = tk.Menu(self.root, tearoff=0)
+        tab = self._preset_tabs[idx]
+        menu.add_command(label=f"Rename '{tab['name']}'",
+                         command=lambda: self._rename_preset_tab(idx))
+        if len(self._preset_tabs) > 1:
+            menu.add_command(label="Delete",
+                             command=lambda: self._remove_preset_tab(idx))
+        menu.post(event.x_root, event.y_root)
+
+    def _rename_preset_tab(self, idx: int):
+        """重命名预设选项卡"""
+        from tkinter import simpledialog
+        tab = self._preset_tabs[idx]
+        new_name = simpledialog.askstring("Rename Preset", "New name:",
+                                           parent=self.root, initialvalue=tab["name"])
+        if new_name and new_name.strip():
+            tab["name"] = new_name.strip()
+            self._refresh_preset_tab_buttons()
 
     def _switch_preset_tab(self, idx: int):
         """切换到指定预设选项卡，保存当前状态到旧选项卡"""
@@ -293,7 +312,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             self._log(f"[Preset] Switched to: {tab['name']}")
         else:
             # Fresh tab — clear tracks
-            self._track_editor.tracks = [Track(index=0, name="Track 1")]
+            self._track_editor.tracks = [Track(index=0, name="T1")]
             self._track_editor._selected_clip = None
             self._track_editor._redraw()
 
@@ -476,6 +495,9 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     # ── Track Operations ──
 
+    def _on_track_selected(self, track_idx: int):
+        self._last_active_track_idx = track_idx
+
     def _add_track(self):
         self._track_editor.add_track()
 
@@ -486,11 +508,22 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         else:
             self._track_editor.remove_track(len(self._track_editor.tracks) - 1)
 
-    def _add_persona_to_track(self, persona: Persona):
-        sel = self._track_editor.get_selected_clip()
-        track_idx = sel[0] if sel else 0
-        if track_idx >= len(self._track_editor.tracks):
-            track_idx = 0
+    def _add_persona_to_track(self, persona: Persona, new_track: bool = True):
+        if new_track:
+            # Find first empty track (from index 0)
+            track_idx = None
+            for i, t in enumerate(self._track_editor.tracks):
+                if not t.clips:
+                    track_idx = i
+                    break
+            if track_idx is None:
+                # All tracks have clips, create a new one
+                track = self._track_editor.add_track()
+                track_idx = track.index
+        else:
+            track_idx = self._last_active_track_idx
+            if track_idx >= len(self._track_editor.tracks):
+                track_idx = 0
 
         color = COLORS[self._color_idx % len(COLORS)]
         self._color_idx += 1
@@ -509,7 +542,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             clip.start_frame = max(c.end_frame for c in track.clips)
 
         self._track_editor.add_clip(track_idx, clip)
-        self._log(f"[Track] Added '{persona.display_name}' to Track {track_idx + 1}")
+        self._last_active_track_idx = track_idx
+        self._log(f"[Track] Added '{persona.display_name}' to T{track_idx + 1}")
 
     def _split_at_playhead(self):
         sel = self._track_editor.get_selected_clip()
@@ -536,6 +570,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         menu.add_command(label="Split at Playhead",
                          command=lambda: self._track_editor.split_clip_at(
                              track_idx, clip, int(self._track_editor.playhead_frame)))
+        menu.add_command(label=f"Reset Length ({clip.original_length_frames} frames)",
+                         command=lambda: self._track_editor.reset_clip_length(clip))
         menu.add_separator()
         eff = clip.effect
         has_eff = eff.has_custom_effects()

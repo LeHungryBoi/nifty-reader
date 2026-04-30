@@ -2,3 +2,5 @@
 *.safetensors
 /build/
 /lib/*.dll
+__pycache__/
+*.pyc

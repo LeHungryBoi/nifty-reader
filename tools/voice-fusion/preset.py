@@ -24,6 +24,7 @@ class ClipData:
     track_index: int = 0
     start_frame: int = 0       # 起始帧 (12.5Hz)
     length_frames: int = 0     # 长度（帧数）
+    original_length_frames: int = 0  # 创建时的默认长度
     weight: float = 1.0
     fusion_level: int = 4
     effect: dict = field(default_factory=dict)  # ClipEffect dict
