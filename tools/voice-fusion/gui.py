@@ -26,7 +26,7 @@ from gui_base import (
     load_settings, save_settings, Settings,
     Persona, scan_voices_dir, get_stale_personas,
     TrackEditor, Track, Clip, ClipEffect,
-    level_display_str, parse_level_from_str,
+    level_display_str, parse_level_from_str, LEVEL_SHORT_NAMES,
 )
 from theme import THEME, apply_theme, load_theme, get_theme_name, THEMES
 
@@ -80,6 +80,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         # Settings
         saved = load_settings(RUNNING_DIR)
+        self._saved_settings = saved
         self.test_text = tk.StringVar(value=saved.test_text)
         self.method = tk.StringVar(value="align")
         self.device = tk.StringVar(value=saved.device)
@@ -105,9 +106,9 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             tab = self._preset_tabs[self._active_preset_idx]
             if tab.get("data") is not None and tab["data"].tracks_config:
                 self._track_editor.load_from_dict(tab["data"].tracks_config)
-            elif getattr(saved, "tracks", None):
+            elif getattr(self._saved_settings, "tracks", None):
                 # Fallback: legacy single-track restoration
-                self._track_editor.load_from_dict(saved.tracks)
+                self._track_editor.load_from_dict(self._saved_settings.tracks)
 
         # Global keybindings
         self.root.bind("<space>", self._on_key_space)
@@ -124,6 +125,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self.root.bind("<F10>", lambda e: self._switch_preset_tab(9))
         self.root.bind("<F11>", lambda e: self._switch_preset_tab(10))
         self.root.bind("<F12>", lambda e: self._switch_preset_tab(11))
+        self.root.bind("t", lambda e: self._trim_clip())
+        self.root.bind("s", lambda e: self._split_at_playhead())
 
         # Load model async
         self.root.after(100, self._load_model)
@@ -160,7 +163,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         pw.add(right, weight=1)
 
         # Preset tabs bar (above track editor)
-        self._build_preset_tabs(right, getattr(saved, "preset_tabs", None))
+        self._build_preset_tabs(right, getattr(self._saved_settings, "preset_tabs", None))
 
         # Track editor toolbar
         te_tb = ttk.Frame(right)
@@ -202,6 +205,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         ttk.Button(action_row, text="Generate Fused", command=self._generate_fused,
                    style="Accent.TButton").pack(side="right", padx=4)
         ttk.Button(action_row, text="Split at Playhead", command=self._split_at_playhead).pack(side="right", padx=4)
+        ttk.Button(action_row, text="Trim", command=self._trim_clip).pack(side="right", padx=4)
 
     def _build_log(self):
         f = ttk.LabelFrame(self.root, text="Log", padding=4)
@@ -238,7 +242,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         # Restore saved tabs or create default
         if saved_tabs and len(saved_tabs) > 0:
-            from preset import PresetData
+            from preset import PresetData, ClipData
             self._preset_tabs = []
             for st in saved_tabs:
                 pd = None
@@ -249,10 +253,18 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
                         clips=clips,
                         tracks_config=st.get("tracks_config", []),
                     )
-                self._preset_tabs.append({"name": st.get("name", f"Preset {len(self._preset_tabs)+1}"), "data": pd})
-            self._active_preset_idx = min(getattr(saved, "active_preset_idx", 0), len(self._preset_tabs) - 1)
+                tab_dict = {"name": st.get("name", f"Preset {len(self._preset_tabs)+1}"), "data": pd}
+                # Restore saved level, or infer from first clip
+                if "fusion_level" in st:
+                    tab_dict["fusion_level"] = st["fusion_level"]
+                elif pd and pd.clips:
+                    tab_dict["fusion_level"] = pd.clips[0].fusion_level if hasattr(pd.clips[0], 'fusion_level') else 4
+                else:
+                    tab_dict["fusion_level"] = 4
+                self._preset_tabs.append(tab_dict)
+            self._active_preset_idx = min(getattr(self._saved_settings, "active_preset_idx", 0), len(self._preset_tabs) - 1)
         else:
-            self._preset_tabs = [{"name": "Preset 1", "data": None}]
+            self._preset_tabs = [{"name": "Preset 1", "data": None, "fusion_level": 4}]
         self._refresh_preset_tab_buttons()
 
     def _refresh_preset_tab_buttons(self):
@@ -262,10 +274,12 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._preset_tab_buttons = []
 
         for i, tab in enumerate(self._preset_tabs):
+            lvl = tab.get("fusion_level", 4)
+            level_tag = LEVEL_SHORT_NAMES.get(lvl, f"L{lvl}")
             btn = ttk.Button(
                 self._tab_button_container,
-                text=f"F{i+1}: {tab['name']}",
-                width=12,
+                text=f"F{i+1}: {tab['name']} [{level_tag}]",
+                width=14,
                 command=lambda idx=i: self._switch_preset_tab(idx),
             )
             btn.pack(side="left", padx=1)
@@ -277,7 +291,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
     def _add_preset_tab(self):
         """添加新的预设选项卡"""
         idx = len(self._preset_tabs) + 1
-        self._preset_tabs.append({"name": f"Preset {idx}", "data": None})
+        current_level = parse_level_from_str(self._clip_level_var.get())
+        self._preset_tabs.append({"name": f"Preset {idx}", "data": None, "fusion_level": current_level})
         self._switch_preset_tab(len(self._preset_tabs) - 1)
 
     def _remove_preset_tab(self, idx: int = None):
@@ -322,7 +337,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         if idx < 0 or idx >= len(self._preset_tabs):
             return
 
-        # Save current state to current tab
+        # Save current state (including level) to current tab
         if self._active_preset_idx < len(self._preset_tabs):
             self._save_current_state_to_tab(self._active_preset_idx)
 
@@ -332,9 +347,13 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         # Load new tab's data
         tab = self._preset_tabs[idx]
+        # Restore the level stored in this tab
+        stored_level = tab.get("fusion_level", 4)
+        self._clip_level_var.set(level_display_str(stored_level))
+
         if tab["data"] is not None:
             self._track_editor.load_from_dict(tab["data"].tracks_config)
-            self._log(f"[Preset] Switched to: {tab['name']}")
+            self._log(f"[Preset] Switched to: {tab['name']} (L{stored_level})")
         else:
             # Fresh tab — clear tracks
             self._track_editor.tracks = [Track(index=0, name="T1")]
@@ -355,6 +374,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             clips=clips_data,
             tracks_config=self._track_editor.to_dict(),
         )
+        tab["fusion_level"] = parse_level_from_str(self._clip_level_var.get())
 
 
     # ── Theme ──
@@ -387,16 +407,15 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
     # ── Key Bindings ──
 
     def _on_key_space(self, event):
-        """Space = play int8"""
+        """Space = generate and play f32"""
+        self.root.focus_set()
+        self._play_f32()
+
+    def _on_key_shift_space(self, event):
+        """Shift+Space = play int8"""
         self.root.focus_set()
         if self._last_int8_audio is not None or self._last_f32_audio is not None:
             self._play_int8()
-
-    def _on_key_shift_space(self, event):
-        """Shift+Space = play f32"""
-        self.root.focus_set()
-        if self._last_f32_audio is not None:
-            self._play_f32()
 
     # ── Settings Dialog ──
 
@@ -550,13 +569,17 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         color = COLORS[self._color_idx % len(COLORS)]
         self._color_idx += 1
 
+        level = 4
+        latent_frames = self._get_persona_latent_frames(persona, level=level)
+
         clip = Clip(
             persona_name=persona.name,
             persona_original_path=persona.original_path,
             start_frame=0,
-            length_frames=100,
+            length_frames=latent_frames,
+            original_length_frames=latent_frames,
             weight=1.0,
-            fusion_level=4,
+            fusion_level=level,
             color=color,
         )
         track = self._track_editor.tracks[track_idx]
@@ -568,6 +591,43 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._log(f"[Track] Added '{persona.display_name}' to T{track_idx + 1}")
         self._auto_save()
 
+    @staticmethod
+    def _get_persona_latent_frames(persona: Persona, level: int = 4) -> int:
+        """
+        Get the latent time dimension for a persona at a given level.
+        Tries to read the extracted feature .npy file; falls back to audio duration.
+        """
+        try:
+            import numpy as np
+            derived_path = persona.get_derived_path(level)
+            if derived_path.exists():
+                arr = np.load(str(derived_path))
+                # Level 7 shape: [N, 2, B, T, H, D] → time dim is index 3
+                # Level 2 shape: [B, 512, T] → time dim is last
+                # Level 4 shape: [B, 32, T] → time dim is last
+                # Level 5 shape: [B, T, 32] → time dim is 1
+                # Level 6 shape: [B, T, 1024] → time dim is 1
+                if level == 7 and arr.ndim >= 4:
+                    return max(int(arr.shape[3]), 20)
+                elif level in (5, 6) and arr.ndim >= 2:
+                    return max(int(arr.shape[1]), 20)
+                elif arr.ndim >= 1:
+                    return max(int(arr.shape[-1]), 20)
+        except Exception:
+            pass
+        # Fallback: estimate from audio duration
+        return VoiceFusionApp._get_audio_duration_frames(persona.original_path)
+
+    @staticmethod
+    def _get_audio_duration_frames(audio_path: str) -> int:
+        """Read audio file duration and return visual frame count (1 frame = 10ms)."""
+        try:
+            import soundfile as sf
+            info = sf.info(audio_path)
+            return max(int(info.duration * 100), 20)  # 20 frames minimum
+        except Exception:
+            return 100
+
     def _split_at_playhead(self):
         sel = self._track_editor.get_selected_clip()
         if not sel:
@@ -577,6 +637,19 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         frame = int(self._track_editor.playhead_frame)
         self._track_editor.split_clip_at(track_idx, clip, frame)
         self._log(f"[Track] Split clip '{clip.persona_name}' at frame {frame}")
+        self._auto_save()
+
+    def _trim_clip(self):
+        trimmed = self._track_editor.trim_clip_at_playhead()
+        if not trimmed:
+            sel = self._track_editor.get_selected_clip()
+            if not sel:
+                messagebox.showinfo("Trim", "Select a clip first, then position playhead inside it")
+            else:
+                messagebox.showinfo("Trim", "Position playhead inside the clip to trim")
+            return
+        _, clip = self._track_editor.get_selected_clip()
+        self._log(f"[Track] Trimmed '{clip.persona_name}' → [{clip.start_frame}-{clip.end_frame}]")
         self._auto_save()
 
     def _on_clip_double_click(self, track_idx, clip):
@@ -620,9 +693,15 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             self._auto_save()
 
     def _on_clip_level_change(self, event=None):
+        new_level = parse_level_from_str(self._clip_level_var.get())
+        # Update current preset tab's level
+        if self._active_preset_idx < len(self._preset_tabs):
+            self._preset_tabs[self._active_preset_idx]["fusion_level"] = new_level
+            self._refresh_preset_tab_buttons()
+            self._auto_save()
         sel = self._track_editor.get_selected_clip()
         if sel:
-            sel[1].fusion_level = parse_level_from_str(self._clip_level_var.get())
+            sel[1].fusion_level = new_level
             self._track_editor._redraw()
             self._auto_save()
 
@@ -702,7 +781,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         # Serialize preset tabs for persistence
         saved_tabs = []
         for tab in self._preset_tabs:
-            tab_dict = {"name": tab["name"]}
+            tab_dict = {"name": tab["name"], "fusion_level": tab.get("fusion_level", 4)}
             if tab["data"] is not None:
                 tab_dict["clips"] = [c.__dict__ if hasattr(c, "__dict__") else c for c in tab["data"].clips]
                 tab_dict["tracks_config"] = tab["data"].tracks_config

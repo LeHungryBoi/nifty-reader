@@ -47,7 +47,7 @@ class TtsCompareMixin:
 
     def _play_f32(self):
         if self._last_f32_audio is None:
-            messagebox.showwarning("Warning", "Generate f32 audio first")
+            self._generate_fused()
             return
         if not _sounddevice_available:
             messagebox.showwarning("Warning", "Install sounddevice for playback")

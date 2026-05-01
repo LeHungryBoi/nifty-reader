@@ -27,9 +27,9 @@ mimi 外部:
   Raw Audio [B,1,T] 24kHz
     → SEANet Features [B,512,T/120] 200Hz
     → Encoder Attn [B,512,T/120]
-    → MiMi Latent [B,32,T/1200] 12.5Hz
-    → transpose [B,T/1200,32]
-    → Speaker Proj [B,T/1200,1024]
+    → MiMi Latent [B,32,T/1920] 12.5Hz
+    → transpose [B,T/1920,32]
+    → Speaker Proj [B,T/1920,1024]
     → FlowLM KV Cache (每层 cache: [2,1,seq_len,heads,dim])
 ```
 

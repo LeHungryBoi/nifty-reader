@@ -45,7 +45,7 @@ class LevelExtractor:
         try:
             # 调用 get_state_for_audio_prompt 触发完整的编码流程
             state = self.model.get_state_for_audio_prompt(
-                audio_path, truncate=True, copy_state=copy_state)
+                audio_path, truncate=True)
 
             # Level 7: 完整的 KV Cache state
             if state:

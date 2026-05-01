@@ -107,10 +107,225 @@
     {
       "index": 0,
       "name": "T1",
+      "clips": [
+        {
+          "persona_name": "bad",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
+          "track_index": 0,
+          "start_frame": 0,
+          "length_frames": 100,
+          "original_length_frames": 100,
+          "weight": 2.033333333333333,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "name": "T2",
+      "clips": [
+        {
+          "persona_name": "hq",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
+          "track_index": 1,
+          "start_frame": 0,
+          "length_frames": 100,
+          "original_length_frames": 100,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "name": "T3",
+      "clips": [
+        {
+          "persona_name": "Chucky",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "track_index": 2,
+          "start_frame": 0,
+          "length_frames": 1726,
+          "original_length_frames": 1726,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "name": "T4",
+      "clips": []
+    },
+    {
+      "index": 4,
+      "name": "T5",
+      "clips": []
+    },
+    {
+      "index": 5,
+      "name": "T6",
       "clips": []
     }
   ],
   "fusion_level": 4,
   "tts_compare_text": "",
-  "theme": "Zesty"
+  "theme": "Zesty",
+  "preset_tabs": [
+    {
+      "name": "Preset 1",
+      "clips": [
+        {
+          "persona_name": "bad",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
+          "track_index": 0,
+          "start_frame": 0,
+          "length_frames": 100,
+          "original_length_frames": 100,
+          "weight": 2.033333333333333,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "hq",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
+          "track_index": 1,
+          "start_frame": 0,
+          "length_frames": 100,
+          "original_length_frames": 100,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "Chucky",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "track_index": 2,
+          "start_frame": 0,
+          "length_frames": 1726,
+          "original_length_frames": 1726,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ],
+      "tracks_config": [
+        {
+          "index": 0,
+          "name": "T1",
+          "clips": [
+            {
+              "persona_name": "bad",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\bad.wav",
+              "track_index": 0,
+              "start_frame": 0,
+              "length_frames": 100,
+              "original_length_frames": 100,
+              "weight": 2.033333333333333,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "name": "T2",
+          "clips": [
+            {
+              "persona_name": "hq",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\hq.wav",
+              "track_index": 1,
+              "start_frame": 0,
+              "length_frames": 100,
+              "original_length_frames": 100,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "name": "T3",
+          "clips": [
+            {
+              "persona_name": "Chucky",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+              "track_index": 2,
+              "start_frame": 0,
+              "length_frames": 1726,
+              "original_length_frames": 1726,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "name": "T4",
+          "clips": []
+        },
+        {
+          "index": 4,
+          "name": "T5",
+          "clips": []
+        },
+        {
+          "index": 5,
+          "name": "T6",
+          "clips": []
+        }
+      ]
+    }
+  ],
+  "active_preset_idx": 0
 }
