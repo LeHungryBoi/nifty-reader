@@ -105,13 +105,17 @@ class LevelExtractor:
         """Monkey-patch _encode_audio 来捕获 level 5 和 6"""
         original_encode = self.model._encode_audio
 
-        def patched_encode(audio_prompt, model_state=None, copy_state=False):
-            result = original_encode(audio_prompt, model_state, copy_state)
+        def patched_encode(*args, **kwargs):
+            # 兼容不同版本 pocket_tts 的 _encode_audio 签名：
+            # - (audio_prompt)
+            # - (audio_prompt, model_state=None, copy_state=False)
+            result = original_encode(*args, **kwargs)
             # result 是 encoded tensor, 在 _encode_audio 内部经过了 transpose 和 projection
             # Level 5 (transpose): [B, 32, T] -> [B, T, 32]
             # Level 6 (speaker proj): [B, T, 32] -> [B, T, 1024]
             # encoded 最终是 [B, T_latent, 1024] (level 6 output)
-            self._captured[6] = result.detach().cpu()
+            if isinstance(result, torch.Tensor):
+                self._captured[6] = result.detach().cpu()
             # Level 5 需要重新计算 transpose 之前的状态
             # encoded 的来源: transpose([B, 32, T]) -> [B, T, 32] -> proj -> [B, T, 1024]
             # 所以 level 5 = result[:, :, :32] 不对，需要从 level 4 反推

@@ -1,5 +1,6 @@
 @echo off
 cd /d "%~dp0"
 cls
-python run.py
+set PYTHONUTF8=1
+python -X utf8 run.py
 exit

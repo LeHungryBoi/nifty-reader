@@ -175,6 +175,7 @@ class TrackEditor(tk.Canvas):
 
     def __init__(self, parent, **kwargs):
         self.tracks: list[Track] = [Track(index=0, name="T1")]
+        self._preset_level: int = 4
         self.pixels_per_frame = PIXELS_PER_FRAME_DEFAULT
         self.playhead_frame: float = 0
         self._max_frame = 500
@@ -214,6 +215,15 @@ class TrackEditor(tk.Canvas):
         self.tracks.append(track)
         self._redraw()
         return track
+
+    def set_preset_level(self, level: int):
+        """设置当前 preset level（用于背景着色）。"""
+        try:
+            level = int(level)
+        except Exception:
+            level = 4
+        self._preset_level = min(7, max(1, level))
+        self._redraw()
 
     def remove_track(self, index: int):
         if 0 <= index < len(self.tracks) and len(self.tracks) > 1:
@@ -428,21 +438,14 @@ class TrackEditor(tk.Canvas):
                 break
 
             # ── 左侧轨道标签 ──
-            label_bg = THEME.get("track_label_bg", THEME["ruler_bg"])
-            is_sel = (track.index == self.selected_track_idx)
-            if is_sel:
-                self.create_rectangle(0, y, TRACK_LABEL_WIDTH, y + TRACK_HEIGHT,
-                                      fill=THEME["playhead_fg"], outline="")
             self.create_text(TRACK_LABEL_WIDTH // 2, y + TRACK_HEIGHT // 2,
                              text=f"T{track.index + 1}", fill=THEME["track_label_fg"],
                              font=("", 8, "bold"), anchor="center")
 
             # ── 轨道区域（clip 区域）──
-            track_bg = THEME["track_even_bg"] if track.index % 2 == 0 else THEME["track_odd_bg"]
-            border_color = THEME.get("track_selected_border", THEME["playhead_fg"]) if is_sel else THEME["track_border"]
-            border_w = 2 if is_sel else 1
+            track_bg = self._get_track_bg(track.index)
             self.create_rectangle(TRACK_LABEL_WIDTH, y, w, y + TRACK_HEIGHT,
-                                  fill=track_bg, outline=border_color, width=border_w)
+                                  fill=track_bg, outline=THEME["track_border"], width=1)
 
             for clip in track.clips:
                 self._draw_clip(clip, track.index, y)
@@ -768,6 +771,12 @@ class TrackEditor(tk.Canvas):
 
     def _frame_to_x_safe(self, frame: float) -> float:
         return TRACK_LABEL_WIDTH + RULER_HEIGHT + frame * self.pixels_per_frame
+
+    def _get_track_bg(self, track_idx: int) -> str:
+        """基于当前 preset level 返回轨道背景色，奇偶轨道做轻微明暗区分。"""
+        palette = THEME.get("track_level_palette") or THEME.get("level_palette", {})
+        base = palette.get(self._preset_level, THEME["track_even_bg"])
+        return self._lighten(base, 0.04) if track_idx % 2 == 0 else self._darken(base, 0.06)
 
     def _update_max_frame(self):
         self._max_frame = max(500, self.get_total_duration_frames() + 100)

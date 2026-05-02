@@ -12,12 +12,22 @@ class TtsCompareMixin:
         f = ttk.LabelFrame(self.root, text="TTS Compare (f32 vs int8)", padding=6)
         f.grid(row=3, column=0, sticky="ew", padx=8, pady=4)
 
-        # Text input
+        # Text input — click to edit, Enter to confirm, Esc to cancel
         text_row = ttk.Frame(f)
         text_row.pack(fill="x")
         ttk.Label(text_row, text="Text:").pack(side="left")
-        ttk.Entry(text_row, textvariable=self.test_text).pack(
-            side="left", fill="x", expand=True, padx=(4, 0))
+
+        self._text_entry = ttk.Entry(text_row, textvariable=self.test_text)
+        self._text_entry.pack(side="left", fill="x", expand=True, padx=(4, 0))
+        self._text_entry_hint = ttk.Label(text_row, text="  [Enter=confirm, Esc=cancel]",
+                                          style="Status.TLabel")
+        self._text_entry_hint.pack(side="left")
+
+        self._text_editing = False
+        self._text_entry.bind("<FocusIn>", self._on_text_focus_in)
+        self._text_entry.bind("<FocusOut>", self._on_text_focus_out)
+        self._text_entry.bind("<Return>", self._on_text_confirm)
+        self._text_entry.bind("<Escape>", self._on_text_cancel)
 
         # Buttons
         btn_row = ttk.Frame(f)
@@ -40,13 +50,33 @@ class TtsCompareMixin:
         self._tts_status = ttk.Label(btn_row, text="", style="Status.TLabel")
         self._tts_status.pack(side="right", padx=4)
 
+    def _on_text_focus_in(self, event=None):
+        """进入编辑模式：保存当前文本作为备份"""
+        self._text_editing = True
+        self._text_backup = self.test_text.get()
+
+    def _on_text_focus_out(self, event=None):
+        """离开编辑模式：隐藏提示"""
+        self._text_editing = False
+        self._text_entry_hint.configure(text="")
+
+    def _on_text_confirm(self, event=None):
+        """Enter — 确认文本，退出编辑"""
+        self.root.focus_set()
+
+    def _on_text_cancel(self, event=None):
+        """Esc — 还原文本，退出编辑"""
+        self.test_text.set(self._text_backup)
+        self.root.focus_set()
+
     def _get_sample_rate(self):
         if hasattr(self.model, "sample_rate"):
             return self.model.sample_rate
         return self.model.config.mimi.sample_rate
 
     def _play_f32(self):
-        if self._last_f32_audio is None:
+        current_text = self.test_text.get().strip()
+        if self._last_f32_audio is None or current_text != getattr(self, '_last_generated_text', ''):
             self._generate_fused()
             return
         if not _sounddevice_available:

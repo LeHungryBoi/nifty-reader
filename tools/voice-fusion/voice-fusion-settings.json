@@ -3,7 +3,7 @@
   "device": "cpu",
   "proxy_enabled": true,
   "proxy": "http://127.0.0.1:10808",
-  "test_text": " shut the fuck up! What's wrong with pedophile? huh? I like older guys anyway!",
+  "test_text": "my hand found the back of ",
   "alpha": 0.5,
   "method": "align",
   "last_audio_dir": "D:\\Project\\nifty-reader\\assets\\voices",
@@ -184,6 +184,11 @@
       "index": 5,
       "name": "T6",
       "clips": []
+    },
+    {
+      "index": 6,
+      "name": "T7",
+      "clips": []
     }
   ],
   "fusion_level": 4,
@@ -191,7 +196,8 @@
   "theme": "Zesty",
   "preset_tabs": [
     {
-      "name": "Preset 1",
+      "name": "Rasp",
+      "fusion_level": 4,
       "clips": [
         {
           "persona_name": "bad",
@@ -322,6 +328,23 @@
         {
           "index": 5,
           "name": "T6",
+          "clips": []
+        },
+        {
+          "index": 6,
+          "name": "T7",
+          "clips": []
+        }
+      ]
+    },
+    {
+      "name": "Preset 2",
+      "fusion_level": 4,
+      "clips": [],
+      "tracks_config": [
+        {
+          "index": 0,
+          "name": "T1",
           "clips": []
         }
       ]

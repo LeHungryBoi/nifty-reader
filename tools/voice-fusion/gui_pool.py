@@ -132,9 +132,92 @@ class PoolMixin:
             name_lbl = tk.Label(info, text=f"{display_name}  (stale)", font=("", 9, "bold"),
                                 bg=THEME["pool_card_bg"], fg=THEME["pool_name_stale_fg"], anchor="w")
         else:
-            name_lbl = tk.Label(info, text=f"{display_name}  ✓", font=("", 9, "bold"),
+            name_lbl = tk.Label(info, text=display_name, font=("", 9, "bold"),
                                 bg=THEME["pool_card_bg"], fg=THEME["pool_name_fg"], anchor="w")
         name_lbl.pack(fill="x")
+
+        self._build_level_cache_bar(info, persona, top=False)
+
+    def _build_level_cache_bar(self, parent, persona: Persona, top: bool):
+        """绘制 7 个独立 level 状态灯（VST 风格发光点）。"""
+        bar = tk.Canvas(parent, height=14, bg=THEME["pool_card_bg"], highlightthickness=0, bd=0)
+        pad = (0, 1) if top else (2, 0)
+        bar.pack(fill="x", pady=pad)
+
+        states = self._get_persona_level_states(persona) if hasattr(self, "_get_persona_level_states") else {}
+        level_palette = THEME.get("pool_level_palette") or THEME.get("level_palette", {})
+        bg = THEME["pool_card_bg"]
+
+        def draw(_e=None):
+            bar.delete("all")
+            width = max(int(bar.winfo_width()), 56)
+            height = max(int(bar.winfo_height()), 12)
+            seg = width / 7.0
+            inner_r = max(3, min(5, height // 3))
+            glow_r = inner_r + 3
+            y = height // 2
+            for i in range(7):
+                lvl = i + 1
+                x = int((i + 0.5) * seg)
+                base = level_palette.get(lvl, "#4f6b8a")
+                state = states.get(lvl, "missing")
+                fill, glow, outline = self._level_dot_style(base, state, bg)
+
+                if glow:
+                    bar.create_oval(
+                        x - glow_r, y - glow_r, x + glow_r, y + glow_r,
+                        fill=glow, outline=""
+                    )
+                bar.create_oval(
+                    x - inner_r, y - inner_r, x + inner_r, y + inner_r,
+                    fill=fill, outline=outline, width=1
+                )
+
+        bar.bind("<Configure>", draw)
+        draw()
+
+    @staticmethod
+    def _level_dot_style(base: str, state: str, bg: str) -> tuple[str, str, str]:
+        if state == "ready":
+            fill = base
+            glow = PoolMixin._mix_hex(fill, bg, 0.72)
+            outline = PoolMixin._mix_hex(fill, "#ffffff", 0.15)
+            return fill, glow, outline
+        if state == "extracting":
+            fill = PoolMixin._mix_hex(base, "#f1c40f", 0.55)
+            glow = PoolMixin._mix_hex("#f1c40f", bg, 0.70)
+            outline = "#f1c40f"
+            return fill, glow, outline
+        if state == "error":
+            fill = PoolMixin._mix_hex(base, "#ff4d4f", 0.65)
+            glow = PoolMixin._mix_hex("#ff4d4f", bg, 0.72)
+            outline = "#ff7875"
+            return fill, glow, outline
+        fill = PoolMixin._mix_hex(base, bg, 0.78)
+        glow = ""
+        outline = PoolMixin._mix_hex(fill, bg, 0.45)
+        return fill, glow, outline
+
+    @staticmethod
+    def _level_status_color(base: str, state: str) -> str:
+        if state == "ready":
+            return base
+        if state == "extracting":
+            return PoolMixin._mix_hex(base, "#f1c40f", 0.55)
+        if state == "error":
+            return PoolMixin._mix_hex(base, "#ff4d4f", 0.65)
+        return PoolMixin._mix_hex(base, "#20232a", 0.65)
+
+    @staticmethod
+    def _mix_hex(c1: str, c2: str, ratio: float) -> str:
+        c1 = c1.lstrip("#")
+        c2 = c2.lstrip("#")
+        r1, g1, b1 = [int(c1[i:i + 2], 16) for i in (0, 2, 4)]
+        r2, g2, b2 = [int(c2[i:i + 2], 16) for i in (0, 2, 4)]
+        r = int(r1 * (1 - ratio) + r2 * ratio)
+        g = int(g1 * (1 - ratio) + g2 * ratio)
+        b = int(b1 * (1 - ratio) + b2 * ratio)
+        return f"#{r:02x}{g:02x}{b:02x}"
 
     def _filter_personas(self):
         if not hasattr(self, "_pool_inner"):

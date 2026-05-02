@@ -56,6 +56,10 @@ THEME_KEYS = [
     "error_fg",
     # Clip palette (固定，不随主题变 — 用于区分不同 persona clip)
     "clip_palette",
+    # Preset level palette (1-7)
+    "level_palette",
+    "track_level_palette",
+    "pool_level_palette",
 ]
 
 
@@ -102,6 +106,40 @@ ZESTY_THEME = {
         "#b2ff59", "#ff80ab", "#ffd740", "#7c4dff",
         "#18ffff", "#ff6e40",
     ],
+    "level_palette": {
+        # Level 1: Raw Audio — 绿色 (基础/自然)
+        1: "#4caf50",
+        # Level 2: SEANet Features — 蓝色 (卷积/特征)
+        2: "#42a5f5",
+        # Level 3: Encoder Attn — 青色 (注意力)
+        3: "#26c6da",
+        # Level 4: MiMi Latent — 紫色 (codec/压缩)
+        4: "#ab47bc",
+        # Level 5: Transpose — 橙色 (格式转换)
+        5: "#ff9800",
+        # Level 6: Speaker Proj — 粉色 (说话人投射)
+        6: "#ec407a",
+        # Level 7: KV Cache — 金色 (完整状态/最高级)
+        7: "#ffd740",
+    },
+    "track_level_palette": {
+        1: "#253044",
+        2: "#25364a",
+        3: "#233e47",
+        4: "#2a2a42",
+        5: "#3a2f49",
+        6: "#3f2d40",
+        7: "#3a2a35",
+    },
+    "pool_level_palette": {
+        1: "#4caf50",
+        2: "#42a5f5",
+        3: "#26c6da",
+        4: "#ab47bc",
+        5: "#ff9800",
+        6: "#ec407a",
+        7: "#ffd740",
+    },
 }
 
 
@@ -147,6 +185,33 @@ DARK_THEME = {
         "#BA68C8", "#4DD0E1", "#FFD54F", "#A1887F",
         "#90A4AE", "#F06292",
     ],
+    "level_palette": {
+        1: "#66bb6a",
+        2: "#64b5f6",
+        3: "#4dd0e1",
+        4: "#ba68c8",
+        5: "#ffb74d",
+        6: "#f06292",
+        7: "#ffeb3b",
+    },
+    "track_level_palette": {
+        1: "#222d3a",
+        2: "#22343f",
+        3: "#20383b",
+        4: "#282840",
+        5: "#312a3f",
+        6: "#352935",
+        7: "#30262d",
+    },
+    "pool_level_palette": {
+        1: "#66bb6a",
+        2: "#64b5f6",
+        3: "#4dd0e1",
+        4: "#ba68c8",
+        5: "#ffb74d",
+        6: "#f06292",
+        7: "#ffeb3b",
+    },
 }
 
 
