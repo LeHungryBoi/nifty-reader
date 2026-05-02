@@ -38,16 +38,18 @@ class TtsCompareMixin:
         btn_row.pack(fill="x", pady=(4, 0))
 
         ttk.Label(btn_row, text="f32:", font=("", 9, "bold")).pack(side="left")
-        ttk.Button(btn_row, text="▶ Play f32 (Space)", command=self._play_f32).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="▶ Play f32", command=self._play_f32).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="Save f32", command=self._save_f32).pack(side="left", padx=2)
 
         ttk.Separator(btn_row, orient="vertical").pack(side="left", fill="y", padx=8)
 
         ttk.Label(btn_row, text="int8:", font=("", 9, "bold")).pack(side="left")
-        ttk.Button(btn_row, text="▶ Play int8 (Shift+Space)", command=self._play_int8).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="▶ Play int8", command=self._play_int8).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="Save int8", command=self._save_int8).pack(side="left", padx=2)
 
         ttk.Separator(btn_row, orient="vertical").pack(side="left", fill="y", padx=8)
 
-        ttk.Button(btn_row, text="Export FuseSona", command=self._export_fusesona).pack(side="left", padx=2)
+        ttk.Button(btn_row, text="Save State", command=self._save_fused_state).pack(side="left", padx=2)
 
         self._tts_status = ttk.Label(btn_row, text="", style="Status.TLabel")
         self._tts_status.pack(side="right", padx=4)
@@ -112,6 +114,12 @@ class TtsCompareMixin:
 
         import threading
         threading.Thread(target=task, daemon=True).start()
+
+    def _save_f32(self):
+        self._save_audio_file(self._last_f32_audio, "fused_f32.wav")
+
+    def _save_int8(self):
+        self._save_audio_file(self._last_int8_audio, "fused_int8.wav")
 
     def _save_audio_file(self, audio, default_name: str):
         if audio is None:

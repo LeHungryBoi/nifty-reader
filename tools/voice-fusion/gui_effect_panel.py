@@ -16,20 +16,12 @@ class EffectPanelMixin:
         self._effect_frame = ttk.LabelFrame(parent, text="Clip Effects", padding=6)
         self._effect_frame.pack(side="right", fill="both", expand=True, padx=(4, 0), pady=0)
 
-        # Row 1: Weight + Normalize, Denoise, Strength
+        # Row 1: Normalize, Denoise, Strength
         row1 = ttk.Frame(self._effect_frame)
         row1.pack(fill="x")
 
-        # Weight control with precise numeric display
-        weight_frame = ttk.Frame(row1)
-        weight_frame.pack(side="left", padx=(0, 8))
-        
-        ttk.Label(weight_frame, text="Weight:").pack(side="left")
-        self._weight_value_label = ttk.Label(weight_frame, text="1.0", width=5, font=("Consolas", 9))
-        self._weight_value_label.pack(side="left", padx=2)
-        ttk.Scale(weight_frame, from_=0.0, to=2.0, variable=self._clip_weight_var,
-                  orient="horizontal", length=100,
-                  command=self._on_weight_change).pack(side="left", padx=2)
+        self._effect_name_label = ttk.Label(row1, text="(no clip selected)", style="Status.TLabel")
+        self._effect_name_label.pack(side="left", padx=(0, 8))
 
         ttk.Checkbutton(row1, text="Normalize",
                         variable=self._effect_normalize).pack(side="left", padx=2)
@@ -91,31 +83,12 @@ class EffectPanelMixin:
             sel[1].effect.pitch_shift = round(float(val), 1)
             self._track_editor._redraw()
 
-    def _on_weight_change(self, val):
-        """Update weight value display and sync to clip"""
-        weight_val = round(float(val), 2)
-        try:
-            self._weight_value_label.configure(text=f"{weight_val:.2f}")
-        except (AttributeError, tk.TclError):
-            pass
-        
-        sel = self._track_editor.get_selected_clip()
-        if sel:
-            sel[1].weight = weight_val
-            self._track_editor._redraw()
-            self._auto_save()
-            self._invalidate_fused_cache()
-
     def _show_effect_panel(self, clip: Clip):
         self._effect_frame.pack(side="right", fill="both", expand=True, padx=(4, 0), pady=0)
         eff = clip.effect
-        
-        # Update weight display
-        self._clip_weight_var.set(clip.weight)
-        try:
-            self._weight_value_label.configure(text=f"{clip.weight:.2f}")
-        except (AttributeError, tk.TclError):
-            pass
+        self._effect_name_label.configure(
+            text=f"Clip: {clip.persona_name}",
+            foreground="")
 
         if eff.normalize is None:
             self._effect_normalize.set(self.preprocess_normalize.get())
@@ -141,6 +114,7 @@ class EffectPanelMixin:
 
     def _hide_effect_panel(self):
         self._effect_frame.pack_forget()
+        self._effect_name_label.configure(text="(no clip selected)", foreground=THEME["pool_status_fg"])
         try:
             self._effect_normalize.trace_remove("write", self._sync_effect_to_clip)
             self._effect_denoise.trace_remove("write", self._sync_effect_to_clip)
