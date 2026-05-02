@@ -77,10 +77,9 @@ class ShortcutManager:
         # Rule 1: if focus is on a text-entry widget, let plain keys through
         # (but still allow explicit bindings like <Return>, <Escape> if registered)
         if isinstance(focused, (tk.Entry, tk.Text)):
-            # For plain printable single-char keys, always pass through
             key = event.keysym
-            if len(key) == 1 and key.isprintable() and not event.state & 0x1:
-                # Plain letter / digit / punctuation → typing, suppress shortcuts
+            # space is a printable char but keysym is "space" (length 5), not " "
+            if (len(key) == 1 and key.isprintable() and not event.state & 0x1) or key == "space":
                 return None
 
             # Non-printable keys (Return, Escape, etc.) can still trigger shortcuts

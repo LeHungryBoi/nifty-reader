@@ -1,4 +1,4 @@
-"""Voice Fusion Tool — 颜色主题。
+"""Fusion Studio — 颜色主题。
 
 所有 UI 颜色集中在此文件，方便管理和切换配色方案。
 每个配色方案是一个 dict，键名统一使用 THEME_KEYS 中定义的语义名称。

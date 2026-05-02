@@ -1,5 +1,5 @@
 """
-Voice Fusion Tool — PocketTTS voice state fusion GUI.
+Fusion Studio — PocketTTS voice state fusion GUI.
 
 布局:
   - 顶部: 工具栏 (模型加载、预处理、Preset/FuseSona)
@@ -42,7 +42,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("Voice Fusion Tool")
+        self.root.title("Fusion Studio")
         self.root.geometry("1400x850")
         self.root.minsize(1000, 600)
         self.root.configure(bg=THEME["app_bg"])
@@ -827,6 +827,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             audio = data.astype(np.float32)
             self._log(f"[Preview] {mode}: {persona.display_name}")
             import sounddevice as sd
+            from audio_duck import AudioDuck
+            AudioDuck().duck_for_playback()
             sd.play(audio, sr)
         except Exception as e:
             self._on_error(f"Preview failed: {e}")
@@ -847,6 +849,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
                 data = data[:, 0]
             audio = data.astype(np.float32)
             self._log(f"[Preview] {label}: {p.name}")
+            from audio_duck import AudioDuck
+            AudioDuck().duck_for_playback()
             sd.play(audio, sr)
         except Exception as e:
             self._on_error(f"Preview failed: {e}")

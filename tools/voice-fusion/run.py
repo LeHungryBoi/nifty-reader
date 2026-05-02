@@ -1,4 +1,4 @@
-"""Auto-restart runner for Voice Fusion Tool.
+"""Auto-restart runner for Fusion Studio.
 
 Watches .py files in the tool directory. When any file changes,
 the GUI subprocess is killed and relaunched — guaranteeing all

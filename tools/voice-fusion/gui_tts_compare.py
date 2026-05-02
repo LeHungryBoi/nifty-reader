@@ -88,6 +88,8 @@ class TtsCompareMixin:
         sr = self._get_sample_rate()
         self._tts_status.configure(text="Playing f32...")
         try:
+            from audio_duck import AudioDuck
+            AudioDuck().duck_for_playback()
             sd.play(audio, sr)
         except Exception as e:
             self._on_error(f"Playback failed: {e}")
@@ -105,6 +107,8 @@ class TtsCompareMixin:
         sr = self._get_sample_rate()
         self._tts_status.configure(text="Playing int8...")
         try:
+            from audio_duck import AudioDuck
+            AudioDuck().duck_for_playback()
             sd.play(audio, sr)
         except Exception as e:
             self._on_error(f"Playback failed: {e}")

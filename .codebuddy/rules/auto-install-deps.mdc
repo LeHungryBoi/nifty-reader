@@ -1,0 +1,25 @@
+---
+description: 
+alwaysApply: true
+enabled: true
+updatedAt: 2026-05-02T09:29:33.154Z
+provider: 
+---
+
+# Auto-Install Python Dependencies
+
+## 触发条件
+当修改以下文件时，完成后**必须自动执行** `pip install`：
+- `tools/voice-fusion/requirements.txt`
+- 任何新增或移除 Python `import` 依赖的 `.py` 文件（在 `tools/voice-fusion/` 下）
+
+## 执行方式
+修改完成后，运行：
+```bash
+cd d:\Project\nifty-reader\tools\voice-fusion && pip install -r requirements.txt
+```
+
+## 注意
+- 不要使用 `--quiet`，保留输出以便用户确认安装结果
+- 如果安装失败，报告错误但不要继续尝试其他方式
+- 仅在文件实际发生依赖变更时执行（纯代码逻辑修改不需要）

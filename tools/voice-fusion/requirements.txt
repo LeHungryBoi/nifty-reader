@@ -1,4 +1,4 @@
-# Voice Fusion Tool — Dependencies
+# Fusion Studio — Dependencies
 
 # 核心依赖 (pocket-tts 会自动安装 torch)
 pocket-tts @ git+https://github.com/kyutai-labs/pocket-tts.git
@@ -11,6 +11,9 @@ noisereduce>=3.0.0
 
 # 音频读写 (预处理保存需要)
 soundfile>=0.12.0
+
+# Windows 音频闪避 (播放时自动降低其他程序音量, 可选)
+pycaw>=20230407; sys_platform == "win32"
 
 # 开发工具 (文件监控自动重启)
 watchfiles>=0.20.0
