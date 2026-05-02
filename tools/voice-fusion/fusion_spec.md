@@ -71,11 +71,16 @@ mimi 外部:
 
 视频编辑风格多轨道视图。Clip 操作：拖放、移动、伸缩、分割(s)、裁剪(t)。
 
-Clip 显示：名称 + 权重 + level 标签 + effect 指示行（仅非默认时显示）。
+Clip 显示：名称 + 权重 + effect 指示行（仅非默认时显示）。
 
 ## TTS 对比
 
-f32（原版）vs int8（量化）并排对比播放，共用 f32 编码的 voice state。
+f32（原版）vs int8（量化）并排对比播放。每次按 Play 都会重新生成音频。
+
+### 缓存策略
+- **L7 KV Cache**：`fused_state` 会根据 clip 配置（persona path、权重、level、effect）生成 cache key 并缓存。track 变化时（增删/移动 clip、调整权重、修改 effect）自动失效。
+- **TTS 音频**：不做缓存，每次 Play 都重新生成。
+- **int8 模型**：初始化时与 f32 模型同时加载到 CPU，Play int8 时使用量化模型推理。
 
 ## 底部布局（Row 5）
 

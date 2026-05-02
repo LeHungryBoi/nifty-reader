@@ -488,8 +488,7 @@ class TrackEditor(tk.Canvas):
         text_fg = self._contrast_text(fill)
         self.create_text(x1 + 6, mid_y, text=label_text,
                          fill=text_fg, font=("", 9, "bold"), anchor="w")
-        level_tag = LEVEL_SHORT_NAMES.get(clip.fusion_level, f"L{clip.fusion_level}")
-        info_text = f"W:{clip.weight:.1f} {level_tag}"
+        info_text = f"W:{clip.weight:.1f}"
         # Info text slightly dimmer than name
         info_fg = self._contrast_text(self._darken(fill, 0.15) if not is_selected else fill)
         self.create_text(x2 - 4, mid_y, text=info_text,

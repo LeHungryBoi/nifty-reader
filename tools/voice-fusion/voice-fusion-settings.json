@@ -3,7 +3,7 @@
   "device": "cpu",
   "proxy_enabled": true,
   "proxy": "http://127.0.0.1:10808",
-  "test_text": "my hand found the back of ",
+  "test_text": "My hand found the back of his neck. ",
   "alpha": 0.5,
   "method": "align",
   "last_audio_dir": "D:\\Project\\nifty-reader\\assets\\voices",
@@ -115,7 +115,7 @@
           "start_frame": 0,
           "length_frames": 100,
           "original_length_frames": 100,
-          "weight": 2.033333333333333,
+          "weight": 0.5833333333333333,
           "fusion_level": 4,
           "effect": {
             "normalize": null,
@@ -153,12 +153,12 @@
       "name": "T3",
       "clips": [
         {
-          "persona_name": "Chucky",
-          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "persona_name": "bad_x9_good",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
           "track_index": 2,
           "start_frame": 0,
-          "length_frames": 1726,
-          "original_length_frames": 1726,
+          "length_frames": 119,
+          "original_length_frames": 119,
           "weight": 1.0,
           "fusion_level": 4,
           "effect": {
@@ -173,22 +173,106 @@
     {
       "index": 3,
       "name": "T4",
-      "clips": []
+      "clips": [
+        {
+          "persona_name": "bad_coolhat",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_coolhat.wav",
+          "track_index": 3,
+          "start_frame": 0,
+          "length_frames": 127,
+          "original_length_frames": 127,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
     },
     {
       "index": 4,
       "name": "T5",
-      "clips": []
+      "clips": [
+        {
+          "persona_name": "bad_x9_good",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
+          "track_index": 4,
+          "start_frame": 0,
+          "length_frames": 119,
+          "original_length_frames": 119,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
     },
     {
       "index": 5,
       "name": "T6",
-      "clips": []
+      "clips": [
+        {
+          "persona_name": "bad_unlike_breathy",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_unlike_breathy.wav",
+          "track_index": 5,
+          "start_frame": 0,
+          "length_frames": 34,
+          "original_length_frames": 34,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "hq_unlike",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_unlike.wav",
+          "track_index": 5,
+          "start_frame": 41,
+          "length_frames": 27,
+          "original_length_frames": 27,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
     },
     {
       "index": 6,
       "name": "T7",
-      "clips": []
+      "clips": [
+        {
+          "persona_name": "Chucky",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "track_index": 6,
+          "start_frame": 0,
+          "length_frames": 211,
+          "original_length_frames": 216,
+          "weight": 1.2479166666666666,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        }
+      ]
     }
   ],
   "fusion_level": 4,
@@ -206,7 +290,7 @@
           "start_frame": 0,
           "length_frames": 100,
           "original_length_frames": 100,
-          "weight": 2.033333333333333,
+          "weight": 0.5833333333333333,
           "fusion_level": 4,
           "effect": {
             "normalize": null,
@@ -232,13 +316,93 @@
           }
         },
         {
-          "persona_name": "Chucky",
-          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "persona_name": "bad_x9_good",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
           "track_index": 2,
           "start_frame": 0,
-          "length_frames": 1726,
-          "original_length_frames": 1726,
+          "length_frames": 119,
+          "original_length_frames": 119,
           "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "bad_coolhat",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_coolhat.wav",
+          "track_index": 3,
+          "start_frame": 0,
+          "length_frames": 127,
+          "original_length_frames": 127,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "bad_x9_good",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
+          "track_index": 4,
+          "start_frame": 0,
+          "length_frames": 119,
+          "original_length_frames": 119,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "bad_unlike_breathy",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_unlike_breathy.wav",
+          "track_index": 5,
+          "start_frame": 0,
+          "length_frames": 34,
+          "original_length_frames": 34,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "hq_unlike",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_unlike.wav",
+          "track_index": 5,
+          "start_frame": 41,
+          "length_frames": 27,
+          "original_length_frames": 27,
+          "weight": 1.0,
+          "fusion_level": 4,
+          "effect": {
+            "normalize": null,
+            "denoise": null,
+            "denoise_strength": null,
+            "pitch_shift": 0.0
+          }
+        },
+        {
+          "persona_name": "Chucky",
+          "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+          "track_index": 6,
+          "start_frame": 0,
+          "length_frames": 211,
+          "original_length_frames": 216,
+          "weight": 1.2479166666666666,
           "fusion_level": 4,
           "effect": {
             "normalize": null,
@@ -260,7 +424,7 @@
               "start_frame": 0,
               "length_frames": 100,
               "original_length_frames": 100,
-              "weight": 2.033333333333333,
+              "weight": 0.5833333333333333,
               "fusion_level": 4,
               "effect": {
                 "normalize": null,
@@ -298,12 +462,12 @@
           "name": "T3",
           "clips": [
             {
-              "persona_name": "Chucky",
-              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+              "persona_name": "bad_x9_good",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
               "track_index": 2,
               "start_frame": 0,
-              "length_frames": 1726,
-              "original_length_frames": 1726,
+              "length_frames": 119,
+              "original_length_frames": 119,
               "weight": 1.0,
               "fusion_level": 4,
               "effect": {
@@ -318,22 +482,106 @@
         {
           "index": 3,
           "name": "T4",
-          "clips": []
+          "clips": [
+            {
+              "persona_name": "bad_coolhat",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_coolhat.wav",
+              "track_index": 3,
+              "start_frame": 0,
+              "length_frames": 127,
+              "original_length_frames": 127,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
         },
         {
           "index": 4,
           "name": "T5",
-          "clips": []
+          "clips": [
+            {
+              "persona_name": "bad_x9_good",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_x9_good.wav",
+              "track_index": 4,
+              "start_frame": 0,
+              "length_frames": 119,
+              "original_length_frames": 119,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
         },
         {
           "index": 5,
           "name": "T6",
-          "clips": []
+          "clips": [
+            {
+              "persona_name": "bad_unlike_breathy",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\bad_unlike_breathy.wav",
+              "track_index": 5,
+              "start_frame": 0,
+              "length_frames": 34,
+              "original_length_frames": 34,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            },
+            {
+              "persona_name": "hq_unlike",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\hq_unlike.wav",
+              "track_index": 5,
+              "start_frame": 41,
+              "length_frames": 27,
+              "original_length_frames": 27,
+              "weight": 1.0,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
         },
         {
           "index": 6,
           "name": "T7",
-          "clips": []
+          "clips": [
+            {
+              "persona_name": "Chucky",
+              "persona_original_path": "D:\\Project\\nifty-reader\\tools\\voice-fusion\\assets\\voices\\v2\\Chucky.mp3",
+              "track_index": 6,
+              "start_frame": 0,
+              "length_frames": 211,
+              "original_length_frames": 216,
+              "weight": 1.2479166666666666,
+              "fusion_level": 4,
+              "effect": {
+                "normalize": null,
+                "denoise": null,
+                "denoise_strength": null,
+                "pitch_shift": 0.0
+              }
+            }
+          ]
         }
       ]
     },

@@ -64,6 +64,14 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._play_source_key = None
         self._last_f32_audio = None
         self._last_int8_audio = None
+        self._fused_state_cache: Optional[dict] = None
+        self._fused_state_key: str = ""
+
+        def _invalidate_fused_cache():
+            self._fused_state_cache = None
+            self._fused_state_key = ""
+
+        self._invalidate_fused_cache = _invalidate_fused_cache
         self._rescan_running = False
         self._last_active_track_idx: int = 0
         self._persona_level_runtime: dict[str, dict[int, str]] = {}
@@ -626,6 +634,16 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
                 model = model.to(self.device.get())
                 self.model = model
                 self.root.after(0, self._on_model_loaded)
+                # 加载 int8 量化模型
+                self.root.after(0, lambda: self.model_status.configure(text="Loading int8 model..."))
+                try:
+                    model_int8 = TTSModel.load_model(language=self.language.get() or None)
+                    model_int8 = model_int8.to("cpu")  # int8 模型用 CPU 节省显存
+                    self.model_int8 = model_int8
+                    self._log("[Model] Int8 model loaded (CPU)")
+                except Exception as e:
+                    self._log(f"[Model] Int8 model load failed: {e}")
+                    self.model_int8 = None
             except Exception as e:
                 err = traceback.format_exc()
                 self.root.after(0, lambda _e=e, _err=err:
@@ -647,6 +665,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
     def _add_track(self):
         self._track_editor.add_track()
         self._auto_save()
+        self._invalidate_fused_cache()
+
 
     def _remove_track(self):
         sel = self._track_editor.get_selected_clip()
@@ -655,6 +675,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         else:
             self._track_editor.remove_track(len(self._track_editor.tracks) - 1)
         self._auto_save()
+        self._invalidate_fused_cache()
 
     def _add_persona_to_track(self, persona: Persona, new_track: bool = True):
         if not new_track:
@@ -701,6 +722,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._last_active_track_idx = track_idx
         self._log(f"[Track] Added '{persona.display_name}' to T{track_idx + 1}")
         self._auto_save()
+        self._invalidate_fused_cache()
+
 
     @staticmethod
     def _get_persona_latent_frames(persona: Persona, level: int = 4) -> int:
@@ -749,6 +772,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._track_editor.split_clip_at(track_idx, clip, frame)
         self._log(f"[Track] Split clip '{clip.persona_name}' at frame {frame}")
         self._auto_save()
+        self._invalidate_fused_cache()
+
 
     def _trim_clip(self):
         trimmed = self._track_editor.trim_clip_at_playhead()
@@ -762,6 +787,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         _, clip = self._track_editor.get_selected_clip()
         self._log(f"[Track] Trimmed '{clip.persona_name}' → [{clip.start_frame}-{clip.end_frame}]")
         self._auto_save()
+        self._invalidate_fused_cache()
+
 
     def _on_clip_double_click(self, track_idx, clip):
         self._clip_info_label.configure(
@@ -776,10 +803,12 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         menu.add_command(label=f"Delete '{clip.persona_name}'",
                          command=lambda: self._delete_clip(track_idx, clip))
         menu.add_command(label="Split at Playhead",
-                         command=lambda: self._track_editor.split_clip_at(
-                             track_idx, clip, int(self._track_editor.playhead_frame)))
+                         command=lambda: (self._track_editor.split_clip_at(
+                             track_idx, clip, int(self._track_editor.playhead_frame)),
+                             self._invalidate_fused_cache()))
         menu.add_command(label=f"Reset Length ({clip.original_length_frames} frames)",
-                         command=lambda: self._track_editor.reset_clip_length(clip))
+                         command=lambda: (self._track_editor.reset_clip_length(clip),
+                             self._invalidate_fused_cache()))
         menu.add_separator()
         eff = clip.effect
         has_eff = eff.has_custom_effects()
@@ -795,6 +824,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._track_editor.remove_clip(track_idx, clip)
         self._hide_effect_panel()
         self._auto_save()
+        self._invalidate_fused_cache()
+
 
     def _on_clip_weight_change(self, val):
         sel = self._track_editor.get_selected_clip()
@@ -802,6 +833,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             sel[1].weight = float(val)
             self._track_editor._redraw()
             self._auto_save()
+            self._invalidate_fused_cache()
+
 
     def _on_clip_level_change(self, event=None):
         new_level = parse_level_from_str(self._clip_level_var.get())
@@ -812,6 +845,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             self._track_editor.set_preset_level(new_level)
             self._refresh_preset_tab_buttons()
             self._auto_save()
+            self._invalidate_fused_cache()
+
         self._track_editor._redraw()
 
     # ── Preview ──
@@ -846,6 +881,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             from audio_duck import AudioDuck
             AudioDuck().duck_for_playback()
             sd.play(audio, sr)
+            # Wait for playback to complete - sd.play() is asynchronous
+            sd.wait()
         except Exception as e:
             self._on_error(f"Preview failed: {e}")
 
@@ -868,6 +905,8 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             from audio_duck import AudioDuck
             AudioDuck().duck_for_playback()
             sd.play(audio, sr)
+            # Wait for playback to complete - sd.play() is asynchronous
+            sd.wait()
         except Exception as e:
             self._on_error(f"Preview failed: {e}")
 

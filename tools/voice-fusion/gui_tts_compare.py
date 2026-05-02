@@ -4,6 +4,8 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import traceback
 
+from gui_base import _sounddevice_available
+
 
 class TtsCompareMixin:
     """VoiceFusionApp TTS 对比播放"""
@@ -77,48 +79,41 @@ class TtsCompareMixin:
         return self.model.config.mimi.sample_rate
 
     def _play_f32(self):
-        current_text = self.test_text.get().strip()
-        if self._last_f32_audio is None or current_text != getattr(self, '_last_generated_text', ''):
-            self._generate_fused()
-            return
-        if not _sounddevice_available:
-            messagebox.showwarning("Warning", "Install sounddevice for playback")
-            return
-        import numpy as np
-        import sounddevice as sd
-        audio = self._last_f32_audio.squeeze().cpu().numpy().astype(np.float32)
-        sr = self._get_sample_rate()
-        self._tts_status.configure(text="Playing f32...")
-        try:
-            from audio_duck import AudioDuck
-            AudioDuck().duck_for_playback()
-            sd.play(audio, sr)
-        except Exception as e:
-            self._on_error(f"Playback failed: {e}")
+        self._generate_fused()
 
     def _play_int8(self):
-        if self._last_int8_audio is None:
-            self._generate_int8()
-            return
-        if not _sounddevice_available:
-            messagebox.showwarning("Warning", "Install sounddevice for playback")
-            return
-        import numpy as np
-        import sounddevice as sd
-        audio = self._last_int8_audio.squeeze().cpu().numpy().astype(np.float32)
-        sr = self._get_sample_rate()
-        self._tts_status.configure(text="Playing int8...")
-        try:
-            from audio_duck import AudioDuck
-            AudioDuck().duck_for_playback()
-            sd.play(audio, sr)
-        except Exception as e:
-            self._on_error(f"Playback failed: {e}")
+        self._generate_int8()
 
     def _generate_int8(self):
-        self._log("[int8] Quantized model not yet loaded. Using f32 model as fallback.")
-        self._last_int8_audio = self._last_f32_audio
-        self._play_int8()
+        if getattr(self, 'model_int8', None) is None:
+            self._log("[int8] 量化模型未加载，直接使用 f32 结果")
+            self._last_int8_audio = self._last_f32_audio
+            return
+        if self._generating_int8:
+            return
+        text = self.test_text.get().strip()
+        if not text:
+            return
+
+        self._generating_int8 = True
+        self._log(f"Generating int8: \"{text[:50]}\"")
+
+        def task():
+            try:
+                state = self._get_fused_state()
+                audio = self.model_int8.generate_audio(
+                    model_state=state, text_to_generate=text, copy_state=True)
+                self._last_int8_audio = audio
+                self.root.after(0, lambda: self._on_generated(audio, "int8"))
+            except Exception as e:
+                err = traceback.format_exc()
+                self.root.after(0, lambda _e=e, _err=err:
+                    self._on_error(f"Int8 generation failed:\n{_err}", exc=_e))
+            finally:
+                self.root.after(0, lambda: setattr(self, "_generating_int8", False))
+
+        import threading
+        threading.Thread(target=task, daemon=True).start()
 
     def _save_f32(self):
         self._save_audio_file(self._last_f32_audio, "fused_f32.wav")
@@ -143,8 +138,4 @@ class TtsCompareMixin:
             stream_audio_chunks(path, (audio_tensor,), sr)
             self._log(f"Saved: {path}")
         except Exception as e:
-            self._on_error(f"Save failed:\n{traceback.format_exc()}", exc=e)
-
-
-# Late import to avoid circular
-from gui_base import _sounddevice_available
+            self._on_error(f"Save failed: {traceback.format_exc()}", exc=e)

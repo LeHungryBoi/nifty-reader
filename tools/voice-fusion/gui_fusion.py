@@ -17,7 +17,7 @@ from track_editor import Clip
 from level_extractor import LevelExtractor, save_level_features
 from fusion import fuse_voice_states_multi, save_state, load_state, get_state_info, format_info
 from preset import save_fusesona, FuseSonaMeta, ClipData
-from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR
+from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR, _sounddevice_available
 
 
 class FusionMixin:
@@ -62,19 +62,37 @@ class FusionMixin:
 
     def _on_generated(self, audio, variant: str = "f32"):
         import numpy as np
+        import sounddevice as sd
         sr = self._get_sample_rate()
         duration = audio.shape[-1] / sr
         self._log(f"Generated ({variant}): {duration:.1f}s, {sr}Hz")
         self._tts_status.configure(text=f"{variant}: {duration:.1f}s")
-        if variant == "f32":
-            self._play_f32()
-        elif variant == "int8":
-            self._play_int8()
+        if not _sounddevice_available:
+            messagebox.showwarning("Warning", "Install sounddevice for playback")
+            return
+        audio_np = audio.squeeze().cpu().numpy().astype(np.float32)
+        self._tts_status.configure(text="Playing...")
+        try:
+            from audio_duck import AudioDuck
+            AudioDuck().duck_for_playback()
+            sd.play(audio_np, sr)
+            # Wait for playback to complete - sd.play() is asynchronous
+            sd.wait()
+            self._tts_status.configure(text=f"{variant}: Done")
+        except Exception as e:
+            self._on_error(f"Playback failed: {e}")
 
     def _get_fused_state(self) -> dict:
         all_clips = self._track_editor.get_all_clips()
         if not all_clips:
             raise ValueError("No clips on tracks")
+
+        # 生成 cache key：如果 cache 存在且 key 未变，直接返回缓存的 fused state
+        cache_key = self._compute_fused_state_key(all_clips)
+        if (self._fused_state_cache is not None
+                and cache_key == self._fused_state_key):
+            self._log("[Fusion] Using cached fused state")
+            return self._fused_state_cache
 
         preset_level = self._get_active_preset_level() if hasattr(self, "_get_active_preset_level") else 7
         self._log(f"[Fusion] preset type:L{preset_level}")
@@ -117,8 +135,29 @@ class FusionMixin:
         if not states:
             raise ValueError("No valid voice states. Ensure personas are extracted.")
 
-        return fuse_voice_states_multi(
+        fused = fuse_voice_states_multi(
             states=states, weights=weights, method=self.method.get())
+
+        # 缓存 fused state
+        self._fused_state_cache = fused
+        self._fused_state_key = cache_key
+        self._log("[Fusion] Fused state cached")
+        return fused
+
+    def _compute_fused_state_key(self, clips: list) -> str:
+        """根据 clip 配置生成唯一标识，用于判断缓存是否过期"""
+        import hashlib
+        parts = []
+        preset_level = self._get_active_preset_level() if hasattr(self, "_get_active_preset_level") else 7
+        parts.append(f"L{preset_level}")
+        parts.append(self.method.get())
+        for track_idx, clip in sorted(clips, key=lambda x: (x[0], x[1].persona_name)):
+            parts.append(f"{clip.persona_original_path}:{clip.weight}:{clip.fusion_level}")
+            eff = clip.effect
+            if eff.has_custom_effects():
+                parts.append(f"e{clip.effect.normalize}:{clip.effect.denoise}:{clip.effect.denoise_strength}:{clip.effect.pitch_shift}")
+        key_str = "|".join(parts)
+        return hashlib.md5(key_str.encode()).hexdigest()[:16]
 
     def _load_persona_state_by_level(self, original_path: str, level: int) -> Optional[dict]:
         persona = self._find_persona_by_path(original_path)

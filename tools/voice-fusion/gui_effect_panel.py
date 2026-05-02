@@ -144,6 +144,8 @@ class EffectPanelMixin:
         eff.pitch_shift = round(self._effect_pitch_shift.get(), 1)
 
         self._track_editor._redraw()
+        self._auto_save()
+        self._invalidate_fused_cache()
 
     def _apply_effect(self):
         sel = self._track_editor.get_selected_clip()
