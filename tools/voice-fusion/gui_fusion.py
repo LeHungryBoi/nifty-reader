@@ -17,7 +17,7 @@ from track_editor import Clip
 from level_extractor import LevelExtractor, save_level_features
 from fusion import fuse_voice_states_multi, save_state, load_state, get_state_info, format_info
 from preset import save_fusesona, FuseSonaMeta, ClipData
-from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR, _sounddevice_available
+from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR
 
 
 class FusionMixin:
