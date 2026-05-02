@@ -66,6 +66,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._last_int8_audio = None
         self._fused_state_cache: Optional[dict] = None
         self._fused_state_key: str = ""
+        self._current_play_callback = None  # Track current play button callback for toggle
 
         def _invalidate_fused_cache():
             self._fused_state_cache = None
@@ -87,6 +88,7 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._effect_denoise = tk.BooleanVar()
         self._effect_denoise_strength = tk.DoubleVar(value=0.3)
         self._effect_pitch_shift = tk.DoubleVar(value=0.0)
+        self._clip_weight_var = tk.DoubleVar(value=1.0)  # For effect panel weight control
 
         # Settings
         saved = load_settings(RUNNING_DIR)
@@ -172,22 +174,13 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         # Track editor toolbar
         te_tb = ttk.Frame(right)
-        te_tb.pack(fill="x", pady=(0, 4))
+        te_tb.pack(fill="x", pady=(4, 0))
+
+        # Track controls (Add/Remove track buttons)
         ttk.Button(te_tb, text="+ Track", command=self._add_track).pack(side="left", padx=2)
         ttk.Button(te_tb, text="- Track", command=self._remove_track).pack(side="left", padx=2)
-        ttk.Separator(te_tb, orient="vertical").pack(side="left", fill="y", padx=6)
-
-        self._clip_info_label = ttk.Label(te_tb, text="No clip selected", style="Status.TLabel")
-        self._clip_info_label.pack(side="left", padx=4)
 
         ttk.Separator(te_tb, orient="vertical").pack(side="left", fill="y", padx=6)
-
-        ttk.Label(te_tb, text="Weight:").pack(side="left")
-        self._clip_weight_var = tk.DoubleVar(value=1.0)
-        self._clip_weight_scale = ttk.Scale(te_tb, from_=0.1, to=3.0,
-            variable=self._clip_weight_var, orient="horizontal", length=80,
-            command=self._on_clip_weight_change)
-        self._clip_weight_scale.pack(side="left", padx=2)
 
         ttk.Label(te_tb, text="Preset Level:").pack(side="left", padx=(8, 2))
         self._clip_level_var = tk.StringVar(value=level_display_str(4))
@@ -208,8 +201,6 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         # Action bar
         action_row = ttk.Frame(right)
         action_row.pack(fill="x", pady=(4, 0))
-        ttk.Button(action_row, text="Generate Fused", command=self._generate_fused,
-                   style="Accent.TButton").pack(side="right", padx=4)
         ttk.Button(action_row, text="Split at Playhead", command=self._split_at_playhead).pack(side="right", padx=4)
         ttk.Button(action_row, text="Trim", command=self._trim_clip).pack(side="right", padx=4)
 
@@ -262,9 +253,6 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         tab_container.pack(side="left", fill="x", expand=True)
 
         self._tab_button_container = tab_container
-
-        # Export button on right side
-        ttk.Button(tab_bar, text="Export FuseSona", command=self._export_fusesona).pack(side="right", padx=2)
 
         # Restore saved tabs or create default
         if saved_tabs and len(saved_tabs) > 0:
@@ -827,15 +815,6 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         self._invalidate_fused_cache()
 
 
-    def _on_clip_weight_change(self, val):
-        sel = self._track_editor.get_selected_clip()
-        if sel:
-            sel[1].weight = float(val)
-            self._track_editor._redraw()
-            self._auto_save()
-            self._invalidate_fused_cache()
-
-
     def _on_clip_level_change(self, event=None):
         new_level = parse_level_from_str(self._clip_level_var.get())
         # Update current preset tab's level
@@ -848,6 +827,76 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
             self._invalidate_fused_cache()
 
         self._track_editor._redraw()
+
+    # ── Audio Control (Play/Pause/Stop) ──
+
+    def _stop_all_audio(self):
+        """停止所有正在播放的音频"""
+        try:
+            import sounddevice as sd
+            sd.stop()
+        except Exception:
+            pass
+        self._play_stream = None
+        self._current_play_callback = None
+
+    def _play_audio_async(self, audio_data, sr: int, source_key: str = "", play_callback=None):
+        """异步播放音频，支持暂停/停止切换
+        
+        Args:
+            audio_data: 音频数据 (numpy array)
+            sr: 采样率
+            source_key: 音频源标识，用于判断是否重复点击同一按钮
+            play_callback: 可选的回调函数，用于更新按钮状态
+        """
+        if not _sounddevice_available:
+            messagebox.showwarning("Warning", "Install sounddevice for playback")
+            return
+
+        # 如果点击的是同一个播放按钮且正在播放，则停止
+        if self._current_play_callback == play_callback and self._play_stream is not None:
+            self._stop_all_audio()
+            if play_callback:
+                play_callback(False)  # 更新按钮为停止状态
+            return
+
+        # 停止之前的播放
+        self._stop_all_audio()
+
+        # 在后台线程中播放
+        def task():
+            try:
+                from audio_duck import AudioDuck
+                AudioDuck().duck_for_playback()
+                
+                import sounddevice as sd
+                self._play_stream = sd.play(audio_data, sr, blocking=False)
+                
+                # 等待流启动
+                import time
+                time.sleep(0.1)
+                
+                # 检查流是否成功创建
+                if hasattr(sd, 'get_stream') and sd.get_stream() is not None:
+                    self._log(f"[Audio] Playing: {source_key}")
+                else:
+                    self._log("[Audio] Stream creation failed")
+                    
+            except Exception as e:
+                self.root.after(0, lambda: self._on_error(f"Playback failed: {e}"))
+            finally:
+                self._play_stream = None
+                self._current_play_callback = None
+                if play_callback:
+                    self.root.after(0, lambda: play_callback(False))
+
+        import threading
+        self._current_play_callback = play_callback
+        threading.Thread(target=task, daemon=True).start()
+        
+        # 立即更新按钮状态为播放中
+        if play_callback:
+            play_callback(True)
 
     # ── Preview ──
 
@@ -871,18 +920,13 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         try:
             import soundfile as sf
+            import numpy as np
             data, sr = sf.read(p)
             if data.ndim > 1:
                 data = data[:, 0]
-            import numpy as np
             audio = data.astype(np.float32)
-            self._log(f"[Preview] {mode}: {persona.display_name}")
-            import sounddevice as sd
-            from audio_duck import AudioDuck
-            AudioDuck().duck_for_playback()
-            sd.play(audio, sr)
-            # Wait for playback to complete - sd.play() is asynchronous
-            sd.wait()
+            source_key = f"{mode}: {persona.display_name}"
+            self._play_audio_async(audio, sr, source_key)
         except Exception as e:
             self._on_error(f"Preview failed: {e}")
 
@@ -896,17 +940,12 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         try:
             import soundfile as sf
             import numpy as np
-            import sounddevice as sd
             data, sr = sf.read(p)
             if data.ndim > 1:
                 data = data[:, 0]
             audio = data.astype(np.float32)
-            self._log(f"[Preview] {label}: {p.name}")
-            from audio_duck import AudioDuck
-            AudioDuck().duck_for_playback()
-            sd.play(audio, sr)
-            # Wait for playback to complete - sd.play() is asynchronous
-            sd.wait()
+            source_key = f"{label}: {p.name}"
+            self._play_audio_async(audio, sr, source_key)
         except Exception as e:
             self._on_error(f"Preview failed: {e}")
 

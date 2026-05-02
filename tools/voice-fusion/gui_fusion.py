@@ -17,7 +17,7 @@ from track_editor import Clip
 from level_extractor import LevelExtractor, save_level_features
 from fusion import fuse_voice_states_multi, save_state, load_state, get_state_info, format_info
 from preset import save_fusesona, FuseSonaMeta, ClipData
-from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR, _sounddevice_available
+from gui_base import RUNNING_DIR, _get_np, PREPROCESS_CACHE_DIR
 
 
 class FusionMixin:
@@ -62,7 +62,6 @@ class FusionMixin:
 
     def _on_generated(self, audio, variant: str = "f32"):
         import numpy as np
-        import sounddevice as sd
         sr = self._get_sample_rate()
         duration = audio.shape[-1] / sr
         self._log(f"Generated ({variant}): {duration:.1f}s, {sr}Hz")
@@ -72,15 +71,8 @@ class FusionMixin:
             return
         audio_np = audio.squeeze().cpu().numpy().astype(np.float32)
         self._tts_status.configure(text="Playing...")
-        try:
-            from audio_duck import AudioDuck
-            AudioDuck().duck_for_playback()
-            sd.play(audio_np, sr)
-            # Wait for playback to complete - sd.play() is asynchronous
-            sd.wait()
-            self._tts_status.configure(text=f"{variant}: Done")
-        except Exception as e:
-            self._on_error(f"Playback failed: {e}")
+        source_key = f"Fused {variant}"
+        self._play_audio_async(audio_np, sr, source_key)
 
     def _get_fused_state(self) -> dict:
         all_clips = self._track_editor.get_all_clips()
@@ -336,21 +328,3 @@ class FusionMixin:
         except Exception as e:
             self._on_error(f"Export failed:\n{traceback.format_exc()}", exc=e)
 
-    def _save_fused_state(self):
-        clips = self._track_editor.get_all_clips()
-        if not clips:
-            messagebox.showwarning("Warning", "No clips on tracks")
-            return
-        path = filedialog.asksaveasfilename(
-            title="Save fused state", defaultextension=".safetensors",
-            initialfile="fused_state.safetensors",
-            filetypes=[("Safetensors", "*.safetensors")])
-        if not path:
-            return
-        try:
-            state = self._get_fused_state()
-            save_state(state, path)
-            info = get_state_info(state)
-            self._log(f"State saved: {path} — {format_info(info)}")
-        except Exception as e:
-            self._on_error(f"Save failed:\n{traceback.format_exc()}", exc=e)

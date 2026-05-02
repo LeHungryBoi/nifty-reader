@@ -204,6 +204,10 @@ class TrackEditor(tk.Canvas):
         self.bind("<Button-5>", self._on_scroll)
         self.bind("<Left>", self._on_key_left)
         self.bind("<Right>", self._on_key_right)
+        self.bind("<Delete>", self._on_key_delete)
+
+        self.bind("<Configure>", self._on_configure)
+
         self.focus_set()
         self.bind("<Configure>", self._on_configure)
 
@@ -438,13 +442,25 @@ class TrackEditor(tk.Canvas):
                 break
 
             # ── 左侧轨道标签 ──
+            is_track_selected = (self.selected_track_idx == track.index)
+            label_color = THEME["track_selected_fg"] if is_track_selected else THEME["track_label_fg"]
+            label_bg = THEME["track_selected_bg"] if is_track_selected else THEME["ruler_bg"]
+            
+            # Draw track label background with highlight if selected
+            self.create_rectangle(0, y, TRACK_LABEL_WIDTH, y + TRACK_HEIGHT,
+                                  fill=label_bg, outline="")
             self.create_text(TRACK_LABEL_WIDTH // 2, y + TRACK_HEIGHT // 2,
-                             text=f"T{track.index + 1}", fill=THEME["track_label_fg"],
+                             text=f"T{track.index + 1}", fill=label_color,
                              font=("", 8, "bold"), anchor="center")
 
             # ── 轨道区域（clip 区域）──
             track_bg = self._get_track_bg(track.index)
-            self.create_rectangle(TRACK_LABEL_WIDTH, y, w, y + TRACK_HEIGHT,
+            # Highlight track area if selected
+            if is_track_selected:
+                track_bg = self._lighten(track_bg, 0.15)
+            # Fix: Limit track background to canvas width, not extending beyond
+            bg_end_x = min(w, TRACK_LABEL_WIDTH + RULER_HEIGHT + self._max_frame * self.pixels_per_frame + 50)
+            self.create_rectangle(TRACK_LABEL_WIDTH, y, bg_end_x, y + TRACK_HEIGHT,
                                   fill=track_bg, outline=THEME["track_border"], width=1)
 
             for clip in track.clips:
@@ -688,6 +704,18 @@ class TrackEditor(tk.Canvas):
         step = self._get_arrow_step()
         self.playhead_frame = min(self._max_frame, self.playhead_frame + step)
         self._redraw()
+
+    def _on_key_delete(self, event):
+        """Delete key: delete selected clip or selected track"""
+        # If a clip is selected, delete the clip
+        if self._selected_clip:
+            track_idx, clip = self._selected_clip
+            self.remove_clip(track_idx, clip)
+            return
+        
+        # If no clip but a track is selected, delete the track
+        if self.selected_track_idx is not None and len(self.tracks) > 1:
+            self.remove_track(self.selected_track_idx)
 
     def _on_double_click(self, event):
         track_idx, clip, _ = self._hit_test(event.x, event.y)
