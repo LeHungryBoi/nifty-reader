@@ -10,9 +10,11 @@ from theme import THEME
 class EffectPanelMixin:
     """VoiceFusionApp Clip Effect 面板"""
 
-    def _build_effect_panel(self):
-        self._effect_frame = ttk.LabelFrame(self.root, text="Clip Effects", padding=6)
-        self._effect_frame.grid(row=2, column=0, sticky="ew", padx=8, pady=4)
+    def _build_effect_panel(self, parent: tk.Widget = None):
+        if parent is None:
+            parent = self.root
+        self._effect_frame = ttk.LabelFrame(parent, text="Clip Effects", padding=6)
+        self._effect_frame.pack(side="right", fill="both", expand=True, padx=(4, 0), pady=0)
 
         # Row 1: Normalize, Denoise, Strength
         row1 = ttk.Frame(self._effect_frame)
@@ -82,7 +84,7 @@ class EffectPanelMixin:
             self._track_editor._redraw()
 
     def _show_effect_panel(self, clip: Clip):
-        self._effect_frame.grid()
+        self._effect_frame.pack(side="right", fill="both", expand=True, padx=(4, 0), pady=0)
         eff = clip.effect
         self._effect_name_label.configure(
             text=f"Clip: {clip.persona_name}",
@@ -111,7 +113,7 @@ class EffectPanelMixin:
         self._effect_denoise_strength.trace_add("write", self._sync_effect_to_clip)
 
     def _hide_effect_panel(self):
-        self._effect_frame.grid_remove()
+        self._effect_frame.pack_forget()
         self._effect_name_label.configure(text="(no clip selected)", foreground=THEME["pool_status_fg"])
         try:
             self._effect_normalize.trace_remove("write", self._sync_effect_to_clip)

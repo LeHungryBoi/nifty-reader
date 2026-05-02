@@ -11,8 +11,8 @@ tools/voice-fusion/
 ├── gui_pool.py          # Persona Pool 面板（左侧）
 ├── gui_toolbar.py       # 工具栏（顶部）
 ├── gui_fusion.py        # 融合生成逻辑
-├── gui_effect_panel.py  # Clip Effect 面板
-├── gui_tts_compare.py   # TTS 对比播放（f32 vs int8）
+├── gui_effect_panel.py  # Audio Effect 面板（右下角）
+├── gui_tts_compare.py   # TTS 对比播放（左下角）
 ├── track_editor.py      # 多轨道时间线编辑器
 ├── hotkey.py            # 三级优先级快捷键管理器
 ├── audio_duck.py        # 播放时自动降低其他程序音量（pycaw）
@@ -76,6 +76,19 @@ Clip 显示：名称 + 权重 + level 标签 + effect 指示行（仅非默认�
 ## TTS 对比
 
 f32（原版）vs int8（量化）并排对比播放，共用 f32 编码的 voice state。
+
+## 底部布局（Row 5）
+
+```
+┌─────────────────────────────┬───────────────┐
+│  TTS Compare (f32 vs int8) │               │
+├─────────────────────────────┤  Audio Effect │
+│  Log                        │   (Clip级特效) │
+└─────────────────────────────┴───────────────┘
+```
+- 左半边：TTS Compare（上方）+ Log（下方）
+- 右半边：Audio Effect 面板（选择 clip 时显示）
+- 高度自适应，等高并排
 
 ## Preset 选项卡
 

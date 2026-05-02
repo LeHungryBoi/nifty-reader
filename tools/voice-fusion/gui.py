@@ -139,17 +139,14 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
 
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(1, weight=1)
+        self.root.rowconfigure(5, weight=1)
 
         # Row 0 — Toolbar
         self._build_toolbar()
         # Row 1 — Main content (split)
         self._build_main_content()
-        # Row 2 — Clip Effect Panel
-        self._build_effect_panel()
-        # Row 3 — TTS Compare
-        self._build_tts_compare()
-        # Row 4 — Log
-        self._build_log()
+        # Row 5 — Bottom row: left (TTS Compare + Log) | right (Audio Effect)
+        self._build_bottom_row()
 
     def _build_main_content(self):
         pw = ttk.PanedWindow(self.root, orient="horizontal")
@@ -208,9 +205,11 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         ttk.Button(action_row, text="Split at Playhead", command=self._split_at_playhead).pack(side="right", padx=4)
         ttk.Button(action_row, text="Trim", command=self._trim_clip).pack(side="right", padx=4)
 
-    def _build_log(self):
-        f = ttk.LabelFrame(self.root, text="Log", padding=4)
-        f.grid(row=4, column=0, sticky="ew", padx=8, pady=(4, 8))
+    def _build_log(self, parent: tk.Widget = None):
+        if parent is None:
+            parent = self.root
+        f = ttk.LabelFrame(parent, text="Log", padding=4)
+        f.pack(side="top", fill="both", expand=True)
         self.log_text = tk.Text(f, height=5, wrap="word", state="disabled",
                                  font=("Consolas", 9),
                                  bg=THEME["log_bg"], fg=THEME["log_fg"],
@@ -220,6 +219,23 @@ class VoiceFusionApp(ToolbarMixin, PoolMixin, EffectPanelMixin, TtsCompareMixin,
         sb.pack(side="right", fill="y")
         self.log_text.pack(fill="both", expand=True)
         self.log_text.bind("<Button-3>", self._log_context_menu)
+
+    def _build_bottom_row(self):
+        """Build bottom row: left (TTS Compare + Log) | right (Audio Effect)"""
+        bottom_pw = ttk.PanedWindow(self.root, orient="horizontal")
+        bottom_pw.grid(row=5, column=0, sticky="nsew", padx=8, pady=(0, 8))
+
+        # Left pane: TTS Compare + Log stacked
+        left_pane = ttk.Frame(bottom_pw)
+        bottom_pw.add(left_pane, weight=1)
+
+        self._build_tts_compare(left_pane)
+        self._build_log(left_pane)
+
+        # Right pane: Audio Effect
+        right_pane = ttk.Frame(bottom_pw)
+        bottom_pw.add(right_pane)
+        self._build_effect_panel(right_pane)
 
     # ── Preset Tabs ──
 

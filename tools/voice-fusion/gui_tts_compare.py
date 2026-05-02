@@ -8,12 +8,14 @@ import traceback
 class TtsCompareMixin:
     """VoiceFusionApp TTS 对比播放"""
 
-    def _build_tts_compare(self):
-        f = ttk.LabelFrame(self.root, text="TTS Compare (f32 vs int8)", padding=6)
-        f.grid(row=3, column=0, sticky="ew", padx=8, pady=4)
+    def _build_tts_compare(self, parent: tk.Widget = None):
+        if parent is None:
+            parent = self.root
+        self._tts_compare_frame = ttk.LabelFrame(parent, text="TTS Compare (f32 vs int8)", padding=6)
+        self._tts_compare_frame.pack(side="top", fill="both", expand=True)
 
         # Text input — click to edit, Enter to confirm, Esc to cancel
-        text_row = ttk.Frame(f)
+        text_row = ttk.Frame(self._tts_compare_frame)
         text_row.pack(fill="x")
         ttk.Label(text_row, text="Text:").pack(side="left")
 
@@ -30,7 +32,7 @@ class TtsCompareMixin:
         self._text_entry.bind("<Escape>", self._on_text_cancel)
 
         # Buttons
-        btn_row = ttk.Frame(f)
+        btn_row = ttk.Frame(self._tts_compare_frame)
         btn_row.pack(fill="x", pady=(4, 0))
 
         ttk.Label(btn_row, text="f32:", font=("", 9, "bold")).pack(side="left")
